@@ -102,6 +102,28 @@ Python将数值区分为三种子类型: 整数(integers), 浮点数(floating po
 | `__annotations__` | 存储参数注解的字典, 字典的键值为参数名, 如果带有return注解, 则键值为`return`  | 可写  |
 | `__kwdefaults__`  | 仅存储关键字参数(keyword-only)的默认值字典                              | 可写  |
 
+```python
+# 译者自己加上的示例:
+def f(a, b=1, *c, d=2):
+    '''
+    function documentation
+    '''
+    def g():
+        print(h)
+    h = 3
+    return g
+f.__doc__ # 'function documentation'
+f.__name__ # 'f'
+f.__qualname__ # 'f'
+f.__module__ # __main__
+f.__defaults__ # (1,)
+f.__code__ # <code object f at 0x7f3636318660, file "<stdin>", line 1>
+f.__globals__ # ...
+f.__dict__ # {}
+f.__annotations__ #
+f.__kwdefaults__ # {'d': 2}
+```
+
 基本上所有标为可写的属性在进行赋值时都会做类型检查.
 
 函数对象也支持用点标记(dot-notation)获取和设置任意属性, 比如给函数添加元数据信息(metadata). *注意在目前的实现中, 只有用户定义的函数支持设置其他属性, 内建函数不支持(未来的版本可能会支持)这一操作*.
