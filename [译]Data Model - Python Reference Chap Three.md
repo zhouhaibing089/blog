@@ -122,6 +122,7 @@ f.__globals__ # ...
 f.__dict__ # {}
 f.__annotations__ #
 f.__kwdefaults__ # {'d': 2}
+f(0).__closure__[0].cell_contents # 3
 ```
 
 基本上所有标为可写的属性在进行赋值时都会做类型检查.
