@@ -184,3 +184,34 @@ A.cf.__self__ == A # True
 *   **`Classes`**: 类也是可调用的, 它通常用来作为创建类实例的工厂, 当然如果你重载`__new__`方法的话, 你也可以创建其他类的实例. 调用类时的参数会传给`__init__`方法, 在大部分情况下, 我们通过`__init__`方法来初始化该实例.
 
 *   **`Class Instances`**: 如果该类实例有`__call__`方法的话, 那么该类实例也是可以调用的.
+
+```python
+# 译者自己加上的示例
+# Generator Functions
+def fibo(n):
+    a, b = 0, 1
+    for i in range(0, n):
+        yield a
+        a, b = b, a + b
+b = fibo(1) # <generator object fibo at 0x7f36333dfc60>
+# 有__iter__和__next__方法, 表示遵循iterator协议
+b.__iter__ # <method-wrapper '__iter__' of generator object at 0x7f36333dfca8>
+b.__next__ # <method-wrapper '__next__' of generator object at 0x7f36333dfca8>
+list(b) # [0]
+# Built-in Functions
+abs # <built-in function abs>
+# Built-in Methods
+l = [1, 2, 3]
+l.append # <built-in method append of list object at 0x7f36333f7e08>
+# Classes和Class Instances
+class Constructor:
+    def __new__(cls):
+        return super().__new__(cls)
+    def __init__(self):
+        self.p1 = 1
+        self.p2 = '2'
+    def __call__(self):
+        return self.p1 * self.p2
+c = Constructor() # 像调用方法一样调用类名
+c() # 像调用方法一样调用类实例
+```
