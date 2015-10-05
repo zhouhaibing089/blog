@@ -234,3 +234,5 @@ m.__file__ # '/usr/lib/python3.4/lib-dynload/math.cpython-34m.so'
 import sys as s
 s.__file__ # AttributeError: 'module' object has no attribute '__file__'
 ```
+
+**`Custom classes`**: 自定义类型一般通过类定义来创建. 类有一个通过字典对象来维护的命名空间. 类的属性访问也会转成对该字典对象的查询, 因此`C.x`等价于`C.__dict__['x']`.
