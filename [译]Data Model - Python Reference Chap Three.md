@@ -222,4 +222,15 @@ c() # 像调用方法一样调用类实例
 
 模块的`__dict__对象`是只读的.
 
-> CPython的实现细节:
+> CPython的实现细节: 当模块不再能被访问时, 模块的字典对象会被清除(即使该字典还包含有存活对象的引用). 为了避免这种行为, 你可以复制该字典对象或者在你直接访问模块字典对象时始终保存该模块对象.
+
+预定义的一些可写属性: `__name__`是模块名称. `__doc__`是模块的文档字符串, 如果不可用则为`None`. `__file__`是模块加载的文件路径(如果它是从文件加载的话). `__file__`属性对于某些模块来时可能会缺失(missing), 比如静态链进解释器中的C模块. 对于从共享库动态加载进来的扩展模块, `__file__`则会表示该共享库的路径名.
+
+```python
+import math as m
+m.__name__ # 'math'
+m.__doc__ # 'This module is always available.  It provides access to the\nmathematical functions defined by the C standard.'
+m.__file__ # '/usr/lib/python3.4/lib-dynload/math.cpython-34m.so'
+import sys as s
+s.__file__ # AttributeError: 'module' object has no attribute '__file__'
+```
