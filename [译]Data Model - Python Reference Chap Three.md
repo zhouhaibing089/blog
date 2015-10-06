@@ -235,4 +235,4 @@ import sys as s
 s.__file__ # AttributeError: 'module' object has no attribute '__file__'
 ```
 
-**`Custom classes`**: 自定义类型一般通过类定义来创建. 类有一个通过字典对象来维护的命名空间. 类的属性访问也会转成对该字典对象的查询, 因此`C.x`等价于`C.__dict__['x']`.
+**`Custom classes`**: 自定义类型一般通过类定义来创建. 类有一个通过字典对象来维护的命名空间. 类的属性访问也会转成对该字典对象的查询, 因此`C.x`等价于`C.__dict__['x']`(虽然也有很多钩子函数(hooks)来自定义属性的查找规则). 当属性名未找到时, 查找过程会转向父类继续(使用C3方法, 该方法能正确处理菱形继承结构). 关于C3方法可以查看[https://www.python.org/download/releases/2.3/mro/](https://www.python.org/download/releases/2.3/mro/)(注: 该文译者也进行了翻译, 位于[这里](https://github.com/zhouhaibing089/Blog/blob/master/%5B%E8%AF%91%5DThe%20Python%202.3%20Method%20Resolution%20Order.md)).
