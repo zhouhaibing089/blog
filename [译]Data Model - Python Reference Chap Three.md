@@ -236,3 +236,9 @@ s.__file__ # AttributeError: 'module' object has no attribute '__file__'
 ```
 
 **`Custom classes`**: 自定义类型一般通过类定义来创建. 类有一个通过字典对象来维护的命名空间. 类的属性访问也会转成对该字典对象的查询, 因此`C.x`等价于`C.__dict__['x']`(虽然也有很多钩子函数(hooks)来自定义属性的查找规则). 当属性名未找到时, 查找过程会转向父类继续(使用C3方法, 该方法能正确处理菱形继承结构). 关于C3方法可以查看[https://www.python.org/download/releases/2.3/mro/](https://www.python.org/download/releases/2.3/mro/)(注: 该文译者也进行了翻译, 位于[这里](https://github.com/zhouhaibing089/Blog/blob/master/%5B%E8%AF%91%5DThe%20Python%202.3%20Method%20Resolution%20Order.md)).
+
+当一个类属性访问的是类方法时(class method), 他会转成一个实例方法对象(该方法的`__self__`为类本身). 当一个类属性访问的是静态方法时(static method), 他会转成另外一个包装对象. 另外, 我们可以通过描述符协议来实现另外一种属性访问方式.
+
+类的属性赋值只会更改当前类的字典, 不会影响到父类.
+
+可以通过调用类对象来创建一个类实例.
