@@ -242,3 +242,20 @@ s.__file__ # AttributeError: 'module' object has no attribute '__file__'
 类的属性赋值只会更改当前类的字典, 不会影响到父类.
 
 可以通过调用类对象来创建一个类实例.
+
+一些特殊属性: `__name__`为类名, `__module__`是该定义所在的模块, `__dict__`是包含该类名称空间的字典. `__bases__`是一个包含父类的元组(可能为空或只包含一个元素, 元素顺序与声明顺序一致), `__doc__`是类的文档字符串, 如果不可用, 为`None`
+
+```python
+class A:
+    '''demo class A'''
+    pass
+class B(A):
+    '''demo class B'''
+    pass
+A.__name__ # 'A'
+A.__module__ # '__main__'
+A.__dict__ # mappingproxy({'__module__': '__main__', '__dict__': <attribute '__dict__' of 'A' objects>, '__weakref__': <attribute '__weakref__' of 'A' objects>, '__doc__': 'demo class A'})
+A.__bases__ # (<class 'object'>,)
+A.__doc__ # 'demo class A'
+B.__bases__ # (<class '__main__.A'>,)
+```
