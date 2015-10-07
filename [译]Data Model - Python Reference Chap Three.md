@@ -271,3 +271,17 @@ B.__bases__ # (<class '__main__.A'>,)
 **`I/O objects(也被称作file objects)`**: 文件对象表示打开的文件. 有许多快捷方式来创建文件, `open()`内建函数, `os.popen()`, `os.fdopen()`, `makefile()`(用来创建套接字对象, 也可以通过扩展模块的方法来实现).
 
 `sys.stdin`, `sys.stdout`和`sys.stderr`是三个文件对象, 分别表示解释器的标准输入, 标准输出和标准错误流. 他们都是以文本模式打开的, 所以也就都遵循`io.TextIOBase`中定义的接口.
+
+**`Internal types`**: 这些类型是解释器暴露给用户的一些内部类型(internally). 它们的定义可能在将来的版本中做些调整, 它们在这被提及仅仅是为了本文档的完整性.
+
+*   **`Code objects`**: 代码对象表示字节编译(*byte-compiled*)的可执行Python代码, 也可称为字节码(*bytecode*). 代码对象和函数对象的区别在于函数对象包含一个显式的指向globals的引用, 而代码对象是不包含上下文的, 另外的, 默认参数值存储在函数对象中, 而不在代码对象中(因为它们代表运行时计算的值). 与函数对象不同的是, 代码对象是不可变的, 而且它也不包含(直接或间接)任何指向可变对象的引用.
+
+一些特殊的只读属性: `co_name`给出函数的名称, `co_argument`是位置参数(positional arguments)的数量(包括带默认值的参数). `co_nlocals`是函数使用的局部变量的数量(包括参数). `co_varnames`是包含所有局部变量名称的元组. `co_cellvars`是包含所有被内部函数(nested functions)引用的局部变量名称的元组. `co_freevars`是包含自由变量名称的元组. `co_code`是字节码指令的字符串表示. `co_consts`是包含字节码中所使用的所有字面量的元组. `co_names`是字节码中所使用的名称的元组. `co_filename`表示该字节码是从哪个文件编译而来. `co_firstlineno`是函数的第一行编号. `co_lnotab`是一个字符串, 表示字节码偏移到行数的映射. `co_stacksize`表示需要的栈的大小(包括局部变量). `co_flags`是一个整数, 表示关于解释器的一些标记.
+
+下面是一些可以用于`co_flags`的标记位. `0x04`表示该函数使用了`*arguments`语法来接受任意多的位置参数. `0x08`表示该函数使用了`**arguments`语法来接受任意多的关键字参数. `0x20`表示该函数是一个生成器(generator).
+
+Future特征声明(`from __future__ import division`)也使用了`co_flags`. 它用来表示该代码对象是在启用了特定功能的情况下编译的. `0x2000`表示该函数启用了future division. `0x10`和`0x1000`在早期的Python版本中也有用到.
+
+关于`co_flags`的其他位被保留以供内部使用.
+
+如果代码对象表示一个函数, 那么`co_consts`的第一项表示该函数的文档字符串, 如果未定义, 则为`None`. 
