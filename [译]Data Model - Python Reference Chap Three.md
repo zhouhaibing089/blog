@@ -276,7 +276,7 @@ B.__bases__ # (<class '__main__.A'>,)
 
 *   **`Code objects`**: 代码对象表示字节编译(*byte-compiled*)的可执行Python代码, 也可称为字节码(*bytecode*). 代码对象和函数对象的区别在于函数对象包含一个显式的指向globals的引用, 而代码对象是不包含上下文的, 另外的, 默认参数值存储在函数对象中, 而不在代码对象中(因为它们代表运行时计算的值). 与函数对象不同的是, 代码对象是不可变的, 而且它也不包含(直接或间接)任何指向可变对象的引用.
 
-一些特殊的只读属性: `co_name`给出函数的名称, `co_argument`是位置参数(positional arguments)的数量(包括带默认值的参数). `co_nlocals`是函数使用的局部变量的数量(包括参数). `co_varnames`是包含所有局部变量名称的元组. `co_cellvars`是包含所有被内部函数(nested functions)引用的局部变量名称的元组. `co_freevars`是包含自由变量名称的元组. `co_code`是字节码指令的字符串表示. `co_consts`是包含字节码中所使用的所有字面量的元组. `co_names`是字节码中所使用的名称的元组. `co_filename`表示该字节码是从哪个文件编译而来. `co_firstlineno`是函数的第一行编号. `co_lnotab`是一个字符串, 表示字节码偏移到行数的映射. `co_stacksize`表示需要的栈的大小(包括局部变量). `co_flags`是一个整数, 表示关于解释器的一些标记.
+一些特殊的只读属性: `co_name`给出函数的名称, `co_argcount`是位置参数(positional arguments)的数量(包括带默认值的参数). `co_nlocals`是函数使用的局部变量的数量(包括参数). `co_varnames`是包含所有局部变量名称的元组. `co_cellvars`是包含所有被内部函数(nested functions)引用的局部变量名称的元组. `co_freevars`是包含自由变量名称的元组. `co_code`是字节码指令的字符串表示. `co_consts`是包含字节码中所使用的所有字面量的元组. `co_names`是字节码中所使用的名称的元组. `co_filename`表示该字节码是从哪个文件编译而来. `co_firstlineno`是函数的第一行编号. `co_lnotab`是一个字符串, 表示字节码偏移到行数的映射. `co_stacksize`表示需要的栈的大小(包括局部变量). `co_flags`是一个整数, 表示关于解释器的一些标记.
 
 下面是一些可以用于`co_flags`的标记位. `0x04`表示该函数使用了`*arguments`语法来接受任意多的位置参数. `0x08`表示该函数使用了`**arguments`语法来接受任意多的关键字参数. `0x20`表示该函数是一个生成器(generator).
 
@@ -284,4 +284,32 @@ Future特征声明(`from __future__ import division`)也使用了`co_flags`. 它
 
 关于`co_flags`的其他位被保留以供内部使用.
 
-如果代码对象表示一个函数, 那么`co_consts`的第一项表示该函数的文档字符串, 如果未定义, 则为`None`. 
+如果代码对象表示一个函数, 那么`co_consts`的第一项表示该函数的文档字符串, 如果未定义, 则为`None`.
+
+```python
+# 译者给出的示例
+def f(a, b=1, *c, d=2, **e):
+     '''demo function'''
+     g=1
+     def h():
+         i = g + 1
+         return i
+    return h
+c = f.__code__ # 取得代码对象
+c.co_name # 'f'
+c.co_argcount # 2
+c.co_nlocals # 6
+c.co_varnames # ('a', 'b', 'd', 'c', 'e', 'h')
+c.co_cellvars # ('g',)
+c.co_freevars # ()
+c.co_code # b'd\x01\x00\x89\x00\x00\x87\x00\x00f\x01\x00d\x02\x00d\x03\x00\x86\x00\x00}\x05\x00|\x05\x00S'
+c.co_consts # ('demo function', 1, <code object h at 0x7f13cfc62d20, file "<stdin>", line 4>, 'f.<locals>.h')
+c.co_names # ()
+c.co_filename # '<stdin>'
+c.co_firstlineno # 1
+c.co_lnotab # b'\x00\x02\x06\x01\x12\x03'
+c.co_stacksize # 3
+c.co_flags # 15
+h = f(1)
+h.__code__.co_freevars # ('g',)
+```
