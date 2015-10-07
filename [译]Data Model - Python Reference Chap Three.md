@@ -316,7 +316,7 @@ h.__code__.co_freevars # ('g',)
 
 *   **`Frame objects`**: Frame对象表示执行Frame. 它可能出现在Traceback对象中.
 
-特殊的只读属性: `f_back`表示前一个栈帧(stack frame, 指向调用者). 如果已经在栈底, 则为`None`. `f_code`表示当前栈帧中的可执行代码对象. `f_locals`是一个用来查询局部变量的字典.    `f_globals`是一个用来存储全局变量的. `f_builtins`用来查询内建的名称(built-in names). `f_lasti`给出精确的上一个指令(它是一个索引, 指向代码对象的指令字符串的某个位置).
+特殊的只读属性: `f_back`表示前一个栈帧(stack frame, 指向调用者). 如果已经在栈底, 则为`None`. `f_code`表示当前栈帧中的可执行代码对象. `f_locals`是一个用来查询局部变量的字典.    `f_globals`是用来存储全局变量的. `f_builtins`用来查询内建的名称(built-in names). `f_lasti`给出精确的上一个指令(它是一个索引, 指向代码对象的指令字符串的某个位置).
 
 特殊的可写属性: `f_trace`, 如果不是`None`的话, 则表示在每行源代码执行之前都会调用的一个函数. `f_lineno`表示帧中的当前代码行数, 在trace函数中设置该变量可以使执行跳转到指定的行数. 调试器可以通过设置此变量来实现跳转命令(jump command).
 
