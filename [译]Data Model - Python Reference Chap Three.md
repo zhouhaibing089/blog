@@ -335,7 +335,7 @@ def f():
         raise ValueError
 f()
 # Traceback (most recent call last):
-#  File "<stdin>", line 3, in f
+#   File "<stdin>", line 3, in f
 # ZeroDivisionError: division by zero
 #
 # During handling of the above exception, another exception occurred:
@@ -354,4 +354,36 @@ t1.tb_lasti # 3
 t2.tb_lasti # 31
 t1.tb_lineno == t1.tb_frame.f_lineno # True
 t2.tb_lineno == t2.tb_frame.f_lineno # True
+```
+
+*   **`Slice objects`**: slice对象用来表示`__getitem__()`方法中的切片对象. 它们也可以通过内建函数`slice()`来创建.
+
+特殊的只读属性: `start`表示下界, `stop`表示上界, `step`表示步长, 如果未指定, 则为`None`. 这些属性可以为任意类型.
+
+切片对象只支持一个方法: `slice.indices(self, length)`, 这个方法接收一个整数参数`len`, 然后计算出该切片对象应用到长度为`len`的序列时的相关信息. 它返回长度为3的元组, 对应于`start`, `stop`和`step`. 缺失(missing)或者越界(out-of-bounds)与常规使用切片对象的行为一致.
+
+```python
+s = slice(1, 6, 1)
+s.start # 1
+s.stop # 6
+s.step # 1
+s.indices(10) # (1, 6, 1)
+s.indices(4) # (1, 4, 1)
+```
+
+*   **`Static method objects`**: 静态方法对象提供了一种将函数对象转成方法对象的方式. 一个静态方法对象通常是对用户自定义函数的包装. 当我们通过类或者类实例访问静态方法对象时,实际上返回的是一个包装对象. 该对象不会再被做任何转换(transformation). 静态方法对象所包装的对象通常是可调用的, 但其本身是不可调用的. 静态方法对象由内建构造方法`staticmethod()`创建.
+
+```python
+def f(a, b):
+    return a + b
+sf = staticmethod(f)
+sf(1, 2)
+# Traceback (most recent call last):
+#   File "<stdin>", line 1, in <module>
+# TypeError: 'staticmethod' object is not callable
+sf # <staticmethod object at 0x7fbe831f0668>
+class A:
+    pass
+A.f = sf
+A.f(1, 2) # 3
 ```
