@@ -327,6 +327,7 @@ h.__code__.co_freevars # ('g',)
 特殊的只读属性: `tb_next`是回溯栈的下一级(朝向异常发生的帧), 如果没有, 则为`None`. `tb_frame`指向当前级的执行帧. `tb_lineno`表示异常发生所在的行数. `tb_lasti`表示发生异常的指令. 如果异常发生在没有`except`或`finally`的`try`语句中, `tb_lineno`和`tb_lasti`与`tb_frame`对象中的行数可能会不一样.
 
 ```python
+# 译者给出的示例
 import sys
 def f():
     try:
@@ -363,6 +364,7 @@ t2.tb_lineno == t2.tb_frame.f_lineno # True
 切片对象只支持一个方法: `slice.indices(self, length)`, 这个方法接收一个整数参数`len`, 然后计算出该切片对象应用到长度为`len`的序列时的相关信息. 它返回长度为3的元组, 对应于`start`, `stop`和`step`. 缺失(missing)或者越界(out-of-bounds)与常规使用切片对象的行为一致.
 
 ```python
+# 译者给出的示例
 s = slice(1, 6, 1)
 s.start # 1
 s.stop # 6
@@ -374,6 +376,7 @@ s.indices(4) # (1, 4, 1)
 *   **`Static method objects`**: 静态方法对象提供了一种将函数对象转成方法对象的方式. 一个静态方法对象通常是对用户自定义函数的包装. 当我们通过类或者类实例访问静态方法对象时,实际上返回的是一个包装对象. 该对象不会再被做任何转换(transformation). 静态方法对象所包装的对象通常是可调用的, 但其本身是不可调用的. 静态方法对象由内建构造方法`staticmethod()`创建.
 
 ```python
+# 译者给出的示例
 def f(a, b):
     return a + b
 sf = staticmethod(f)
@@ -386,4 +389,19 @@ class A:
     pass
 A.f = sf
 A.f(1, 2) # 3
+```
+
+*   **`Class method objects`**: 类方法对象, 和静态方法对象类似, 也是对另外一个对象的包装, 并且当该对象通过类或者类实例访问时, 修改其默认行为. 关于类方法的行为已在上文进行过描述. 类方法对象可以通过内建构造方法`classmethod()`创建.
+
+```python
+# 译者给出的示例
+def f(cls, a, b):
+    return a + b
+cf = classmethod(f)
+class A:
+    pass
+A.f = cf
+A.f(1, 2) # 3
+a = A()
+a.f(1, 2) # 3
 ```
