@@ -325,3 +325,33 @@ h.__code__.co_freevars # ('g',)
 *   **`Traceback objects`**: 该对象表示发生异常时的回溯栈. trackback对象在发生异常时创建. 当搜寻异常处理器unwinds执行栈时, 在每个unwind层级都会在当前traceback之前插入一个新的traceback对象. 当异常处理器执行时, 程序可以获取回溯栈对象(`sys.exc_info`返回的元组里的第三个元素). 当程序并没有恰当的异常处理器时, 回溯栈会被打印到标准错误流中. 当用户使用交互式解释器时, 回溯栈对象也可通过`sys.last_traceback`对象获得.
 
 特殊的只读属性: `tb_next`是回溯栈的下一级(朝向异常发生的帧), 如果没有, 则为`None`. `tb_frame`指向当前级的执行帧. `tb_lineno`表示异常发生所在的行数. `tb_lasti`表示发生异常的指令. 如果异常发生在没有`except`或`finally`的`try`语句中, `tb_lineno`和`tb_lasti`与`tb_frame`对象中的行数可能会不一样.
+
+```python
+import sys
+def f():
+    try:
+        1 / 0
+    except ZeroDivisionError:
+        raise ValueError
+f()
+# Traceback (most recent call last):
+#  File "<stdin>", line 3, in f
+# ZeroDivisionError: division by zero
+#
+# During handling of the above exception, another exception occurred:
+
+# Traceback (most recent call last):
+#   File "<stdin>", line 1, in <module>
+#   File "<stdin>", line 5, in f
+# ValueError
+t1 = sys.last_traceback # the ValueError traceback
+t2 = t1.tb_next # the ZeroDivisionError traceback
+t1.tb_frame # <frame object at 0x7fbe832efba8>
+t2.tb_frame # <frame object at 0x7fbe832eabe8>
+t1.tb_lineno # 1
+t2.tb_lineno # 5
+t1.tb_lasti # 3
+t2.tb_lasti # 31
+t1.tb_lineno == t1.tb_frame.f_lineno # True
+t2.tb_lineno == t2.tb_frame.f_lineno # True
+```
