@@ -103,7 +103,7 @@ Python将数值区分为三种子类型: 整数(integers), 浮点数(floating po
 | `__kwdefaults__`  | 仅存储关键字参数(keyword-only)的默认值字典                              | 可写  |
 
 ```python
-# 译者自己加上的示例:
+# 译者给出的示例:
 def f(a, b=1, *c, d=2):
     '''
     function documentation
@@ -146,7 +146,7 @@ f(0).__closure__[0].cell_contents # 3
 当我们从类或类实例访问类方法(class method)时, 该方法的`__self__`为类本身. 类方法的`__func__`属性为原函数对象.
 
 ```python
-# 上面这几句话需要解释一下(非原文, 译者加上的):
+# 译者给出的示例
 class A:
     def f(self):
         pass
@@ -186,7 +186,7 @@ A.cf.__self__ == A # True
 *   **`Class Instances`**: 如果该类实例有`__call__`方法的话, 那么该类实例也是可以调用的.
 
 ```python
-# 译者自己加上的示例
+# 译者给出的示例
 # Generator Functions
 def fibo(n):
     a, b = 0, 1
@@ -227,6 +227,7 @@ c() # 像调用方法一样调用类实例
 预定义的一些可写属性: `__name__`是模块名称. `__doc__`是模块的文档字符串, 如果不可用则为`None`. `__file__`是模块加载的文件路径(如果它是从文件加载的话). `__file__`属性对于某些模块来时可能会缺失(missing), 比如静态链进解释器中的C模块. 对于从共享库动态加载进来的扩展模块, `__file__`则会表示该共享库的路径名.
 
 ```python
+# 译者给出的示例
 import math as m
 m.__name__ # 'math'
 m.__doc__ # 'This module is always available.  It provides access to the\nmathematical functions defined by the C standard.'
@@ -246,6 +247,7 @@ s.__file__ # AttributeError: 'module' object has no attribute '__file__'
 一些特殊属性: `__name__`为类名, `__module__`是该定义所在的模块, `__dict__`是包含该类名称空间的字典. `__bases__`是一个包含父类的元组(可能为空或只包含一个元素, 元素顺序与声明顺序一致), `__doc__`是类的文档字符串, 如果不可用, 为`None`
 
 ```python
+# 译者给出的示例
 class A:
     '''demo class A'''
     pass
