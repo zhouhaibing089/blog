@@ -469,3 +469,15 @@ object.__bytes__(self)
 ```
 
 内建构造方法`bytes()`会调用对象的这个方法来计算该对象的字节字符串(byte-string)表示. 返回值是一个`bytes`对象.
+
+```python
+object.__format__(self, format_spec)
+```
+
+内建函数`format()`以及`str`的扩展方法`str.format()`会调用此方法来产生一个格式化的字符串. `format_spec`是一个字符串参数, 它包含了期望的格式化选项的信息. 对`format_spec`参数的解析由实现了`__format__()`方法的类型决定. 大部分实现基本都要不是委托(delegate)给内建类型, 要不就是使用类似的格式化选项语法.
+
+[formatspec](http://www.baidu.com)[还未翻译到对应章节]有关于标准格式化语法的描述.
+
+返回值必须是字符串类型.
+
+> Python3.4中的改动: 如果`object`的`__format__()`方法接收了任意非空字符串, 它会抛出了`TypeError`异常.
