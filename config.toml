@@ -1,0 +1,4 @@
+baseURL = "https://blog.zhouhaibing.com/"
+languageCode = "en-us"
+title = "Blog"
+theme = "ananke"
