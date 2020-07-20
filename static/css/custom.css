@@ -1,6 +1,27 @@
 @font-face {
     font-family: "myserif";
-    src: url("bookerly.ttf");
+    font-style: normal;
+    src: url("bookerly.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "myserif";
+    font-style: italic;
+    src: url("bookerly-italic.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "myserif";
+    font-style: normal;
+    font-weight: bold;
+    src: url("bookerly-bold.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "myserif";
+    font-style: italic;
+    font-weight: bold;
+    src: url("bookerly-italic-bold.ttf") format('truetype');
 }
 
 .serif {
