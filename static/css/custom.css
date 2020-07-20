@@ -24,6 +24,36 @@
     src: url("bookerly-italic-bold.ttf") format('truetype');
 }
 
-.serif {
+@font-face {
+    font-family: "mysans";
+    font-style: normal;
+    src: url("opensans.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "mysans";
+    font-style: italic;
+    src: url("opensans-italic.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "mysans";
+    font-style: normal;
+    font-weight: bold;
+    src: url("opensans-bold.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "mysans";
+    font-style: italic;
+    font-weight: bold;
+    src: url("opensans-italic-bold.ttf") format('truetype');
+}
+
+.serif, .athelas {
     font-family: myserif;
+}
+
+.helvetica, .avenir {
+    font-family: mysans;
 }
