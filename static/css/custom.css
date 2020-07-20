@@ -1,8 +1,8 @@
 @font-face {
-    font-family: "bookerly";
-    src: url("fonts/bookerly.ttf");
+    font-family: "myserif";
+    src: url("bookerly.ttf");
 }
 
 .serif {
-    font-family: bookerly;
+    font-family: myserif;
 }
