@@ -2,3 +2,6 @@ baseURL = "https://blog.zhouhaibing.com/"
 languageCode = "en-us"
 title = "Blog"
 theme = "ananke"
+
+[params]
+  custom_css = ["css/custom.css"]

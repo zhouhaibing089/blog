@@ -1,0 +1,8 @@
+@font-face {
+    font-family: "bookerly";
+    src: url("fonts/bookerly.ttf");
+}
+
+.serif {
+    font-family: bookerly;
+}

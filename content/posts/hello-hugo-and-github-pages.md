@@ -16,8 +16,8 @@ With the move into Github Pages, I now feel more confortable to write since:
 1. This is now https enabled.
 1. Posts can be written in Markdown, and is properly versioned with Git.
 
-As always, I know that building a site is easy, but producing good content is
+_As always, I know that building a site is easy, but producing good content is
 hard. This is not just for people who are interested in my writtings, but for
-myself, too.
+myself, too._
 
 [1]: http://www.zhouhaibing.com
