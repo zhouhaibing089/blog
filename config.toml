@@ -2,6 +2,7 @@ baseURL = "https://blog.zhouhaibing.com/"
 languageCode = "en-us"
 title = "Blog"
 theme = "ananke"
+pygmentsUseClasses = true
 
 [params]
-  custom_css = ["css/custom.css"]
+  custom_css = ["css/custom.css", "css/syntax.css"]

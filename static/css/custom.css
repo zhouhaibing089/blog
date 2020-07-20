@@ -57,3 +57,7 @@
 .helvetica, .avenir {
     font-family: mysans;
 }
+
+.w-two-thirds-l {
+    width: 100%;
+}
