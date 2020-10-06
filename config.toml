@@ -3,6 +3,7 @@ languageCode = "en-us"
 title = "Blog"
 theme = "ananke"
 pygmentsUseClasses = true
+disqusShortname = "zhouhaibing089"
 
 [params]
   custom_css = ["css/custom.css", "css/syntax.css"]
