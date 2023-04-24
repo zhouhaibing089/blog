@@ -1,0 +1,63 @@
+@font-face {
+    font-family: "myserif";
+    font-style: normal;
+    src: url("bookerly.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "myserif";
+    font-style: italic;
+    src: url("bookerly-italic.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "myserif";
+    font-style: normal;
+    font-weight: bold;
+    src: url("bookerly-bold.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "myserif";
+    font-style: italic;
+    font-weight: bold;
+    src: url("bookerly-italic-bold.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "mysans";
+    font-style: normal;
+    src: url("opensans.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "mysans";
+    font-style: italic;
+    src: url("opensans-italic.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "mysans";
+    font-style: normal;
+    font-weight: bold;
+    src: url("opensans-bold.ttf") format('truetype');
+}
+
+@font-face {
+    font-family: "mysans";
+    font-style: italic;
+    font-weight: bold;
+    src: url("opensans-italic-bold.ttf") format('truetype');
+}
+
+.serif, .athelas {
+    font-family: myserif;
+}
+
+.helvetica, .avenir {
+    font-family: mysans;
+}
+
+.w-two-thirds-l {
+    width: 100%;
+}
