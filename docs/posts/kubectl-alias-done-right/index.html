@@ -31,7 +31,7 @@
     
     
     <meta property="og:title" content="kubectl alias done right" />
-<meta property="og:description" content="It is not uncommon to see people having an alias for kubectl to save few keystrokes. It is admittedly useful, but I find it is not easy to do it correctly.
+<meta property="og:description" content="It is not uncommon to see people having an alias for kubectl to save few keystrokes. It is admittedly useful, but I find it is not easy to get it right.
 Let&rsquo;s start from the basic form:
 # ${HOME}/.zshrc alias k=kubectl This is what I get when I have my laptop configured by the company automation tool. If you are satisfied with it, then you probably can close this page." />
 <meta property="og:type" content="article" />
@@ -39,14 +39,14 @@ Let&rsquo;s start from the basic form:
 <meta property="article:published_time" content="2023-04-23T21:06:00-07:00" />
 <meta property="article:modified_time" content="2023-04-23T21:06:00-07:00" />
 <meta itemprop="name" content="kubectl alias done right">
-<meta itemprop="description" content="It is not uncommon to see people having an alias for kubectl to save few keystrokes. It is admittedly useful, but I find it is not easy to do it correctly.
+<meta itemprop="description" content="It is not uncommon to see people having an alias for kubectl to save few keystrokes. It is admittedly useful, but I find it is not easy to get it right.
 Let&rsquo;s start from the basic form:
 # ${HOME}/.zshrc alias k=kubectl This is what I get when I have my laptop configured by the company automation tool. If you are satisfied with it, then you probably can close this page."><meta itemprop="datePublished" content="2023-04-23T21:06:00-07:00" />
 <meta itemprop="dateModified" content="2023-04-23T21:06:00-07:00" />
-<meta itemprop="wordCount" content="604">
+<meta itemprop="wordCount" content="634">
 <meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="kubectl alias done right"/>
-<meta name="twitter:description" content="It is not uncommon to see people having an alias for kubectl to save few keystrokes. It is admittedly useful, but I find it is not easy to do it correctly.
+<meta name="twitter:description" content="It is not uncommon to see people having an alias for kubectl to save few keystrokes. It is admittedly useful, but I find it is not easy to get it right.
 Let&rsquo;s start from the basic form:
 # ${HOME}/.zshrc alias k=kubectl This is what I get when I have my laptop configured by the company automation tool. If you are satisfied with it, then you probably can close this page."/>
 
@@ -145,8 +145,8 @@ Let&rsquo;s start from the basic form:
       
     </header>
     <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p>It is not uncommon to see people having an alias for <code>kubectl</code> to save few
-keystrokes. It is admittedly useful, but I find it is not easy to do it
-correctly.</p>
+keystrokes. It is admittedly useful, but I find it is not easy to get it
+right.</p>
 <p>Let&rsquo;s start from the basic form:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># ${HOME}/.zshrc</span>
 </span></span><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">k</span><span class="o">=</span>kubectl
@@ -170,34 +170,33 @@ switch becomes a window switch:</p>
 the current context I&rsquo;m operating on. But wait, won&rsquo;t you be able to solve this
 by enabling <code>kube-ps1</code> zsh plugin which shows the current context name.</p>
 <p>There are two issues with <code>kube-ps1</code>. For one, it is still painful to switch
-contexts even though you get a little bit of visual feedback. However, the more
-tricky issue is, you may still end up with using an incorrect context name. It
-is not unusual to work on multiple panels, and if you switched context from one
-panel, and then switched to another panel, you may forget that the prompt you
-see is no longer correct.</p>
+contexts even though I get a little bit of visual feedback. However, the more
+tricky issue is, I may still end up with using an incorrect context name. I
+typically work on multiple tmux windows / panels, and if I switched context from
+one window, and then when I start to work on a different window, chances are
+that I may forget that the prompt I see is actually no longer correct.</p>
 <p>Let&rsquo;s come back to this again:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">alias</span> <span class="nv">k</span><span class="o">=</span><span class="s2">&#34;kubectl --context=</span><span class="si">${</span><span class="nv">wname</span><span class="si">}</span><span class="s2">&#34;</span>
 </span></span></code></pre></div><p>It is great that now I have an alias per tmux window, but there is a problem in
 it - It doesn&rsquo;t work with kubectl plugin because the plugin name is supposedly
 to follow <code>kubectl</code> immediately.</p>
-<p>The solution to this situation is that we can move <code>--context=${wname}</code> to the
+<p>The solution to this situation is that I should move <code>--context=${wname}</code> to the
 end:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="k">function</span> k<span class="o">()</span> <span class="o">{</span>
 </span></span><span class="line"><span class="cl">  kubectl <span class="nv">$@</span> --context<span class="o">=</span><span class="si">${</span><span class="nv">wname</span><span class="si">}</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
 </span></span></code></pre></div><p>Here, instead of using an alias, I defined a function <code>k</code> which I can make sure
-<code>--context=${wname}</code> is appended at the end so that kubectl plugins can still
-work.</p>
+<code>--context=${wname}</code> appears at the end so that kubectl plugins can still work.</p>
 <p>As a side note, I observed that people just create another alias for kubectl
 plugins like <code>alias kshell=kubectl shell</code>.</p>
 <p>I have been happy with this <code>k</code> function for a long time, until recently it
 failed for me in this case:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="gp">$</span> k <span class="nb">exec</span> -it &lt;pod&gt; -c &lt;container&gt; -- bash
-</span></span></code></pre></div><p>This doesn&rsquo;t work and fails in a pretty bad way because it ends up with
+</span></span></code></pre></div><p>This didn&rsquo;t work and failed in a pretty bad way because it ended up with
 executing something like below:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="gp">$</span> kubectl <span class="nb">exec</span> -it &lt;pod&gt; -c &lt;container&gt; -- bash --context<span class="o">=</span><span class="si">${</span><span class="nv">wname</span><span class="si">}</span>
-</span></span></code></pre></div><p>This command doesn&rsquo;t specify a context name at all, and the <code>--context=${wname}</code>
-parameter actually becomes the parameter of <code>bash</code>.</p>
+</span></span></code></pre></div><p>This command didn&rsquo;t specify a context name at all, and the <code>--context=${wname}</code>
+parameter actually became the parameter of <code>bash</code>.</p>
 <p>The flaw is that we can&rsquo;t just put <code>--context=${wname}</code> at the end because there
 are cases where it doesn&rsquo;t make sense. The right place should be right before
 <code>--</code> instead.</p>
@@ -223,10 +222,12 @@ are cases where it doesn&rsquo;t make sense. The right place should be right bef
 </span></span><span class="line"><span class="cl">    kubectl <span class="si">${</span><span class="nv">KUBECTL_ARGS_1</span><span class="si">}</span> --context<span class="o">=</span><span class="si">${</span><span class="nv">wname</span><span class="si">}</span>
 </span></span><span class="line"><span class="cl">  <span class="k">fi</span>
 </span></span><span class="line"><span class="cl"><span class="o">}</span>
-</span></span></code></pre></div><p>Maybe there are more cases where it may fail, but so far this is the version
+</span></span></code></pre></div><p>In this case, I&rsquo;m traversing all the parameters and find where <code>--</code> is, and then
+put <code>--context=${wname}</code> right in the middle.</p>
+<p>Maybe there are more cases where it may fail, but so far this is the version
 which works for me in a lot of situations.</p>
 <p>By sharing this little story, I think it is clear that a simple thing may not
-actually be simple as you thought, and there are always complexities with it.</p>
+actually be as simple as you thought, and there are always complexities with it.</p>
 <ul class="pa0">
   
 </ul>

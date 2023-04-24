@@ -5,8 +5,8 @@ draft: false
 ---
 
 It is not uncommon to see people having an alias for `kubectl` to save few
-keystrokes. It is admittedly useful, but I find it is not easy to do it
-correctly.
+keystrokes. It is admittedly useful, but I find it is not easy to get it
+right.
 
 Let's start from the basic form:
 
@@ -45,22 +45,23 @@ the current context I'm operating on. But wait, won't you be able to solve this
 by enabling `kube-ps1` zsh plugin which shows the current context name.
 
 There are two issues with `kube-ps1`. For one, it is still painful to switch
-contexts even though you get a little bit of visual feedback. However, the more
-tricky issue is, you may still end up with using an incorrect context name. It
-is not unusual to work on multiple panels, and if you switched context from one
-panel, and then switched to another panel, you may forget that the prompt you
-see is no longer correct.
+contexts even though I get a little bit of visual feedback. However, the more
+tricky issue is, I may still end up with using an incorrect context name. I
+typically work on multiple tmux windows / panels, and if I switched context from
+one window, and then when I start to work on a different window, chances are
+that I may forget that the prompt I see is actually no longer correct.
 
 Let's come back to this again:
 
 ```bash
 alias k="kubectl --context=${wname}"
 ```
+
 It is great that now I have an alias per tmux window, but there is a problem in
 it - It doesn't work with kubectl plugin because the plugin name is supposedly
 to follow `kubectl` immediately.
 
-The solution to this situation is that we can move `--context=${wname}` to the
+The solution to this situation is that I should move `--context=${wname}` to the
 end:
 
 ```bash
@@ -70,8 +71,7 @@ function k() {
 ```
 
 Here, instead of using an alias, I defined a function `k` which I can make sure
-`--context=${wname}` is appended at the end so that kubectl plugins can still
-work.
+`--context=${wname}` appears at the end so that kubectl plugins can still work.
 
 As a side note, I observed that people just create another alias for kubectl
 plugins like `alias kshell=kubectl shell`.
@@ -83,15 +83,15 @@ failed for me in this case:
 $ k exec -it <pod> -c <container> -- bash
 ```
 
-This doesn't work and fails in a pretty bad way because it ends up with
+This didn't work and failed in a pretty bad way because it ended up with
 executing something like below:
 
 ```console
 $ kubectl exec -it <pod> -c <container> -- bash --context=${wname}
 ```
 
-This command doesn't specify a context name at all, and the `--context=${wname}`
-parameter actually becomes the parameter of `bash`.
+This command didn't specify a context name at all, and the `--context=${wname}`
+parameter actually became the parameter of `bash`.
 
 The flaw is that we can't just put `--context=${wname}` at the end because there
 are cases where it doesn't make sense. The right place should be right before
@@ -122,8 +122,11 @@ function k() {
 }
 ```
 
+In this case, I'm traversing all the parameters and find where `--` is, and then
+put `--context=${wname}` right in the middle.
+
 Maybe there are more cases where it may fail, but so far this is the version
 which works for me in a lot of situations.
 
 By sharing this little story, I think it is clear that a simple thing may not
-actually be simple as you thought, and there are always complexities with it.
+actually be as simple as you thought, and there are always complexities with it.

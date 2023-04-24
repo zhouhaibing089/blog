@@ -13,7 +13,7 @@
       <pubDate>Sun, 23 Apr 2023 21:06:00 -0700</pubDate>
       
       <guid>https://blog.zhouhaibing.com/posts/kubectl-alias-done-right/</guid>
-      <description>It is not uncommon to see people having an alias for kubectl to save few keystrokes. It is admittedly useful, but I find it is not easy to do it correctly.
+      <description>It is not uncommon to see people having an alias for kubectl to save few keystrokes. It is admittedly useful, but I find it is not easy to get it right.
 Let&amp;rsquo;s start from the basic form:
 # ${HOME}/.zshrc alias k=kubectl This is what I get when I have my laptop configured by the company automation tool. If you are satisfied with it, then you probably can close this page.</description>
     </item>
