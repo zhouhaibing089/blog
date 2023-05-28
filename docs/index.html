@@ -130,6 +130,32 @@
       
       <div class="blah w-100">
         <h1 class="f3 fw1 athelas mt0 lh-title">
+          <a href="https://blog.zhouhaibing.com/posts/race-condition-between-kube-proxy-and-cilium/" class="color-inherit dim link">
+            Race condition between kube-proxy and cilium
+            </a>
+        </h1>
+        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
+          This is an investigation story where all pods on one host lost connectivity to external service. It looks like something below:
+$ nsenter --net=/proc/29080/ns/net curl docs.cilium.io -v &gt; GET / HTTP/1.1 &gt; Host: docs.cilium.io &gt; User-Agent: curl/7.79.1 &gt; Accept: */* &gt; Here 29080 is the pid of some pod process, and it appeared that TCP connection has been established, but somehow it couldn&rsquo;t receive any response.
+About the cluster The cluster was set up like something below:
+        </div>
+          <a href="https://blog.zhouhaibing.com/posts/race-condition-between-kube-proxy-and-cilium/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
+        
+      </div>
+    </div>
+  </div>
+</article>
+
+          </div>
+        
+          <div class="relative w-100 mb4">
+            
+<article class="bb b--black-10">
+  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
+    <div class="flex flex-column flex-row-ns">
+      
+      <div class="blah w-100">
+        <h1 class="f3 fw1 athelas mt0 lh-title">
           <a href="https://blog.zhouhaibing.com/posts/kubectl-alias-done-right/" class="color-inherit dim link">
             kubectl alias done right
             </a>
@@ -178,39 +204,18 @@ Sabaki: 一个基于eletron的桌面围棋应用, 跨平台. gnugo: 机器玩家
 
           </div>
         
-          <div class="relative w-100 mb4">
-            
-<article class="bb b--black-10">
-  <div class="db pv4 ph3 ph0-l no-underline dark-gray">
-    <div class="flex flex-column flex-row-ns">
-      
-      <div class="blah w-100">
-        <h1 class="f3 fw1 athelas mt0 lh-title">
-          <a href="https://blog.zhouhaibing.com/posts/a-story-about-deleteoptions/" class="color-inherit dim link">
-            A Story about DeleteOptions
-            </a>
-        </h1>
-        <div class="f6 f5-l lh-copy nested-copy-line-height nested-links">
-          Note: The issue has been fixed in https://github.com/kubernetes/kubernetes/pull/76051.
-Today, I want to share a story about object deletion in kubernetes federation. This leads to a better understanding on how object deletion works in kubernetes, and I believe this may help others to understand it as well.
-It all starts with a support request:
-When I delete my namespace on federation, the same namespace in member cluster is not deleted, however, cascade deletion does happen for all other resources like configmaps.
-        </div>
-          <a href="https://blog.zhouhaibing.com/posts/a-story-about-deleteoptions/" class="ba b--moon-gray bg-light-gray br2 color-inherit dib f7 hover-bg-moon-gray link mt2 ph2 pv1">read more</a>
-        
-      </div>
-    </div>
-  </div>
-</article>
-
-          </div>
-        
       </section>
 
       
       <section class="w-100">
         <h1 class="f3">More</h1>
         
+        
+          <h2 class="f5 fw4 mb4 dib mr3">
+            <a href="https://blog.zhouhaibing.com/posts/a-story-about-deleteoptions/" class="link black dim">
+              A Story about DeleteOptions
+            </a>
+          </h2>
         
           <h2 class="f5 fw4 mb4 dib mr3">
             <a href="https://blog.zhouhaibing.com/posts/why-keep-running-as-a-habbit/" class="link black dim">

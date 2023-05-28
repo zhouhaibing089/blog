@@ -104,6 +104,23 @@
   <div class="bg-white mb3 pa4 gray overflow-hidden">
     <span class="f6 db">Posts</span>
     <h1 class="f3 near-black">
+      <a href="https://blog.zhouhaibing.com/posts/race-condition-between-kube-proxy-and-cilium/" class="link black dim">
+        Race condition between kube-proxy and cilium
+      </a>
+    </h1>
+    <div class="nested-links f5 lh-copy nested-copy-line-height">
+      This is an investigation story where all pods on one host lost connectivity to external service. It looks like something below:
+$ nsenter --net=/proc/29080/ns/net curl docs.cilium.io -v &gt; GET / HTTP/1.1 &gt; Host: docs.cilium.io &gt; User-Agent: curl/7.79.1 &gt; Accept: */* &gt; Here 29080 is the pid of some pod process, and it appeared that TCP connection has been established, but somehow it couldn&rsquo;t receive any response.
+About the cluster The cluster was set up like something below:
+    </div>
+  </div>
+</div>
+</div>
+      
+        <div class="relative w-100 w-30-l mb4 bg-white"><div class="relative w-100 mb4 bg-white nested-copy-line-height">
+  <div class="bg-white mb3 pa4 gray overflow-hidden">
+    <span class="f6 db">Posts</span>
+    <h1 class="f3 near-black">
       <a href="https://blog.zhouhaibing.com/posts/kubectl-alias-done-right/" class="link black dim">
         kubectl alias done right
       </a>

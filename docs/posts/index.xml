@@ -6,7 +6,18 @@
     <description>Recent content in Posts on Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 23 Apr 2023 21:06:00 -0700</lastBuildDate><atom:link href="https://blog.zhouhaibing.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 27 May 2023 16:00:00 -0700</lastBuildDate><atom:link href="https://blog.zhouhaibing.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Race condition between kube-proxy and cilium</title>
+      <link>https://blog.zhouhaibing.com/posts/race-condition-between-kube-proxy-and-cilium/</link>
+      <pubDate>Sat, 27 May 2023 16:00:00 -0700</pubDate>
+      
+      <guid>https://blog.zhouhaibing.com/posts/race-condition-between-kube-proxy-and-cilium/</guid>
+      <description>This is an investigation story where all pods on one host lost connectivity to external service. It looks like something below:
+$ nsenter --net=/proc/29080/ns/net curl docs.cilium.io -v &amp;gt; GET / HTTP/1.1 &amp;gt; Host: docs.cilium.io &amp;gt; User-Agent: curl/7.79.1 &amp;gt; Accept: */* &amp;gt; Here 29080 is the pid of some pod process, and it appeared that TCP connection has been established, but somehow it couldn&amp;rsquo;t receive any response.
+About the cluster The cluster was set up like something below:</description>
+    </item>
+    
     <item>
       <title>kubectl alias done right</title>
       <link>https://blog.zhouhaibing.com/posts/kubectl-alias-done-right/</link>
