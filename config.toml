@@ -1,9 +1,13 @@
 baseURL = "https://blog.zhouhaibing.com/"
 languageCode = "en-us"
-title = "Blog"
-theme = "ananke"
-pygmentsUseClasses = true
+title = "Hi-Been Space"
+theme = "paper"
 disqusShortname = "zhouhaibing089"
 
 [params]
-  custom_css = ["css/custom.css", "css/syntax.css"]
+  color = 'gray'
+  avatar = 'zhouhaibing089@gmail.com'
+  name = 'Haibing Zhou'
+  bio = "Obstacle is the way; Ego is the enemy."
+  github = 'zhouhaibing089'
+  linkedin = 'haibzhou'

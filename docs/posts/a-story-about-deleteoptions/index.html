@@ -1,36 +1,128 @@
 <!DOCTYPE html>
-<html lang="en-us">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready text-sm lg:text-base"
+  style="--bg: #fbfbfb"
+  lang="en-us"
+>
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    
-    <title>A Story about DeleteOptions | Blog</title>
-    <meta name="viewport" content="width=device-width,minimum-scale=1">
-    <meta name="generator" content="Hugo 0.111.3">
-    
-    
-      <META NAME="ROBOTS" CONTENT="NOINDEX, NOFOLLOW">
-    
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
 
-    
-    
-      <link href="/dist/css/app.4fc0b62e4b82c997bb0041217cd6b979.css" rel="stylesheet">
-    
+  
+  <title>A Story about DeleteOptions - Hi-Been Space</title>
 
-    
-      <link rel="stylesheet" href="/css/custom.css">
-    
-      <link rel="stylesheet" href="/css/syntax.css">
-    
+  
+  <meta name="theme-color" />
 
-    
-      
+  
+  
+  
+  <meta name="description" content="Note: The issue has been fixed in https://github.com/kubernetes/kubernetes/pull/76051.
+Today, I want to share a story about object deletion in kubernetes federation. This leads to a better understanding on how object deletion works in kubernetes, and I believe this may help others to understand it as well.
+It all starts with a support request:
+When I delete my namespace on federation, the same namespace in member cluster is not deleted, however, cascade deletion does happen for all other resources like configmaps." />
+  <meta name="author" content="Haibing Zhou" />
+  
 
-    
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="https://blog.zhouhaibing.com/main.min.css" />
 
-    
-    
-    <meta property="og:title" content="A Story about DeleteOptions" />
+  
+  <script
+    defer
+    src="https://blog.zhouhaibing.com/highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+  
+
+  
+   
+  <link rel="preload" as="image" href="https://blog.zhouhaibing.com/theme.png" />
+
+  
+  
+  
+  <link rel="preload" as="image" href="https://www.gravatar.com/avatar/5efba87a944c70d1abe7f7892f4df74b?s=160&amp;d=identicon" />
+  
+  
+
+  
+  <link rel="preload" as="image" href="https://blog.zhouhaibing.com/github.svg" />
+  
+  <link rel="preload" as="image" href="https://blog.zhouhaibing.com/linkedin.svg" />
+  
+  
+
+  
+  
+
+  
+  <link rel="icon" href="https://blog.zhouhaibing.com/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://blog.zhouhaibing.com/apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.112.3">
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:title" content="A Story about DeleteOptions" />
 <meta property="og:description" content="Note: The issue has been fixed in https://github.com/kubernetes/kubernetes/pull/76051.
 Today, I want to share a story about object deletion in kubernetes federation. This leads to a better understanding on how object deletion works in kubernetes, and I believe this may help others to understand it as well.
 It all starts with a support request:
@@ -39,115 +131,152 @@ When I delete my namespace on federation, the same namespace in member cluster i
 <meta property="og:url" content="https://blog.zhouhaibing.com/posts/a-story-about-deleteoptions/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2019-03-30T09:27:34-07:00" />
 <meta property="article:modified_time" content="2019-03-30T09:27:34-07:00" />
-<meta itemprop="name" content="A Story about DeleteOptions">
+
+  
+  <meta itemprop="name" content="A Story about DeleteOptions">
 <meta itemprop="description" content="Note: The issue has been fixed in https://github.com/kubernetes/kubernetes/pull/76051.
 Today, I want to share a story about object deletion in kubernetes federation. This leads to a better understanding on how object deletion works in kubernetes, and I believe this may help others to understand it as well.
 It all starts with a support request:
 When I delete my namespace on federation, the same namespace in member cluster is not deleted, however, cascade deletion does happen for all other resources like configmaps."><meta itemprop="datePublished" content="2019-03-30T09:27:34-07:00" />
 <meta itemprop="dateModified" content="2019-03-30T09:27:34-07:00" />
 <meta itemprop="wordCount" content="1613">
-<meta itemprop="keywords" content="" /><meta name="twitter:card" content="summary"/>
+<meta itemprop="keywords" content="" />
+  
+  <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="A Story about DeleteOptions"/>
 <meta name="twitter:description" content="Note: The issue has been fixed in https://github.com/kubernetes/kubernetes/pull/76051.
 Today, I want to share a story about object deletion in kubernetes federation. This leads to a better understanding on how object deletion works in kubernetes, and I believe this may help others to understand it as well.
 It all starts with a support request:
 When I delete my namespace on federation, the same namespace in member cluster is not deleted, however, cascade deletion does happen for all other resources like configmaps."/>
 
-	
-  </head>
+  
+  
+</head>
 
-  <body class="ma0 avenir bg-near-white">
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+    <a
+      class="-translate-x-[1px] -translate-y-[1px] text-2xl font-semibold"
+      href="https://blog.zhouhaibing.com/"
+      >Hi-Been Space</a
+    >
+    <div
+      class="btn-dark text-[0] ml-4 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]"
+      role="button"
+      aria-label="Dark"
+    ></div>
+  </div>
+
+  <div
+    class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+    role="button"
+    aria-label="Menu"
+  ></div>
+
+  
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
 
     
-   
-  
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
 
-  <header>
-    <div class="bg-black">
-      <nav class="pv3 ph3 ph4-ns" role="navigation">
-  <div class="flex-l justify-between items-center center">
-    <a href="/" class="f3 fw2 hover-white no-underline white-90 dib">
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = `"#fbfbfb"`.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:ml-12 lg:mt-0 lg:items-center lg:space-x-6"
+    >
       
-        Blog
+      <a
+        class="h-8 w-8 text-[0] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href="https://github.com/zhouhaibing089"
+        target="_blank"
+        rel="me"
+      >
+        github
+      </a>
       
-    </a>
-    <div class="flex-l items-center">
+      <a
+        class="h-8 w-8 text-[0] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./linkedin.svg)"
+        href="https://linkedin.com/in/haibzhou"
+        target="_blank"
+        rel="me"
+      >
+        linkedin
+      </a>
       
-
-      
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    </div>
+    </nav>
+    
   </div>
-</nav>
+</header>
 
+
+    <main
+      class="prose prose-neutral relative mx-auto min-h-[calc(100%-10rem)] max-w-3xl px-8 pb-24 pt-16 dark:prose-invert"
+    >
+      
+
+<article>
+  <header class="mb-20">
+    <h1 class="!my-0 pb-2.5">A Story about DeleteOptions</h1>
+
+    
+    <div class="text-sm opacity-60">
+      
+      <time>Mar 30, 2019</time>
+      
+      
+      
+      
     </div>
+    
   </header>
 
-
-
-    <main class="pb7" role="main">
-      
-  
-  <article class="flex-l flex-wrap justify-between mw8 center ph3">
-    <header class="mt4 w-100">
-      <aside class="instapaper_ignoref b helvetica tracked">
-          
-        POSTS
-      </aside>
-      
-
-
-
-
-  <div id="sharing" class="mt3">
-
-    
-    <a href="https://www.facebook.com/sharer.php?u=https://blog.zhouhaibing.com/posts/a-story-about-deleteoptions/" class="facebook no-underline" aria-label="share on Facebook">
-      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M28.765,50.32h6.744V33.998h4.499l0.596-5.624h-5.095  l0.007-2.816c0-1.466,0.14-2.253,2.244-2.253h2.812V17.68h-4.5c-5.405,0-7.307,2.729-7.307,7.317v3.377h-3.369v5.625h3.369V50.32z   M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;"/></svg>
-
-    </a>
-
-    
-    
-    <a href="https://twitter.com/share?url=https://blog.zhouhaibing.com/posts/a-story-about-deleteoptions/&amp;text=A%20Story%20about%20DeleteOptions" class="twitter no-underline" aria-label="share on Twitter">
-      <svg height="32px"  style="enable-background:new 0 0 67 67;" version="1.1" viewBox="0 0 67 67" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><path d="M37.167,22.283c-2.619,0.953-4.274,3.411-4.086,6.101  l0.063,1.038l-1.048-0.127c-3.813-0.487-7.145-2.139-9.974-4.915l-1.383-1.377l-0.356,1.017c-0.754,2.267-0.272,4.661,1.299,6.271  c0.838,0.89,0.649,1.017-0.796,0.487c-0.503-0.169-0.943-0.296-0.985-0.233c-0.146,0.149,0.356,2.076,0.754,2.839  c0.545,1.06,1.655,2.097,2.871,2.712l1.027,0.487l-1.215,0.021c-1.173,0-1.215,0.021-1.089,0.467  c0.419,1.377,2.074,2.839,3.918,3.475l1.299,0.444l-1.131,0.678c-1.676,0.976-3.646,1.526-5.616,1.568  C19.775,43.256,19,43.341,19,43.405c0,0.211,2.557,1.397,4.044,1.864c4.463,1.377,9.765,0.783,13.746-1.568  c2.829-1.673,5.657-5,6.978-8.221c0.713-1.716,1.425-4.851,1.425-6.354c0-0.975,0.063-1.102,1.236-2.267  c0.692-0.678,1.341-1.419,1.467-1.631c0.21-0.403,0.188-0.403-0.88-0.043c-1.781,0.636-2.033,0.551-1.152-0.402  c0.649-0.678,1.425-1.907,1.425-2.267c0-0.063-0.314,0.042-0.671,0.233c-0.377,0.212-1.215,0.53-1.844,0.72l-1.131,0.361l-1.027-0.7  c-0.566-0.381-1.361-0.805-1.781-0.932C39.766,21.902,38.131,21.944,37.167,22.283z M33,64C16.432,64,3,50.569,3,34S16.432,4,33,4  s30,13.431,30,30S49.568,64,33,64z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/></svg>
-
-    </a>
-
-    
-    <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https://blog.zhouhaibing.com/posts/a-story-about-deleteoptions/&amp;title=A%20Story%20about%20DeleteOptions" class="linkedin no-underline" aria-label="share on LinkedIn">
-      <svg  height="32px"  style="enable-background:new 0 0 65 65;" version="1.1" viewBox="0 0 65 65" width="32px" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <path d="M50.837,48.137V36.425c0-6.275-3.35-9.195-7.816-9.195  c-3.604,0-5.219,1.983-6.119,3.374V27.71h-6.79c0.09,1.917,0,20.427,0,20.427h6.79V36.729c0-0.609,0.044-1.219,0.224-1.655  c0.49-1.22,1.607-2.483,3.482-2.483c2.458,0,3.44,1.873,3.44,4.618v10.929H50.837z M22.959,24.922c2.367,0,3.842-1.57,3.842-3.531  c-0.044-2.003-1.475-3.528-3.797-3.528s-3.841,1.524-3.841,3.528c0,1.961,1.474,3.531,3.753,3.531H22.959z M34,64  C17.432,64,4,50.568,4,34C4,17.431,17.432,4,34,4s30,13.431,30,30C64,50.568,50.568,64,34,64z M26.354,48.137V27.71h-6.789v20.427  H26.354z" style="fill-rule:evenodd;clip-rule:evenodd;fill:;"/>
-</svg>
-
-    </a>
-  </div>
-
-
-      <h1 class="f1 athelas mt3 mb1">A Story about DeleteOptions</h1>
-      
-      
-      <time class="f6 mv4 dib tracked" datetime="2019-03-30T09:27:34-07:00">March 30, 2019</time>
-
-      
-      
-    </header>
-    <div class="nested-copy-line-height lh-copy serif f4 nested-links nested-img mid-gray pr4-l w-two-thirds-l"><p><strong>Note</strong>: The issue has been fixed in <a href="https://github.com/kubernetes/kubernetes/pull/76051">https://github.com/kubernetes/kubernetes/pull/76051</a>.</p>
+  <section><p><strong>Note</strong>: The issue has been fixed in <a href="https://github.com/kubernetes/kubernetes/pull/76051">https://github.com/kubernetes/kubernetes/pull/76051</a>.</p>
 <p>Today, I want to share a story about object deletion in kubernetes federation.
 This leads to a better understanding on how object deletion works in kubernetes,
 and I believe this may help others to understand it as well.</p>
@@ -159,71 +288,71 @@ like configmaps.</p>
 </blockquote>
 <p>Let&rsquo;s see how object deletion is supposed to work on federation firstly. I am
 going to create a new namespace on federation below.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">$ cat ns.yaml
-</span></span><span class="line"><span class="cl">apiVersion: v1
-</span></span><span class="line"><span class="cl">kind: Namespace
-</span></span><span class="line"><span class="cl">metadata:
-</span></span><span class="line"><span class="cl">  name: fcp-foo
-</span></span><span class="line"><span class="cl">$ kubectl create -f ns.yaml
-</span></span><span class="line"><span class="cl">namespace/fcp-foo created
-</span></span><span class="line"><span class="cl">$ kubectl get ns fcp-foo -o yaml
-</span></span><span class="line"><span class="cl">apiVersion: v1
-</span></span><span class="line"><span class="cl">kind: Namespace
-</span></span><span class="line"><span class="cl">metadata:
-</span></span><span class="line"><span class="cl">  creationTimestamp: <span class="s2">&#34;2019-03-31T03:56:32Z&#34;</span>
-</span></span><span class="line"><span class="cl">  finalizers:
-</span></span><span class="line"><span class="cl">  - federation.kubernetes.io/delete-from-underlying-clusters
-</span></span><span class="line"><span class="cl">  - orphan
-</span></span><span class="line"><span class="cl">  name: fcp-foo
-</span></span><span class="line"><span class="cl">  resourceVersion: <span class="s2">&#34;52956073&#34;</span>
-</span></span><span class="line"><span class="cl">  selfLink: /api/v1/namespaces/fcp-foo
-</span></span><span class="line"><span class="cl">  uid: f8b3ea79-5368-11e9-bc0b-2e8a8f1a8f3c
-</span></span><span class="line"><span class="cl">spec:
-</span></span><span class="line"><span class="cl">  finalizers:
-</span></span><span class="line"><span class="cl">  - kubernetes
-</span></span><span class="line"><span class="cl">status:
-</span></span><span class="line"><span class="cl">  phase: Active
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>$ cat ns.yaml
+</span></span><span style="display:flex;"><span>apiVersion: v1
+</span></span><span style="display:flex;"><span>kind: Namespace
+</span></span><span style="display:flex;"><span>metadata:
+</span></span><span style="display:flex;"><span>  name: fcp-foo
+</span></span><span style="display:flex;"><span>$ kubectl create -f ns.yaml
+</span></span><span style="display:flex;"><span>namespace/fcp-foo created
+</span></span><span style="display:flex;"><span>$ kubectl get ns fcp-foo -o yaml
+</span></span><span style="display:flex;"><span>apiVersion: v1
+</span></span><span style="display:flex;"><span>kind: Namespace
+</span></span><span style="display:flex;"><span>metadata:
+</span></span><span style="display:flex;"><span>  creationTimestamp: <span style="color:#e6db74">&#34;2019-03-31T03:56:32Z&#34;</span>
+</span></span><span style="display:flex;"><span>  finalizers:
+</span></span><span style="display:flex;"><span>  - federation.kubernetes.io/delete-from-underlying-clusters
+</span></span><span style="display:flex;"><span>  - orphan
+</span></span><span style="display:flex;"><span>  name: fcp-foo
+</span></span><span style="display:flex;"><span>  resourceVersion: <span style="color:#e6db74">&#34;52956073&#34;</span>
+</span></span><span style="display:flex;"><span>  selfLink: /api/v1/namespaces/fcp-foo
+</span></span><span style="display:flex;"><span>  uid: f8b3ea79-5368-11e9-bc0b-2e8a8f1a8f3c
+</span></span><span style="display:flex;"><span>spec:
+</span></span><span style="display:flex;"><span>  finalizers:
+</span></span><span style="display:flex;"><span>  - kubernetes
+</span></span><span style="display:flex;"><span>status:
+</span></span><span style="display:flex;"><span>  phase: Active
 </span></span></code></pre></div><p>If you pay attention enough, you can find that there are two finalizers added:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-yaml" data-lang="yaml"><span class="line"><span class="cl"><span class="nt">finalizers</span><span class="p">:</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="l">federation.kubernetes.io/delete-from-underlying-clusters</span><span class="w">
-</span></span></span><span class="line"><span class="cl"><span class="w"></span>- <span class="l">orphan</span><span class="w">
-</span></span></span></code></pre></div><p>Finalizer is the mechanism to ensure proper cleanup in kubernetes, the object
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">finalizers</span>:
+</span></span><span style="display:flex;"><span>- <span style="color:#ae81ff">federation.kubernetes.io/delete-from-underlying-clusters</span>
+</span></span><span style="display:flex;"><span>- <span style="color:#ae81ff">orphan</span>
+</span></span></code></pre></div><p>Finalizer is the mechanism to ensure proper cleanup in kubernetes, the object
 won&rsquo;t disappear from storage as long as there are finalizers remaining. In
 another word, every finalizer has its own responsibility for certain resource
 cleanup. What is the responsibility of these two finalizers then? Let&rsquo;s take a
 look at the <a href="https://github.com/kubernetes/federation/blob/804bb9f3599b9b4c7eb29384921b0bd31cd66de8/pkg/federation-controller/util/deletionhelper/deletion_helper.go#L67-L98">code</a> where these two finalizers are added.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// Ensures that the given object has both FinalizerDeleteFromUnderlyingClusters
-</span></span></span><span class="line"><span class="cl"><span class="c1">// and FinalizerOrphan finalizers.
-</span></span></span><span class="line"><span class="cl"><span class="c1">// We do this so that the controller is always notified when a federation resource is deleted.
-</span></span></span><span class="line"><span class="cl"><span class="c1">// If user deletes the resource with nil DeleteOptions or
-</span></span></span><span class="line"><span class="cl"><span class="c1">// DeletionOptions.OrphanDependents = true then the apiserver removes the orphan finalizer
-</span></span></span><span class="line"><span class="cl"><span class="c1">// and deletion helper does a cascading deletion.
-</span></span></span><span class="line"><span class="cl"><span class="c1">// Otherwise, deletion helper just removes the federation resource and orphans
-</span></span></span><span class="line"><span class="cl"><span class="c1">// the corresponding resources in underlying clusters.
-</span></span></span><span class="line"><span class="cl"><span class="c1">// This method should be called before creating objects in underlying clusters.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">dh</span> <span class="o">*</span><span class="nx">DeletionHelper</span><span class="p">)</span> <span class="nf">EnsureFinalizers</span><span class="p">(</span><span class="nx">obj</span> <span class="nx">runtime</span><span class="p">.</span><span class="nx">Object</span><span class="p">)</span> <span class="p">(</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">runtime</span><span class="p">.</span><span class="nx">Object</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">finalizers</span> <span class="o">:=</span> <span class="nx">sets</span><span class="p">.</span><span class="nx">String</span><span class="p">{}</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">hasFinalizer</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">finalizersutil</span><span class="p">.</span><span class="nf">HasFinalizer</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">FinalizerDeleteFromUnderlyingClusters</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">obj</span><span class="p">,</span> <span class="nx">err</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">!</span><span class="nx">hasFinalizer</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">finalizers</span><span class="p">.</span><span class="nf">Insert</span><span class="p">(</span><span class="nx">FinalizerDeleteFromUnderlyingClusters</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">hasFinalizer</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">finalizersutil</span><span class="p">.</span><span class="nf">HasFinalizer</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">FinalizerOrphanDependents</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">obj</span><span class="p">,</span> <span class="nx">err</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">!</span><span class="nx">hasFinalizer</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">finalizers</span><span class="p">.</span><span class="nf">Insert</span><span class="p">(</span><span class="nx">metav1</span><span class="p">.</span><span class="nx">FinalizerOrphanDependents</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">finalizers</span><span class="p">.</span><span class="nf">Len</span><span class="p">()</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">glog</span><span class="p">.</span><span class="nf">V</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="nf">Infof</span><span class="p">(</span><span class="s">&#34;Adding finalizers %v to %s&#34;</span><span class="p">,</span> <span class="nx">finalizers</span><span class="p">.</span><span class="nf">List</span><span class="p">(),</span> <span class="nx">dh</span><span class="p">.</span><span class="nf">objNameFunc</span><span class="p">(</span><span class="nx">obj</span><span class="p">))</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">dh</span><span class="p">.</span><span class="nf">addFinalizers</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">finalizers</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="nx">obj</span><span class="p">,</span> <span class="kc">nil</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Ensures that the given object has both FinalizerDeleteFromUnderlyingClusters
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// and FinalizerOrphan finalizers.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// We do this so that the controller is always notified when a federation resource is deleted.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// If user deletes the resource with nil DeleteOptions or
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// DeletionOptions.OrphanDependents = true then the apiserver removes the orphan finalizer
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// and deletion helper does a cascading deletion.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Otherwise, deletion helper just removes the federation resource and orphans
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// the corresponding resources in underlying clusters.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// This method should be called before creating objects in underlying clusters.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">dh</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">DeletionHelper</span>) <span style="color:#a6e22e">EnsureFinalizers</span>(<span style="color:#a6e22e">obj</span> <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">Object</span>) (
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">Object</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">finalizers</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sets</span>.<span style="color:#a6e22e">String</span>{}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hasFinalizer</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">finalizersutil</span>.<span style="color:#a6e22e">HasFinalizer</span>(<span style="color:#a6e22e">obj</span>, <span style="color:#a6e22e">FinalizerDeleteFromUnderlyingClusters</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">obj</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">hasFinalizer</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">finalizers</span>.<span style="color:#a6e22e">Insert</span>(<span style="color:#a6e22e">FinalizerDeleteFromUnderlyingClusters</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hasFinalizer</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">finalizersutil</span>.<span style="color:#a6e22e">HasFinalizer</span>(<span style="color:#a6e22e">obj</span>, <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">FinalizerOrphanDependents</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">obj</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">hasFinalizer</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">finalizers</span>.<span style="color:#a6e22e">Insert</span>(<span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">FinalizerOrphanDependents</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">finalizers</span>.<span style="color:#a6e22e">Len</span>() <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">glog</span>.<span style="color:#a6e22e">V</span>(<span style="color:#ae81ff">2</span>).<span style="color:#a6e22e">Infof</span>(<span style="color:#e6db74">&#34;Adding finalizers %v to %s&#34;</span>, <span style="color:#a6e22e">finalizers</span>.<span style="color:#a6e22e">List</span>(), <span style="color:#a6e22e">dh</span>.<span style="color:#a6e22e">objNameFunc</span>(<span style="color:#a6e22e">obj</span>))
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">dh</span>.<span style="color:#a6e22e">addFinalizers</span>(<span style="color:#a6e22e">obj</span>, <span style="color:#a6e22e">finalizers</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">obj</span>, <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>To summarize, the finalizer <code>federation.kubernetes.io/delete-from-underlying-clusters</code>
 ensures a proper cleanup in member clusters, aka cascade deletion. However, we
 do not always want to do cascade deletion, in some cases, we just want the object
@@ -232,34 +361,34 @@ to be deleted from federation while leaving the objects in member clusters intac
 cascade deletion or not? This is where finalizer <code>orphan</code> plays the role. If the
 finalizer <code>orphan</code> remains, it means no cascade deletion.</p>
 <p>We can also look into the <a href="https://github.com/kubernetes/federation/blob/804bb9f3599b9b4c7eb29384921b0bd31cd66de8/pkg/federation-controller/util/deletionhelper/deletion_helper.go#L110-L129">code</a> where the controller removes finalizers:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// Deletes the resources corresponding to the given federated resource from
-</span></span></span><span class="line"><span class="cl"><span class="c1">// all underlying clusters, unless it has the FinalizerOrphan finalizer.
-</span></span></span><span class="line"><span class="cl"><span class="c1">// Removes FinalizerOrphan and FinalizerDeleteFromUnderlyingClusters finalizers
-</span></span></span><span class="line"><span class="cl"><span class="c1">// when done.
-</span></span></span><span class="line"><span class="cl"><span class="c1">// Callers are expected to keep calling this (with appropriate backoff) until
-</span></span></span><span class="line"><span class="cl"><span class="c1">// it succeeds.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">dh</span> <span class="o">*</span><span class="nx">DeletionHelper</span><span class="p">)</span> <span class="nf">HandleObjectInUnderlyingClusters</span><span class="p">(</span><span class="nx">obj</span> <span class="nx">runtime</span><span class="p">.</span><span class="nx">Object</span><span class="p">)</span> <span class="p">(</span>
-</span></span><span class="line"><span class="cl">	<span class="o">...</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">hasFinalizer</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">finalizersutil</span><span class="p">.</span><span class="nf">HasFinalizer</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">FinalizerDeleteFromUnderlyingClusters</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">obj</span><span class="p">,</span> <span class="nx">err</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">!</span><span class="nx">hasFinalizer</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">glog</span><span class="p">.</span><span class="nf">V</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="nf">Infof</span><span class="p">(</span><span class="s">&#34;obj does not have %s finalizer. Nothing to do&#34;</span><span class="p">,</span> <span class="nx">FinalizerDeleteFromUnderlyingClusters</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">obj</span><span class="p">,</span> <span class="kc">nil</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">hasOrphanFinalizer</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">finalizersutil</span><span class="p">.</span><span class="nf">HasFinalizer</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">FinalizerOrphanDependents</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">obj</span><span class="p">,</span> <span class="nx">err</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">hasOrphanFinalizer</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">glog</span><span class="p">.</span><span class="nf">V</span><span class="p">(</span><span class="mi">2</span><span class="p">).</span><span class="nf">Infof</span><span class="p">(</span><span class="s">&#34;Found finalizer orphan. Nothing to do, just remove the finalizer&#34;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="c1">// If the obj has FinalizerOrphan finalizer, then we need to orphan the
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="c1">// corresponding objects in underlying clusters.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="c1">// Just remove both the finalizers in that case.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="nx">finalizers</span> <span class="o">:=</span> <span class="nx">sets</span><span class="p">.</span><span class="nf">NewString</span><span class="p">(</span><span class="nx">FinalizerDeleteFromUnderlyingClusters</span><span class="p">,</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">FinalizerOrphanDependents</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="nx">dh</span><span class="p">.</span><span class="nf">removeFinalizers</span><span class="p">(</span><span class="nx">obj</span><span class="p">,</span> <span class="nx">finalizers</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Deletes the resources corresponding to the given federated resource from
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// all underlying clusters, unless it has the FinalizerOrphan finalizer.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Removes FinalizerOrphan and FinalizerDeleteFromUnderlyingClusters finalizers
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// when done.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Callers are expected to keep calling this (with appropriate backoff) until
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// it succeeds.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">dh</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">DeletionHelper</span>) <span style="color:#a6e22e">HandleObjectInUnderlyingClusters</span>(<span style="color:#a6e22e">obj</span> <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">Object</span>) (
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hasFinalizer</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">finalizersutil</span>.<span style="color:#a6e22e">HasFinalizer</span>(<span style="color:#a6e22e">obj</span>, <span style="color:#a6e22e">FinalizerDeleteFromUnderlyingClusters</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">obj</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">hasFinalizer</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">glog</span>.<span style="color:#a6e22e">V</span>(<span style="color:#ae81ff">2</span>).<span style="color:#a6e22e">Infof</span>(<span style="color:#e6db74">&#34;obj does not have %s finalizer. Nothing to do&#34;</span>, <span style="color:#a6e22e">FinalizerDeleteFromUnderlyingClusters</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">obj</span>, <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hasOrphanFinalizer</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">finalizersutil</span>.<span style="color:#a6e22e">HasFinalizer</span>(<span style="color:#a6e22e">obj</span>, <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">FinalizerOrphanDependents</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">obj</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">hasOrphanFinalizer</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">glog</span>.<span style="color:#a6e22e">V</span>(<span style="color:#ae81ff">2</span>).<span style="color:#a6e22e">Infof</span>(<span style="color:#e6db74">&#34;Found finalizer orphan. Nothing to do, just remove the finalizer&#34;</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// If the obj has FinalizerOrphan finalizer, then we need to orphan the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// corresponding objects in underlying clusters.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#75715e">// Just remove both the finalizers in that case.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">finalizers</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sets</span>.<span style="color:#a6e22e">NewString</span>(<span style="color:#a6e22e">FinalizerDeleteFromUnderlyingClusters</span>, <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">FinalizerOrphanDependents</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">dh</span>.<span style="color:#a6e22e">removeFinalizers</span>(<span style="color:#a6e22e">obj</span>, <span style="color:#a6e22e">finalizers</span>)
+</span></span><span style="display:flex;"><span>	}
 </span></span></code></pre></div><p>We can see,  the controller removes both <code>orphan</code> and
 <code>federation.kubernetes.io/delete-from-underlying-clusters</code> finalizer at the same
 time if <code>orphan</code> finalizer is still on that object.</p>
@@ -272,30 +401,30 @@ deletion. That has to happen, and must always happen earlier than the time when
 controller gets the deletion event.</p>
 <p>This proves to be true, when we send a delete request to api server, the
 <a href="https://github.com/kubernetes/kubernetes/blob/afefc0b2c587302034993d381f1c7cfa5c38aa9f/pkg/registry/core/namespace/storage/storage.go#L124-L223">registry implementation</a> for namespace decides what to do on those finalizers:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// Delete enforces life-cycle rules for namespace termination
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="o">*</span><span class="nx">REST</span><span class="p">)</span> <span class="nf">Delete</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">options</span> <span class="o">*</span><span class="nx">metav1</span><span class="p">.</span><span class="nx">DeleteOptions</span><span class="p">)</span> <span class="p">(</span><span class="nx">runtime</span><span class="p">.</span><span class="nx">Object</span><span class="p">,</span> <span class="kt">bool</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="o">...</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">// upon first request to delete, we switch the phase to start namespace termination
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">// TODO: enhance graceful deletion&#39;s calls to DeleteStrategy to allow phase change and finalizer patterns
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">if</span> <span class="nx">namespace</span><span class="p">.</span><span class="nx">DeletionTimestamp</span><span class="p">.</span><span class="nf">IsZero</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">err</span> <span class="p">=</span> <span class="nx">r</span><span class="p">.</span><span class="nx">store</span><span class="p">.</span><span class="nx">Storage</span><span class="p">.</span><span class="nf">GuaranteedUpdate</span><span class="p">(</span>
-</span></span><span class="line"><span class="cl">			<span class="nx">ctx</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">out</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">preconditions</span><span class="p">,</span>
-</span></span><span class="line"><span class="cl">			<span class="nx">storage</span><span class="p">.</span><span class="nf">SimpleUpdate</span><span class="p">(</span><span class="kd">func</span><span class="p">(</span><span class="nx">existing</span> <span class="nx">runtime</span><span class="p">.</span><span class="nx">Object</span><span class="p">)</span> <span class="p">(</span><span class="nx">runtime</span><span class="p">.</span><span class="nx">Object</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">				<span class="o">...</span>
-</span></span><span class="line"><span class="cl">				<span class="c1">// Remove orphan finalizer if options.OrphanDependents = false.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>				<span class="k">if</span> <span class="nx">options</span><span class="p">.</span><span class="nx">OrphanDependents</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="o">&amp;&amp;</span> <span class="o">*</span><span class="nx">options</span><span class="p">.</span><span class="nx">OrphanDependents</span> <span class="o">==</span> <span class="kc">false</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">					<span class="c1">// remove Orphan finalizer.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>					<span class="nx">newFinalizers</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{}</span>
-</span></span><span class="line"><span class="cl">					<span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">existingNamespace</span><span class="p">.</span><span class="nx">ObjectMeta</span><span class="p">.</span><span class="nx">Finalizers</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">						<span class="nx">finalizer</span> <span class="o">:=</span> <span class="nx">existingNamespace</span><span class="p">.</span><span class="nx">ObjectMeta</span><span class="p">.</span><span class="nx">Finalizers</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
-</span></span><span class="line"><span class="cl">						<span class="k">if</span> <span class="nb">string</span><span class="p">(</span><span class="nx">finalizer</span><span class="p">)</span> <span class="o">!=</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">FinalizerOrphanDependents</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">							<span class="nx">newFinalizers</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">newFinalizers</span><span class="p">,</span> <span class="nx">finalizer</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">						<span class="p">}</span>
-</span></span><span class="line"><span class="cl">					<span class="p">}</span>
-</span></span><span class="line"><span class="cl">					<span class="nx">existingNamespace</span><span class="p">.</span><span class="nx">ObjectMeta</span><span class="p">.</span><span class="nx">Finalizers</span> <span class="p">=</span> <span class="nx">newFinalizers</span>
-</span></span><span class="line"><span class="cl">				<span class="p">}</span>
-</span></span><span class="line"><span class="cl">				<span class="k">return</span> <span class="nx">existingNamespace</span><span class="p">,</span> <span class="kc">nil</span>
-</span></span><span class="line"><span class="cl">	<span class="o">...</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Delete enforces life-cycle rules for namespace termination
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">REST</span>) <span style="color:#a6e22e">Delete</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">name</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">options</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">DeleteOptions</span>) (<span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">Object</span>, <span style="color:#66d9ef">bool</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// upon first request to delete, we switch the phase to start namespace termination
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// TODO: enhance graceful deletion&#39;s calls to DeleteStrategy to allow phase change and finalizer patterns
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">namespace</span>.<span style="color:#a6e22e">DeletionTimestamp</span>.<span style="color:#a6e22e">IsZero</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">store</span>.<span style="color:#a6e22e">Storage</span>.<span style="color:#a6e22e">GuaranteedUpdate</span>(
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">key</span>, <span style="color:#a6e22e">out</span>, <span style="color:#66d9ef">false</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">preconditions</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">storage</span>.<span style="color:#a6e22e">SimpleUpdate</span>(<span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">existing</span> <span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">Object</span>) (<span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">Object</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>				<span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>				<span style="color:#75715e">// Remove orphan finalizer if options.OrphanDependents = false.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>				<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">OrphanDependents</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">OrphanDependents</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">false</span> {
+</span></span><span style="display:flex;"><span>					<span style="color:#75715e">// remove Orphan finalizer.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>					<span style="color:#a6e22e">newFinalizers</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">string</span>{}
+</span></span><span style="display:flex;"><span>					<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">existingNamespace</span>.<span style="color:#a6e22e">ObjectMeta</span>.<span style="color:#a6e22e">Finalizers</span> {
+</span></span><span style="display:flex;"><span>						<span style="color:#a6e22e">finalizer</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">existingNamespace</span>.<span style="color:#a6e22e">ObjectMeta</span>.<span style="color:#a6e22e">Finalizers</span>[<span style="color:#a6e22e">i</span>]
+</span></span><span style="display:flex;"><span>						<span style="color:#66d9ef">if</span> string(<span style="color:#a6e22e">finalizer</span>) <span style="color:#f92672">!=</span> <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">FinalizerOrphanDependents</span> {
+</span></span><span style="display:flex;"><span>							<span style="color:#a6e22e">newFinalizers</span> = append(<span style="color:#a6e22e">newFinalizers</span>, <span style="color:#a6e22e">finalizer</span>)
+</span></span><span style="display:flex;"><span>						}
+</span></span><span style="display:flex;"><span>					}
+</span></span><span style="display:flex;"><span>					<span style="color:#a6e22e">existingNamespace</span>.<span style="color:#a6e22e">ObjectMeta</span>.<span style="color:#a6e22e">Finalizers</span> = <span style="color:#a6e22e">newFinalizers</span>
+</span></span><span style="display:flex;"><span>				}
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">existingNamespace</span>, <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">...</span>
 </span></span></code></pre></div><p>Bingo, now we can see, the namespace store removes <code>orphan</code> finalizer when
 <code>*options.OrphanDependents == false</code>. This can explain how the cascade deletion
 works on federation:</p>
@@ -310,107 +439,107 @@ are successfully made.</li>
 set it as <code>true</code>. And in that case, the <code>orphan</code> finalizer remains, and the
 controller will remove both finalizers without touching member clusters.</p>
 <p>Now let&rsquo;s get back to our problem, why it is broken:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-console" data-lang="console"><span class="line"><span class="cl"><span class="gp">$</span> kubectl delete ns fcp-foo --v<span class="o">=</span><span class="m">10</span>
-</span></span><span class="line"><span class="cl"><span class="go">...
-</span></span></span><span class="line"><span class="cl"><span class="go">I0330 22:22:08.278004   44597 request.go:942] Request Body: {&#34;propagationPolicy&#34;:&#34;Background&#34;}
-</span></span></span><span class="line"><span class="cl"><span class="go">I0330 22:22:08.278049   44597 round_trippers.go:419] curl -k -v -XDELETE  -H &#34;Accept: application/json&#34; -H &#34;Content-Type: application/json&#34; -H &#34;User-Agent: kubectl/v1.14.0 (darwin/amd64) kubernetes/641856d&#34; &#39;https://&lt;apiserver&gt;/api/v1/namespaces/fcp-foo&#39;
-</span></span></span><span class="line"><span class="cl"><span class="go">...
-</span></span></span></code></pre></div><p>As observed, the delete options is <code>{&quot;propagationPolicy&quot;:&quot;Background&quot;}</code>, this is
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ kubectl delete ns fcp-foo --v<span style="color:#f92672">=</span><span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>...
+</span></span><span style="display:flex;"><span>I0330 22:22:08.278004   44597 request.go:942] Request Body: {&#34;propagationPolicy&#34;:&#34;Background&#34;}
+</span></span><span style="display:flex;"><span>I0330 22:22:08.278049   44597 round_trippers.go:419] curl -k -v -XDELETE  -H &#34;Accept: application/json&#34; -H &#34;Content-Type: application/json&#34; -H &#34;User-Agent: kubectl/v1.14.0 (darwin/amd64) kubernetes/641856d&#34; &#39;https://&lt;apiserver&gt;/api/v1/namespaces/fcp-foo&#39;
+</span></span><span style="display:flex;"><span>...
+</span></span></code></pre></div><p>As observed, the delete options is <code>{&quot;propagationPolicy&quot;:&quot;Background&quot;}</code>, this is
 the default value on kubectl v1.14.0. Since it does not specifying
 <code>orphanDependents</code>, the finalizer <code>orphan</code> is not removed, and thus the cascade
 deletion does not happen.</p>
 <p>But why other resources like configmaps are still fine, do they have a different
 registry store implementation? Well, they do!</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-go" data-lang="go"><span class="line"><span class="cl"><span class="c1">// Delete removes the item from storage.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="p">(</span><span class="nx">e</span> <span class="o">*</span><span class="nx">Store</span><span class="p">)</span> <span class="nf">Delete</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">name</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">options</span> <span class="o">*</span><span class="nx">metav1</span><span class="p">.</span><span class="nx">DeleteOptions</span><span class="p">)</span> <span class="p">(</span><span class="nx">runtime</span><span class="p">.</span><span class="nx">Object</span><span class="p">,</span> <span class="kt">bool</span><span class="p">,</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="o">...</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">// Handle combinations of graceful deletion and finalization by issuing
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">// the correct updates.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">shouldUpdateFinalizers</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nf">deletionFinalizersForGarbageCollection</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">e</span><span class="p">,</span> <span class="nx">accessor</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">// TODO: remove the check, because we support no-op updates now.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">if</span> <span class="nx">graceful</span> <span class="o">||</span> <span class="nx">pendingFinalizers</span> <span class="o">||</span> <span class="nx">shouldUpdateFinalizers</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">err</span><span class="p">,</span> <span class="nx">ignoreNotFound</span><span class="p">,</span> <span class="nx">deleteImmediately</span><span class="p">,</span> <span class="nx">out</span><span class="p">,</span> <span class="nx">lastExisting</span> <span class="p">=</span> <span class="nx">e</span><span class="p">.</span><span class="nf">updateForGracefulDeletionAndFinalizers</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">key</span><span class="p">,</span> <span class="nx">options</span><span class="p">,</span> <span class="nx">preconditions</span><span class="p">,</span> <span class="nx">obj</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="o">...</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">// deletionFinalizersForGarbageCollection analyzes the object and delete options
-</span></span></span><span class="line"><span class="cl"><span class="c1">// to determine whether the object is in need of finalization by the garbage
-</span></span></span><span class="line"><span class="cl"><span class="c1">// collector. If so, returns the set of deletion finalizers to apply and a bool
-</span></span></span><span class="line"><span class="cl"><span class="c1">// indicating whether the finalizer list has changed and is in need of updating.
-</span></span></span><span class="line"><span class="cl"><span class="c1">//
-</span></span></span><span class="line"><span class="cl"><span class="c1">// The finalizers returned are intended to be handled by the garbage collector.
-</span></span></span><span class="line"><span class="cl"><span class="c1">// If garbage collection is disabled for the store, this function returns false
-</span></span></span><span class="line"><span class="cl"><span class="c1">// to ensure finalizers aren&#39;t set which will never be cleared.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">deletionFinalizersForGarbageCollection</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">e</span> <span class="o">*</span><span class="nx">Store</span><span class="p">,</span> <span class="nx">accessor</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">Object</span><span class="p">,</span> <span class="nx">options</span> <span class="o">*</span><span class="nx">metav1</span><span class="p">.</span><span class="nx">DeleteOptions</span><span class="p">)</span> <span class="p">(</span><span class="kt">bool</span><span class="p">,</span> <span class="p">[]</span><span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="o">...</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">shouldOrphan</span> <span class="o">:=</span> <span class="nf">shouldOrphanDependents</span><span class="p">(</span><span class="nx">ctx</span><span class="p">,</span> <span class="nx">e</span><span class="p">,</span> <span class="nx">accessor</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="o">...</span>
-</span></span><span class="line"><span class="cl">	<span class="nx">newFinalizers</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="c1">// first remove both finalizers, add them back if needed.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">f</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">accessor</span><span class="p">.</span><span class="nf">GetFinalizers</span><span class="p">()</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">if</span> <span class="nx">f</span> <span class="o">==</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">FinalizerOrphanDependents</span> <span class="o">||</span> <span class="nx">f</span> <span class="o">==</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">FinalizerDeleteDependents</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">			<span class="k">continue</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">newFinalizers</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">newFinalizers</span><span class="p">,</span> <span class="nx">f</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">shouldOrphan</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">newFinalizers</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">newFinalizers</span><span class="p">,</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">FinalizerOrphanDependents</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="o">...</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">// shouldOrphanDependents returns true if the finalizer for orphaning should be set
-</span></span></span><span class="line"><span class="cl"><span class="c1">// updated for FinalizerOrphanDependents. In the order of highest to lowest
-</span></span></span><span class="line"><span class="cl"><span class="c1">// priority, there are three factors affect whether to add/remove the
-</span></span></span><span class="line"><span class="cl"><span class="c1">// FinalizerOrphanDependents: options, existing finalizers of the object,
-</span></span></span><span class="line"><span class="cl"><span class="c1">// and e.DeleteStrategy.DefaultGarbageCollectionPolicy.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kd">func</span> <span class="nf">shouldOrphanDependents</span><span class="p">(</span><span class="nx">ctx</span> <span class="nx">context</span><span class="p">.</span><span class="nx">Context</span><span class="p">,</span> <span class="nx">e</span> <span class="o">*</span><span class="nx">Store</span><span class="p">,</span> <span class="nx">accessor</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">Object</span><span class="p">,</span> <span class="nx">options</span> <span class="o">*</span><span class="nx">metav1</span><span class="p">.</span><span class="nx">DeleteOptions</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">	<span class="c1">// Get default GC policy from this REST object type
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">gcStrategy</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">e</span><span class="p">.</span><span class="nx">DeleteStrategy</span><span class="p">.(</span><span class="nx">rest</span><span class="p">.</span><span class="nx">GarbageCollectionDeleteStrategy</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="kd">var</span> <span class="nx">defaultGCPolicy</span> <span class="nx">rest</span><span class="p">.</span><span class="nx">GarbageCollectionPolicy</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">ok</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="nx">defaultGCPolicy</span> <span class="p">=</span> <span class="nx">gcStrategy</span><span class="p">.</span><span class="nf">DefaultGarbageCollectionPolicy</span><span class="p">(</span><span class="nx">ctx</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">defaultGCPolicy</span> <span class="o">==</span> <span class="nx">rest</span><span class="p">.</span><span class="nx">Unsupported</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="c1">// return  false to indicate that we should NOT orphan
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>		<span class="k">return</span> <span class="kc">false</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="c1">// An explicit policy was set at deletion time, that overrides everything
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">if</span> <span class="nx">options</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="o">&amp;&amp;</span> <span class="nx">options</span><span class="p">.</span><span class="nx">OrphanDependents</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="o">*</span><span class="nx">options</span><span class="p">.</span><span class="nx">OrphanDependents</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="nx">options</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="o">&amp;&amp;</span> <span class="nx">options</span><span class="p">.</span><span class="nx">PropagationPolicy</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">switch</span> <span class="o">*</span><span class="nx">options</span><span class="p">.</span><span class="nx">PropagationPolicy</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">DeletePropagationOrphan</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="kc">true</span>
-</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">DeletePropagationBackground</span><span class="p">,</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">DeletePropagationForeground</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="kc">false</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="c1">// If a finalizer is set in the object, it overrides the default
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="c1">// validation should make sure the two cases won&#39;t be true at the same time.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="nx">finalizers</span> <span class="o">:=</span> <span class="nx">accessor</span><span class="p">.</span><span class="nf">GetFinalizers</span><span class="p">()</span>
-</span></span><span class="line"><span class="cl">	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">f</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">finalizers</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">switch</span> <span class="nx">f</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">FinalizerOrphanDependents</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="kc">true</span>
-</span></span><span class="line"><span class="cl">		<span class="k">case</span> <span class="nx">metav1</span><span class="p">.</span><span class="nx">FinalizerDeleteDependents</span><span class="p">:</span>
-</span></span><span class="line"><span class="cl">			<span class="k">return</span> <span class="kc">false</span>
-</span></span><span class="line"><span class="cl">		<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">	<span class="c1">// Get default orphan policy from this REST object type if it exists
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>	<span class="k">if</span> <span class="nx">defaultGCPolicy</span> <span class="o">==</span> <span class="nx">rest</span><span class="p">.</span><span class="nx">OrphanDependents</span> <span class="p">{</span>
-</span></span><span class="line"><span class="cl">		<span class="k">return</span> <span class="kc">true</span>
-</span></span><span class="line"><span class="cl">	<span class="p">}</span>
-</span></span><span class="line"><span class="cl">	<span class="k">return</span> <span class="kc">false</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Delete removes the item from storage.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">e</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Store</span>) <span style="color:#a6e22e">Delete</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">name</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">options</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">DeleteOptions</span>) (<span style="color:#a6e22e">runtime</span>.<span style="color:#a6e22e">Object</span>, <span style="color:#66d9ef">bool</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Handle combinations of graceful deletion and finalization by issuing
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// the correct updates.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">shouldUpdateFinalizers</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">deletionFinalizersForGarbageCollection</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">e</span>, <span style="color:#a6e22e">accessor</span>, <span style="color:#a6e22e">options</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// TODO: remove the check, because we support no-op updates now.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">graceful</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">pendingFinalizers</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">shouldUpdateFinalizers</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">ignoreNotFound</span>, <span style="color:#a6e22e">deleteImmediately</span>, <span style="color:#a6e22e">out</span>, <span style="color:#a6e22e">lastExisting</span> = <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">updateForGracefulDeletionAndFinalizers</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">name</span>, <span style="color:#a6e22e">key</span>, <span style="color:#a6e22e">options</span>, <span style="color:#a6e22e">preconditions</span>, <span style="color:#a6e22e">obj</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// deletionFinalizersForGarbageCollection analyzes the object and delete options
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// to determine whether the object is in need of finalization by the garbage
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// collector. If so, returns the set of deletion finalizers to apply and a bool
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// indicating whether the finalizer list has changed and is in need of updating.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">//
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// The finalizers returned are intended to be handled by the garbage collector.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// If garbage collection is disabled for the store, this function returns false
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// to ensure finalizers aren&#39;t set which will never be cleared.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">deletionFinalizersForGarbageCollection</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">e</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Store</span>, <span style="color:#a6e22e">accessor</span> <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">Object</span>, <span style="color:#a6e22e">options</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">DeleteOptions</span>) (<span style="color:#66d9ef">bool</span>, []<span style="color:#66d9ef">string</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">shouldOrphan</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">shouldOrphanDependents</span>(<span style="color:#a6e22e">ctx</span>, <span style="color:#a6e22e">e</span>, <span style="color:#a6e22e">accessor</span>, <span style="color:#a6e22e">options</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">newFinalizers</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">string</span>{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// first remove both finalizers, add them back if needed.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">f</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">accessor</span>.<span style="color:#a6e22e">GetFinalizers</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">f</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">FinalizerOrphanDependents</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">f</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">FinalizerDeleteDependents</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">newFinalizers</span> = append(<span style="color:#a6e22e">newFinalizers</span>, <span style="color:#a6e22e">f</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">shouldOrphan</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">newFinalizers</span> = append(<span style="color:#a6e22e">newFinalizers</span>, <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">FinalizerOrphanDependents</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// shouldOrphanDependents returns true if the finalizer for orphaning should be set
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// updated for FinalizerOrphanDependents. In the order of highest to lowest
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// priority, there are three factors affect whether to add/remove the
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// FinalizerOrphanDependents: options, existing finalizers of the object,
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// and e.DeleteStrategy.DefaultGarbageCollectionPolicy.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">shouldOrphanDependents</span>(<span style="color:#a6e22e">ctx</span> <span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Context</span>, <span style="color:#a6e22e">e</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Store</span>, <span style="color:#a6e22e">accessor</span> <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">Object</span>, <span style="color:#a6e22e">options</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">DeleteOptions</span>) <span style="color:#66d9ef">bool</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Get default GC policy from this REST object type
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">gcStrategy</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">e</span>.<span style="color:#a6e22e">DeleteStrategy</span>.(<span style="color:#a6e22e">rest</span>.<span style="color:#a6e22e">GarbageCollectionDeleteStrategy</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">defaultGCPolicy</span> <span style="color:#a6e22e">rest</span>.<span style="color:#a6e22e">GarbageCollectionPolicy</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">ok</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">defaultGCPolicy</span> = <span style="color:#a6e22e">gcStrategy</span>.<span style="color:#a6e22e">DefaultGarbageCollectionPolicy</span>(<span style="color:#a6e22e">ctx</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">defaultGCPolicy</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">rest</span>.<span style="color:#a6e22e">Unsupported</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// return  false to indicate that we should NOT orphan
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// An explicit policy was set at deletion time, that overrides everything
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">options</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">OrphanDependents</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">OrphanDependents</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">options</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">PropagationPolicy</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">switch</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">options</span>.<span style="color:#a6e22e">PropagationPolicy</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">DeletePropagationOrphan</span>:
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">DeletePropagationBackground</span>, <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">DeletePropagationForeground</span>:
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// If a finalizer is set in the object, it overrides the default
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// validation should make sure the two cases won&#39;t be true at the same time.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">finalizers</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">accessor</span>.<span style="color:#a6e22e">GetFinalizers</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">f</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">finalizers</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">f</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">FinalizerOrphanDependents</span>:
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">metav1</span>.<span style="color:#a6e22e">FinalizerDeleteDependents</span>:
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Get default orphan policy from this REST object type if it exists
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">defaultGCPolicy</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">rest</span>.<span style="color:#a6e22e">OrphanDependents</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Put it simply:</p>
 <ol>
 <li>It removes <code>orphan</code> finalizer first.</li>
@@ -428,74 +557,69 @@ registry store implementation? Well, they do!</p>
 deletion.</p>
 <p>Now we have figured out how it happened, it needs a lot of patience to go through
 the codebase. However it is really enjoyable.</p>
-<ul class="pa0">
+</section>
+
   
-</ul>
-<div class="mt6 instapaper_ignoref">
-      
-        <div id="disqus_thread"></div>
-<script type="application/javascript">
-    window.disqus_config = function () {
+  
+
+  
+  
+  
+  <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+    
+    <a
+      class="flex w-1/2 items-center rounded-l-md p-6 pr-3 no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      href="https://blog.zhouhaibing.com/posts/learning-go-1/"
+      ><span class="mr-1.5">←</span><span>学棋记</span></a
+    >
     
     
+    <a
+      class="ml-auto flex w-1/2 items-center justify-end rounded-r-md p-6 pl-3 no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      href="https://blog.zhouhaibing.com/posts/why-keep-running-as-a-habbit/"
+      ><span>我为什么要跑步</span><span class="ml-1.5">→</span></a
+    >
     
-    };
-    (function() {
-        if (["localhost", "127.0.0.1"].indexOf(window.location.hostname) != -1) {
-            document.getElementById('disqus_thread').innerHTML = 'Disqus comments not available by default when the website is previewed locally.';
-            return;
-        }
-        var d = document, s = d.createElement('script'); s.async = true;
-        s.src = '//' + "zhouhaibing089" + '.disqus.com/embed.js';
-        s.setAttribute('data-timestamp', +new Date());
-        (d.head || d.body).appendChild(s);
-    })();
-</script>
-<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<a href="https://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-      
-      
-      </div>
-    </div>
+  </nav>
+  
 
-    <aside class="w-30-l mt6-l">
+  
+  
+  <div class="mt-24" id="disqus_thread"></div>
+  <script>
+    const disqusShortname = 'zhouhaibing089';
+    const script = document.createElement('script');
+    script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+    script.setAttribute('data-timestamp', +new Date());
+    document.head.appendChild(script);
+  </script>
+  
 
+  
+  
+</article>
 
-
-
-</aside>
-
-  </article>
 
     </main>
-    <footer class="bg-black bottom-0 w-100 pa3" role="contentinfo">
-  <div class="flex justify-between">
-  <a class="f4 fw4 hover-white no-underline white-70 dn dib-ns pv2 ph3" href="https://blog.zhouhaibing.com/" >
-    &copy;  Blog 2023 
-  </a>
-    <div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-</div>
+    <footer
+  class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60"
+>
+  <div class="mr-auto">
+    &copy; 2023
+    <a class="link" href="https://blog.zhouhaibing.com/">Hi-Been Space</a>
   </div>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
+    >Powered by Hugo️️</a
+  >️
+  <a
+    class="link"
+    href="https://github.com/nanxiaobei/hugo-paper"
+    rel="noopener"
+    target="_blank"
+    >Theme Paper</a
+  >
 </footer>
-
-    
-
-  <script src="/dist/js/app.3fc0f988d21662902933.js"></script>
-
 
   </body>
 </html>
