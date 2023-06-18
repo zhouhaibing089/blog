@@ -6,7 +6,18 @@
     <description>Recent content in Posts on Hi-Been Space</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 27 May 2023 16:00:00 -0700</lastBuildDate><atom:link href="https://blog.zhouhaibing.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 18 Jun 2023 14:27:00 -0700</lastBuildDate><atom:link href="https://blog.zhouhaibing.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>etcd clustering step by step</title>
+      <link>https://blog.zhouhaibing.com/posts/etcd-clustering/</link>
+      <pubDate>Sun, 18 Jun 2023 14:27:00 -0700</pubDate>
+      
+      <guid>https://blog.zhouhaibing.com/posts/etcd-clustering/</guid>
+      <description>This is an attempt to document the steps that I tried to understand etcd clustering. I think by following these steps, we are better suited to understand how etcd disaster recovery looks like in practice.
+Prerequisites I added the following into /etc/hosts so that I can assign dns names to each of the etcd instances that I&amp;rsquo;m about to create.
+$ cat /etc/hosts # Static table lookup for hostnames. # See hosts(5) for details.</description>
+    </item>
+    
     <item>
       <title>Race condition between kube-proxy and cilium</title>
       <link>https://blog.zhouhaibing.com/posts/race-condition-between-kube-proxy-and-cilium/</link>
