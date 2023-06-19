@@ -2,6 +2,8 @@
 title: "etcd clustering step by step"
 date: 2023-06-18T14:27:00-07:00
 draft: false
+aliases:
+- etcd-clustering
 ---
 
 This is an attempt to document the steps that I tried to understand etcd

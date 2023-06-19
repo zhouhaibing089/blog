@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready text-sm lg:text-base"
+  style="--bg: #fbfbfb"
+  lang="en-us"
+>
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+
+  
+  <title>etcd clustering step by step - Hi-Been Space</title>
+
+  
+  <meta name="theme-color" />
+
+  
+  
+  
+  <meta name="description" content="This is an attempt to document the steps that I tried to understand etcd clustering. I think by following these steps, we are better suited to understand how etcd disaster recovery looks like in practice.
+Prerequisites I added the following into /etc/hosts so that I can assign dns names to each of the etcd instances that I&rsquo;m about to create.
+$ cat /etc/hosts # Static table lookup for hostnames. # See hosts(5) for details." />
+  <meta name="author" content="Haibing Zhou" />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="https://blog.zhouhaibing.com/main.min.css" />
+
+  
+  <script
+    defer
+    src="https://blog.zhouhaibing.com/highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+  
+
+  
+   
+  <link rel="preload" as="image" href="https://blog.zhouhaibing.com/theme.png" />
+
+  
+  
+  
+  <link rel="preload" as="image" href="https://www.gravatar.com/avatar/5efba87a944c70d1abe7f7892f4df74b?s=160&amp;d=identicon" />
+  
+  
+
+  
+  <link rel="preload" as="image" href="https://blog.zhouhaibing.com/github.svg" />
+  
+  <link rel="preload" as="image" href="https://blog.zhouhaibing.com/linkedin.svg" />
+  
+  
+
+  
+  
+
+  
+  <link rel="icon" href="https://blog.zhouhaibing.com/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://blog.zhouhaibing.com/apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.112.3">
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:title" content="etcd clustering step by step" />
+<meta property="og:description" content="This is an attempt to document the steps that I tried to understand etcd clustering. I think by following these steps, we are better suited to understand how etcd disaster recovery looks like in practice.
+Prerequisites I added the following into /etc/hosts so that I can assign dns names to each of the etcd instances that I&rsquo;m about to create.
+$ cat /etc/hosts # Static table lookup for hostnames. # See hosts(5) for details." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.zhouhaibing.com/posts/etcd-clustering-step-by-step/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2023-06-18T14:27:00-07:00" />
+<meta property="article:modified_time" content="2023-06-18T14:27:00-07:00" />
+
+  
+  <meta itemprop="name" content="etcd clustering step by step">
+<meta itemprop="description" content="This is an attempt to document the steps that I tried to understand etcd clustering. I think by following these steps, we are better suited to understand how etcd disaster recovery looks like in practice.
+Prerequisites I added the following into /etc/hosts so that I can assign dns names to each of the etcd instances that I&rsquo;m about to create.
+$ cat /etc/hosts # Static table lookup for hostnames. # See hosts(5) for details."><meta itemprop="datePublished" content="2023-06-18T14:27:00-07:00" />
+<meta itemprop="dateModified" content="2023-06-18T14:27:00-07:00" />
+<meta itemprop="wordCount" content="1880">
+<meta itemprop="keywords" content="" />
+  
+  <meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="etcd clustering step by step"/>
+<meta name="twitter:description" content="This is an attempt to document the steps that I tried to understand etcd clustering. I think by following these steps, we are better suited to understand how etcd disaster recovery looks like in practice.
+Prerequisites I added the following into /etc/hosts so that I can assign dns names to each of the etcd instances that I&rsquo;m about to create.
+$ cat /etc/hosts # Static table lookup for hostnames. # See hosts(5) for details."/>
+
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+    <a
+      class="-translate-x-[1px] -translate-y-[1px] text-2xl font-semibold"
+      href="https://blog.zhouhaibing.com/"
+      >Hi-Been Space</a
+    >
+    <div
+      class="btn-dark text-[0] ml-4 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]"
+      role="button"
+      aria-label="Dark"
+    ></div>
+  </div>
+
+  <div
+    class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+    role="button"
+    aria-label="Menu"
+  ></div>
+
+  
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = `"#fbfbfb"`.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:ml-12 lg:mt-0 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 text-[0] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href="https://github.com/zhouhaibing089"
+        target="_blank"
+        rel="me"
+      >
+        github
+      </a>
+      
+      <a
+        class="h-8 w-8 text-[0] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./linkedin.svg)"
+        href="https://linkedin.com/in/haibzhou"
+        target="_blank"
+        rel="me"
+      >
+        linkedin
+      </a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main
+      class="prose prose-neutral relative mx-auto min-h-[calc(100%-10rem)] max-w-3xl px-8 pb-24 pt-16 dark:prose-invert"
+    >
+      
+
+<article>
+  <header class="mb-20">
+    <h1 class="!my-0 pb-2.5">etcd clustering step by step</h1>
+
+    
+    <div class="text-sm opacity-60">
+      
+      <time>Jun 18, 2023</time>
+      
+      
+      
+      
+    </div>
+    
+  </header>
+
+  <section><p>This is an attempt to document the steps that I tried to understand etcd
+clustering. I think by following these steps, we are better suited to understand
+how etcd disaster recovery looks like in practice.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>I added the following into <code>/etc/hosts</code> so that I can assign dns names to each
+of the etcd instances that I&rsquo;m about to create.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ cat /etc/hosts
+</span></span><span style="display:flex;"><span># Static table lookup <span style="color:#66d9ef">for</span> hostnames.
+</span></span><span style="display:flex;"><span># See hosts<span style="color:#f92672">(</span>5<span style="color:#f92672">)</span> <span style="color:#66d9ef">for</span> details.
+</span></span><span style="display:flex;"><span>127.0.0.1 etcd-1
+</span></span><span style="display:flex;"><span>127.0.0.2 etcd-2
+</span></span><span style="display:flex;"><span>127.0.0.3 etcd-3
+</span></span></code></pre></div><h2 id="the-first-instance">The first instance</h2>
+<p>We can run the following command to start our first etcd instance:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-1 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.1:2380 \
+</span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.1:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380 \
+</span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-1:2380 \
+</span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-1:2379
+</span></span></code></pre></div><p>The default value for <code>--name</code> is <code>default</code> which doesn&rsquo;t look great because I
+will need to create <code>n</code> instances, so I decided to name it as <code>etcd-{x}</code>.</p>
+<p><code>--listen-peer-urls</code> specifies the address to listen on requests received from
+peers (other etcd instances), and <code>--listen-client-urls</code> specifies the address
+to listen on requests received from clients (for instance, <code>etcdctl</code>). I could
+have just skipped these two flags, but for consistency and better clarities, I
+decided to add them explicitly.</p>
+<p>The default value for <code>--initial-cluster</code> is <code>'default=http://localhost:2380'</code>.
+Since I changed the name and also wanted to use a specific dns name, I need to
+override it properly.</p>
+<p><code>--initial-advertise-peer-urls</code> and <code>--advertise-client-urls</code> specifies how this
+instance expects other peers and clients to talk to it.</p>
+<p>Now let&rsquo;s store some data into it:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcdctl --endpoints<span style="color:#f92672">=</span>http://etcd-1:2379 put foo bar
+</span></span><span style="display:flex;"><span>OK
+</span></span></code></pre></div><h2 id="add-the-second-instance">Add the second instance</h2>
+<p>It is natural to just try the same command with few modifications. Let&rsquo;s try it
+out:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-2 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.2:2380 \
+</span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.2:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster etcd-2=http://etcd-2:2380 \
+</span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-2:2380 \
+</span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-2:2379
+</span></span></code></pre></div><p>The command runs fine, but it just started another new etcd instance which is
+not connected to the first instance at all:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcdctl --endpoints<span style="color:#f92672">=</span>http://etcd-2:2379 get foo
+</span></span></code></pre></div><p>This command above gives nothing, which we would expect to see <code>bar</code>.</p>
+<p>In order to connect to the first instance, we should specify its peer address in
+<code>--initial-cluster</code>. Let&rsquo;s add <code>etcd-1</code> as well:</p>
+<blockquote>
+<p>You may have to run <code>rm -drf etcd-2.etcd</code> to clean up first.</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-2 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.2:2380 \
+</span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.2:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380 \
+</span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-2:2380 \
+</span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-2:2379
+</span></span></code></pre></div><p>This takes us further, but it errors crazily with message below:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;level&#34;</span>: <span style="color:#e6db74">&#34;warn&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;ts&#34;</span>: <span style="color:#e6db74">&#34;2023-06-17T21:26:46.212008-0700&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;caller&#34;</span>: <span style="color:#e6db74">&#34;rafthttp/stream.go:653&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;msg&#34;</span>: <span style="color:#e6db74">&#34;request sent was ignored by remote peer due to cluster ID mismatch&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;remote-peer-id&#34;</span>: <span style="color:#e6db74">&#34;a3959071884acd0c&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;remote-peer-cluster-id&#34;</span>: <span style="color:#e6db74">&#34;572a811fac16a854&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;local-member-id&#34;</span>: <span style="color:#e6db74">&#34;97ecdd3706cc2d90&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;local-member-cluster-id&#34;</span>: <span style="color:#e6db74">&#34;b2698d4259f33e40&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;cluster ID mismatch&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>It means that this instance tried to create another cluster which isn&rsquo;t expected.
+We can fix this by add <code>--initial-cluster-state existing</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-2 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.2:2380 \
+</span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.2:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380 \
+</span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-2:2380 \
+</span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-2:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster-state existing
+</span></span></code></pre></div><p>This command still failed to bring up the second instance. The error message is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;level&#34;</span>: <span style="color:#e6db74">&#34;fatal&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;ts&#34;</span>: <span style="color:#e6db74">&#34;2023-06-17T21:30:36.560232-0700&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;caller&#34;</span>: <span style="color:#e6db74">&#34;etcdmain/etcd.go:204&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;msg&#34;</span>: <span style="color:#e6db74">&#34;discovery failed&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;error validating peerURLs {ClusterID:572a811fac16a854 Members:[&amp;{ID:a3959071884acd0c RaftAttributes:{PeerURLs:[http://etcd-1:2380] IsLearner:false} Attributes:{Name:etcd-1 ClientURLs:[http://etcd-1:2379]}}] RemovedMemberIDs:[]}: member count is unequal&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;stacktrace&#34;</span>: <span style="color:#e6db74">&#34;go.etcd.io/etcd/server/v3/etcdmain.startEtcdOrProxyV2\n\tgo.etcd.io/etcd/server/v3/etcdmain/etcd.go:204\ngo.etcd.io/etcd/server/v3/etcdmain.Main\n\tgo.etcd.io/etcd/server/v3/etcdmain/main.go:40\nmain.main\n\tgo.etcd.io/etcd/server/v3/main.go:31\nruntime.main\n\truntime/proc.go:250&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>This basically means that the member count doesn&rsquo;t match. We specified 2 in our
+flag <code>--initial-cluster</code>, but there is only one member which is <code>etcd-1</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcdctl --endpoints<span style="color:#f92672">=</span>http://etcd-1:2379 member list
+</span></span><span style="display:flex;"><span>a3959071884acd0c, started, etcd-1, http://etcd-1:2380, http://etcd-1:2379, false
+</span></span></code></pre></div><p>To fix this, we can add <code>etcd-2</code> manually with:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcdctl --endpoints<span style="color:#f92672">=</span>http://etcd-1:2379 member add etcd-2 --peer-urls http://etcd-2:2380
+</span></span></code></pre></div><blockquote>
+<p>This is going to disrupt the service status of <code>etcd-1</code> due to loss of quorum
+because <code>etcd-2</code> is not yet up.</p>
+</blockquote>
+<p>Afterwards, we should be able to bring up the second instance by re-running the
+command that failed previously. And we should be able to query from <code>etcd-2</code> as
+well:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcdctl --endpoints<span style="color:#f92672">=</span>http://etcd-2:2379 get foo
+</span></span><span style="display:flex;"><span>foo
+</span></span><span style="display:flex;"><span>bar
+</span></span></code></pre></div><h2 id="add-another-instance">Add another instance</h2>
+<p>The step should now be straightforward:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcdctl --endpoints<span style="color:#f92672">=</span>http://etcd-1:2379 member add etcd-3 --peer-urls http://etcd-3:2380
+</span></span><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-3 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.3:2380 \
+</span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.3:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
+</span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-3:2380 \
+</span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-3:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster-state existing
+</span></span><span style="display:flex;"><span>$ etcdctl --endpoints<span style="color:#f92672">=</span>http://etcd-3:2379 get foo
+</span></span><span style="display:flex;"><span>foo
+</span></span><span style="display:flex;"><span>bar
+</span></span></code></pre></div><h3 id="avoid-adding-members-manually">Avoid adding members manually</h3>
+<p>The steps demonstrated above seem to be tedious because we have to add each
+member manually before we can start the instance. If we know all the members
+beforehand, we can avoid doing that manually. To run the same setup, we can just
+do the following:</p>
+<blockquote>
+<p>You may need to clean up everything we did above by running <code>rm -drf etcd-*</code>.</p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-1 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.1:2380 \
+</span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.1:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
+</span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-1:2380 \
+</span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-1:2379
+</span></span><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-2 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.2:2380 \
+</span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.2:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
+</span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-2:2380 \
+</span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-2:2379
+</span></span><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-3 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.3:2380 \
+</span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.3:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
+</span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-3:2380 \
+</span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-3:2379
+</span></span></code></pre></div><p>Here are the differences:</p>
+<ul>
+<li>Now all the instances are started with a full list of <code>--initial-cluster</code>.</li>
+<li>They all start with <code>--initial-cluster-state new</code> (the default value).</li>
+</ul>
+<p>As part of this change, the first instance won&rsquo;t be able to take traffic right
+away because the cluster isn&rsquo;t healthy yet. The cluster is only able to start
+serving traffic once the second instance is also up.</p>
+<p>But wait, why <code>--initial-cluster-state new</code> works here? In our previous attempt,
+when we join the second instance without setting it to <code>existing</code>, it complains
+about <code>clusterID mismatch</code>. It turns out that cluster id is actually generated
+based on <code>--initial-cluster</code>. This means that each instance, when they have the
+same value of <code>--initial-cluster</code>, they&rsquo;ll come up with the same member id as
+well as cluster id. We can examine the cluster id by trying the command above
+multiple time and we can expect that cluster id is always the same:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcdctl --endpoints<span style="color:#f92672">=</span>http://etcd-1:2379 member list -w json | jq <span style="color:#e6db74">&#39;.header.cluster_id&#39;</span>
+</span></span><span style="display:flex;"><span>1176270058202747400
+</span></span></code></pre></div><blockquote>
+<p>You actually should see the same value if you followed the same steps above.</p>
+</blockquote>
+<p>Fore more information, you may look at <a href="https://github.com/etcd-io/etcd/blob/6f2a5b710fc13fb427128d09939671560edf680b/server/etcdserver/api/membership/member.go#L63">computeMemberId</a> and <a href="https://github.com/etcd-io/etcd/blob/6f2a5b710fc13fb427128d09939671560edf680b/server/etcdserver/api/membership/cluster.go#L232">genID</a>.</p>
+<h2 id="failures">Failures</h2>
+<p>There are different failure scenarios:</p>
+<ul>
+<li>Minority failure with data.</li>
+<li>Minority failure without data.</li>
+<li>Majority failure with data.</li>
+<li>Majority failure without data.</li>
+</ul>
+<h3 id="minority-failure-with-data">Minority failure with data</h3>
+<p>Let&rsquo;s imagine a case when <code>etcd-1</code> (<code>127.0.0.1</code>) failed, but its local storage
+is still available because it uses remote storage. We can simply provision
+another instance and let <code>etcd-1</code> resolves to the new IP address. In my
+experiment, let&rsquo;s assume the new IP address is <code>127.0.0.4</code>. We can make this
+change by updating <code>/etc/hosts</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ cat /etc/hosts
+</span></span><span style="display:flex;"><span># Static table lookup <span style="color:#66d9ef">for</span> hostnames.
+</span></span><span style="display:flex;"><span># See hosts<span style="color:#f92672">(</span>5<span style="color:#f92672">)</span> <span style="color:#66d9ef">for</span> details.
+</span></span><span style="display:flex;"><span>127.0.0.4 etcd-1
+</span></span><span style="display:flex;"><span>127.0.0.2 etcd-2
+</span></span><span style="display:flex;"><span>127.0.0.3 etcd-3
+</span></span></code></pre></div><p>Note that <code>etcd-1</code> now points to <code>127.0.0.4</code>. We can now start this instance by:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-1 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.4:2380 \
+</span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.4:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
+</span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-1:2380 \
+</span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-1:2379
+</span></span></code></pre></div><h3 id="minority-failure-without-data">Minority failure without data</h3>
+<p>In this case, not only the instance is gone, but its data is also lost. To
+simulate this case, let&rsquo;s wipe out the data via:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ rm -drf etcd-1.etcd
+</span></span></code></pre></div><p>Now if we try the same command as mentioned above:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-1 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.4:2380 \
+</span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.4:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
+</span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-1:2380 \
+</span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-1:2379
+</span></span></code></pre></div><p>It is going to fail with:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;level&#34;</span>: <span style="color:#e6db74">&#34;fatal&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;ts&#34;</span>: <span style="color:#e6db74">&#34;2023-06-18T13:16:48.878283-0700&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;caller&#34;</span>: <span style="color:#e6db74">&#34;etcdmain/etcd.go:204&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;msg&#34;</span>: <span style="color:#e6db74">&#34;discovery failed&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;member a3959071884acd0c has already been bootstrapped&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;stacktrace&#34;</span>: <span style="color:#e6db74">&#34;go.etcd.io/etcd/server/v3/etcdmain.startEtcdOrProxyV2\n\tgo.etcd.io/etcd/server/v3/etcdmain/etcd.go:204\ngo.etcd.io/etcd/server/v3/etcdmain.Main\n\tgo.etcd.io/etcd/server/v3/etcdmain/main.go:40\nmain.main\n\tgo.etcd.io/etcd/server/v3/main.go:31\nruntime.main\n\truntime/proc.go:250&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>What this message means is that <code>etcd-1</code> has already been bootstrapped in the
+past, it won&rsquo;t succeed if we try to bootstrap it again. In order to bootstrap it
+successfully, we have to reset its state by removing this member:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ memberid<span style="color:#f92672">=</span><span style="color:#66d9ef">$(</span>etcdctl --endpoints<span style="color:#f92672">=</span>http://etcd-2:2379 member list --hex -w json | jq -r <span style="color:#e6db74">&#39;.members[] | select(.name == &#34;etcd-1&#34;) | .ID&#39;</span><span style="color:#66d9ef">)</span>
+</span></span><span style="display:flex;"><span>$ etcdctl --endpoints<span style="color:#f92672">=</span>http://etcd-2:2379 member remove $memberid
+</span></span></code></pre></div><p>Now we are back to the original state, which we need to add this member manually
+and then start the instance with <code>--initial-cluster-state existing</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcdctl --endpoints<span style="color:#f92672">=</span>http://etcd-2:2379 member add etcd-1 --peer-urls http://etcd-1:2380
+</span></span><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-1 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.4:2380 \
+</span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.4:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
+</span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-1:2380 \
+</span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-1:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster-state existing
+</span></span></code></pre></div><h3 id="majority-failure-with-data">Majority failure with data</h3>
+<p>Let&rsquo;s continue the experimentation, and assume we lost <code>etcd-2</code> and <code>etcd-3</code>. In
+this case, since we still have the data for <code>etcd-2</code> and <code>etcd-3</code>, we can simply
+launch two new instances. In this experiment, let&rsquo;s assume the new IP addresses
+for them are <code>127.0.0.5</code> and <code>127.0.0.6</code> respectively:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ cat /etc/hosts
+</span></span><span style="display:flex;"><span># Static table lookup <span style="color:#66d9ef">for</span> hostnames.
+</span></span><span style="display:flex;"><span># See hosts<span style="color:#f92672">(</span>5<span style="color:#f92672">)</span> <span style="color:#66d9ef">for</span> details.
+</span></span><span style="display:flex;"><span>127.0.0.4 etcd-1
+</span></span><span style="display:flex;"><span>127.0.0.5 etcd-2
+</span></span><span style="display:flex;"><span>127.0.0.6 etcd-3
+</span></span><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-2 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.5:2380 \
+</span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.5:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
+</span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-2:2380 \
+</span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-2:2379
+</span></span><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-3 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.6:2380 \
+</span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.6:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
+</span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-3:2380 \
+</span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-3:2379
+</span></span></code></pre></div><h3 id="majority-failure-without-data">Majority failure without data</h3>
+<p>It is clear now that we need to remove the previous dead members when we don&rsquo;t
+have its previous data, however we won&rsquo;t be able to do such operations because
+we lost too many instances, and at that point of time, no <code>etcdctl</code> operations
+are possible anymore. This can further be dividied into three different cases:</p>
+<ul>
+<li>There is snapshot saved.</li>
+<li>There is no snapshot, but there is still at least one live instance.</li>
+<li>No snapshot, and no any live instances</li>
+</ul>
+<h4 id="with-snapshot">With snapshot</h4>
+<p>Let&rsquo;s save a snapshot before we simulate failures:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcdctl --endpoints<span style="color:#f92672">=</span>http://etcd-3:2379 snapshot save snapshot.db
+</span></span></code></pre></div><p>Now let&rsquo;s stop all instances and also clean the data directories:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ rm -drf etcd-1.etcd
+</span></span><span style="display:flex;"><span>$ rm -drf etcd-2.etcd
+</span></span><span style="display:flex;"><span>$ rm -drf etcd-3.etcd
+</span></span></code></pre></div><p>Now we can restore the data directory for each of the instance via:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcdctl snapshot restore snapshot.db <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --name etcd-1 \
+</span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
+</span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-1:2380
+</span></span><span style="display:flex;"><span>$ etcdctl snapshot restore snapshot.db <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --name etcd-2 \
+</span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
+</span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-2:2380
+</span></span><span style="display:flex;"><span>$ etcdctl snapshot restore snapshot.db <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --name etcd-3 \
+</span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
+</span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-3:2380
+</span></span></code></pre></div><p>Then we can follow the same steps above just like we have data available:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-1 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.4:2380 \
+</span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.4:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
+</span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-1:2380 \
+</span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-1:2379
+</span></span><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-2 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.5:2380 \
+</span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.5:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
+</span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-2:2380 \
+</span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-2:2379
+</span></span><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-3 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.6:2380 \
+</span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.6:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
+</span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-3:2380 \
+</span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-3:2379
+</span></span></code></pre></div><h4 id="with-live-instance">With live instance</h4>
+<p>If we don&rsquo;t have snapshots, but we do still have at least one live instance, we
+can still restore this cluster by initializing the state from one of the live
+instance. In this experiment, I&rsquo;m going to stop <code>etcd-2</code> and <code>etcd-3</code> and also
+remove its data directories:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ rm -drf etcd-2.etcd
+</span></span><span style="display:flex;"><span>$ rm -drf etcd-3.etcd
+</span></span></code></pre></div><p>Now we can restart <code>etcd-1</code> with <code>--force-new-cluster</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-1 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.4:2380 \
+</span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.4:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
+</span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-1:2380 \
+</span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-1:2379 \
+</span></span><span style="display:flex;"><span>    --force-new-cluster
+</span></span></code></pre></div><p>With this step completed, we can bring back <code>etcd-2</code> and <code>etcd-3</code> just like what
+we experimented earlier - when we set up clustering manually:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcdctl --endpoints<span style="color:#f92672">=</span>http://etcd-1:2379 member add etcd-2 --peer-urls http://etcd-2:2380
+</span></span><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-2 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.5:2380 \
+</span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.5:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380 \
+</span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-2:2380 \
+</span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-2:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster-state existing
+</span></span><span style="display:flex;"><span>$ etcdctl --endpoints<span style="color:#f92672">=</span>http://etcd-1:2379 member add etcd-3 --peer-urls http://etcd-3:2380
+</span></span><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-3 <span style="color:#ae81ff">\
+</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.6:2380 \
+</span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.6:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
+</span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-3:2380 \
+</span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-3:2379 \
+</span></span><span style="display:flex;"><span>    --initial-cluster-state existing
+</span></span></code></pre></div><p>If there is no snapshot, nor there is any live instances, then I think we don&rsquo;t
+really have any possibilities there.</p>
+<h2 id="summary">Summary</h2>
+<p>I hope you enjoyed this experimentation so far. This post examined several cases
+from manual clustering setup as well as different disaster recovery scenarios. I
+wish this offered few insights and also be helpful when you actually need it.</p>
+</section>
+
+  
+  
+
+  
+  
+  
+  <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+    
+    
+    <a
+      class="ml-auto flex w-1/2 items-center justify-end rounded-r-md p-6 pl-3 no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      href="https://blog.zhouhaibing.com/posts/race-condition-between-kube-proxy-and-cilium/"
+      ><span>Race condition between kube-proxy and cilium</span><span class="ml-1.5">→</span></a
+    >
+    
+  </nav>
+  
+
+  
+  
+  <div class="mt-24" id="disqus_thread"></div>
+  <script>
+    const disqusShortname = 'zhouhaibing089';
+    const script = document.createElement('script');
+    script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+    script.setAttribute('data-timestamp', +new Date());
+    document.head.appendChild(script);
+  </script>
+  
+
+  
+  
+</article>
+
+
+    </main>
+
+    <footer
+  class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60"
+>
+  <div class="mr-auto">
+    &copy; 2023
+    <a class="link" href="https://blog.zhouhaibing.com/">Hi-Been Space</a>
+  </div>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
+    >Powered by Hugo️️</a
+  >️
+  <a
+    class="link"
+    href="https://github.com/nanxiaobei/hugo-paper"
+    rel="noopener"
+    target="_blank"
+    >Theme Paper</a
+  >
+</footer>
+
+  </body>
+</html>
