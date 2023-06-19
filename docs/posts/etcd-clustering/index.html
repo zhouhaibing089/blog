@@ -136,7 +136,7 @@ $ cat /etc/hosts # Static table lookup for hostnames. # See hosts(5) for details
 Prerequisites I added the following into /etc/hosts so that I can assign dns names to each of the etcd instances that I&rsquo;m about to create.
 $ cat /etc/hosts # Static table lookup for hostnames. # See hosts(5) for details."><meta itemprop="datePublished" content="2023-06-18T14:27:00-07:00" />
 <meta itemprop="dateModified" content="2023-06-18T14:27:00-07:00" />
-<meta itemprop="wordCount" content="1835">
+<meta itemprop="wordCount" content="1880">
 <meta itemprop="keywords" content="" />
   
   <meta name="twitter:card" content="summary"/>
@@ -332,8 +332,18 @@ not connected to the first instance at all:</p>
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-2:2380 \
 </span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-2:2379
 </span></span></code></pre></div><p>This takes us further, but it errors crazily with message below:</p>
-<pre tabindex="0"><code>{&#34;level&#34;:&#34;warn&#34;,&#34;ts&#34;:&#34;2023-06-17T21:26:46.212008-0700&#34;,&#34;caller&#34;:&#34;rafthttp/stream.go:653&#34;,&#34;msg&#34;:&#34;request sent was ignored by remote peer due to cluster ID mismatch&#34;,&#34;remote-peer-id&#34;:&#34;a3959071884acd0c&#34;,&#34;remote-peer-cluster-id&#34;:&#34;572a811fac16a854&#34;,&#34;local-member-id&#34;:&#34;97ecdd3706cc2d90&#34;,&#34;local-member-cluster-id&#34;:&#34;b2698d4259f33e40&#34;,&#34;error&#34;:&#34;cluster ID mismatch&#34;}
-</code></pre><p>It means that this instance tried to create another cluster which isn&rsquo;t expected.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;level&#34;</span>: <span style="color:#e6db74">&#34;warn&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;ts&#34;</span>: <span style="color:#e6db74">&#34;2023-06-17T21:26:46.212008-0700&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;caller&#34;</span>: <span style="color:#e6db74">&#34;rafthttp/stream.go:653&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;msg&#34;</span>: <span style="color:#e6db74">&#34;request sent was ignored by remote peer due to cluster ID mismatch&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;remote-peer-id&#34;</span>: <span style="color:#e6db74">&#34;a3959071884acd0c&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;remote-peer-cluster-id&#34;</span>: <span style="color:#e6db74">&#34;572a811fac16a854&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;local-member-id&#34;</span>: <span style="color:#e6db74">&#34;97ecdd3706cc2d90&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;local-member-cluster-id&#34;</span>: <span style="color:#e6db74">&#34;b2698d4259f33e40&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;cluster ID mismatch&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>It means that this instance tried to create another cluster which isn&rsquo;t expected.
 We can fix this by add <code>--initial-cluster-state existing</code>.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-2 <span style="color:#ae81ff">\
 </span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.2:2380 \
@@ -343,7 +353,14 @@ We can fix this by add <code>--initial-cluster-state existing</code>.</p>
 </span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-2:2379 \
 </span></span><span style="display:flex;"><span>    --initial-cluster-state existing
 </span></span></code></pre></div><p>This command still failed to bring up the second instance. The error message is:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>{&#34;level&#34;:&#34;fatal&#34;,&#34;ts&#34;:&#34;2023-06-17T21:30:36.560232-0700&#34;,&#34;caller&#34;:&#34;etcdmain/etcd.go:204&#34;,&#34;msg&#34;:&#34;discovery failed&#34;,&#34;error&#34;:&#34;error validating peerURLs {ClusterID:572a811fac16a854 Members:[&amp;{ID:a3959071884acd0c RaftAttributes:{PeerURLs:[http://etcd-1:2380] IsLearner:false} Attributes:{Name:etcd-1 ClientURLs:[http://etcd-1:2379]}}] RemovedMemberIDs:[]}: member count is unequal&#34;,&#34;stacktrace&#34;:&#34;go.etcd.io/etcd/server/v3/etcdmain.startEtcdOrProxyV2\n\tgo.etcd.io/etcd/server/v3/etcdmain/etcd.go:204\ngo.etcd.io/etcd/server/v3/etcdmain.Main\n\tgo.etcd.io/etcd/server/v3/etcdmain/main.go:40\nmain.main\n\tgo.etcd.io/etcd/server/v3/main.go:31\nruntime.main\n\truntime/proc.go:250&#34;}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;level&#34;</span>: <span style="color:#e6db74">&#34;fatal&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;ts&#34;</span>: <span style="color:#e6db74">&#34;2023-06-17T21:30:36.560232-0700&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;caller&#34;</span>: <span style="color:#e6db74">&#34;etcdmain/etcd.go:204&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;msg&#34;</span>: <span style="color:#e6db74">&#34;discovery failed&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;error validating peerURLs {ClusterID:572a811fac16a854 Members:[&amp;{ID:a3959071884acd0c RaftAttributes:{PeerURLs:[http://etcd-1:2380] IsLearner:false} Attributes:{Name:etcd-1 ClientURLs:[http://etcd-1:2379]}}] RemovedMemberIDs:[]}: member count is unequal&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;stacktrace&#34;</span>: <span style="color:#e6db74">&#34;go.etcd.io/etcd/server/v3/etcdmain.startEtcdOrProxyV2\n\tgo.etcd.io/etcd/server/v3/etcdmain/etcd.go:204\ngo.etcd.io/etcd/server/v3/etcdmain.Main\n\tgo.etcd.io/etcd/server/v3/etcdmain/main.go:40\nmain.main\n\tgo.etcd.io/etcd/server/v3/main.go:31\nruntime.main\n\truntime/proc.go:250&#34;</span>
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>This basically means that the member count doesn&rsquo;t match. We specified 2 in our
 flag <code>--initial-cluster</code>, but there is only one member which is <code>etcd-1</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcdctl --endpoints<span style="color:#f92672">=</span>http://etcd-1:2379 member list
@@ -374,7 +391,7 @@ well:</p>
 </span></span><span style="display:flex;"><span>foo
 </span></span><span style="display:flex;"><span>bar
 </span></span></code></pre></div><h3 id="avoid-adding-members-manually">Avoid adding members manually</h3>
-<p>The steps demonstrated abvoe seem to be tedious because we have to add each
+<p>The steps demonstrated above seem to be tedious because we have to add each
 member manually before we can start the instance. If we know all the members
 beforehand, we can avoid doing that manually. To run the same setup, we can just
 do the following:</p>
@@ -459,7 +476,14 @@ simulate this case, let&rsquo;s wipe out the data via:</p>
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-1:2380 \
 </span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-1:2379
 </span></span></code></pre></div><p>It is going to fail with:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>{&#34;level&#34;:&#34;fatal&#34;,&#34;ts&#34;:&#34;2023-06-18T13:16:48.878283-0700&#34;,&#34;caller&#34;:&#34;etcdmain/etcd.go:204&#34;,&#34;msg&#34;:&#34;discovery failed&#34;,&#34;error&#34;:&#34;member a3959071884acd0c has already been bootstrapped&#34;,&#34;stacktrace&#34;:&#34;go.etcd.io/etcd/server/v3/etcdmain.startEtcdOrProxyV2\n\tgo.etcd.io/etcd/server/v3/etcdmain/etcd.go:204\ngo.etcd.io/etcd/server/v3/etcdmain.Main\n\tgo.etcd.io/etcd/server/v3/etcdmain/main.go:40\nmain.main\n\tgo.etcd.io/etcd/server/v3/main.go:31\nruntime.main\n\truntime/proc.go:250&#34;}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;level&#34;</span>: <span style="color:#e6db74">&#34;fatal&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;ts&#34;</span>: <span style="color:#e6db74">&#34;2023-06-18T13:16:48.878283-0700&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;caller&#34;</span>: <span style="color:#e6db74">&#34;etcdmain/etcd.go:204&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;msg&#34;</span>: <span style="color:#e6db74">&#34;discovery failed&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;error&#34;</span>: <span style="color:#e6db74">&#34;member a3959071884acd0c has already been bootstrapped&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;stacktrace&#34;</span>: <span style="color:#e6db74">&#34;go.etcd.io/etcd/server/v3/etcdmain.startEtcdOrProxyV2\n\tgo.etcd.io/etcd/server/v3/etcdmain/etcd.go:204\ngo.etcd.io/etcd/server/v3/etcdmain.Main\n\tgo.etcd.io/etcd/server/v3/etcdmain/main.go:40\nmain.main\n\tgo.etcd.io/etcd/server/v3/main.go:31\nruntime.main\n\truntime/proc.go:250&#34;</span>
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>What this message means is that <code>etcd-1</code> has already been bootstrapped in the
 past, it won&rsquo;t succeed if we try to bootstrap it again. In order to bootstrap it
 successfully, we have to reset its state by removing this member:</p>

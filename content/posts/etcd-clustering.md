@@ -97,8 +97,18 @@ $ etcd --name=etcd-2 \
 
 This takes us further, but it errors crazily with message below:
 
-```
-{"level":"warn","ts":"2023-06-17T21:26:46.212008-0700","caller":"rafthttp/stream.go:653","msg":"request sent was ignored by remote peer due to cluster ID mismatch","remote-peer-id":"a3959071884acd0c","remote-peer-cluster-id":"572a811fac16a854","local-member-id":"97ecdd3706cc2d90","local-member-cluster-id":"b2698d4259f33e40","error":"cluster ID mismatch"}
+```json
+{
+  "level": "warn",
+  "ts": "2023-06-17T21:26:46.212008-0700",
+  "caller": "rafthttp/stream.go:653",
+  "msg": "request sent was ignored by remote peer due to cluster ID mismatch",
+  "remote-peer-id": "a3959071884acd0c",
+  "remote-peer-cluster-id": "572a811fac16a854",
+  "local-member-id": "97ecdd3706cc2d90",
+  "local-member-cluster-id": "b2698d4259f33e40",
+  "error": "cluster ID mismatch"
+}
 ```
 
 It means that this instance tried to create another cluster which isn't expected.
@@ -116,8 +126,15 @@ $ etcd --name=etcd-2 \
 
 This command still failed to bring up the second instance. The error message is:
 
-```console
-{"level":"fatal","ts":"2023-06-17T21:30:36.560232-0700","caller":"etcdmain/etcd.go:204","msg":"discovery failed","error":"error validating peerURLs {ClusterID:572a811fac16a854 Members:[&{ID:a3959071884acd0c RaftAttributes:{PeerURLs:[http://etcd-1:2380] IsLearner:false} Attributes:{Name:etcd-1 ClientURLs:[http://etcd-1:2379]}}] RemovedMemberIDs:[]}: member count is unequal","stacktrace":"go.etcd.io/etcd/server/v3/etcdmain.startEtcdOrProxyV2\n\tgo.etcd.io/etcd/server/v3/etcdmain/etcd.go:204\ngo.etcd.io/etcd/server/v3/etcdmain.Main\n\tgo.etcd.io/etcd/server/v3/etcdmain/main.go:40\nmain.main\n\tgo.etcd.io/etcd/server/v3/main.go:31\nruntime.main\n\truntime/proc.go:250"}
+```json
+{
+  "level": "fatal",
+  "ts": "2023-06-17T21:30:36.560232-0700",
+  "caller": "etcdmain/etcd.go:204",
+  "msg": "discovery failed",
+  "error": "error validating peerURLs {ClusterID:572a811fac16a854 Members:[&{ID:a3959071884acd0c RaftAttributes:{PeerURLs:[http://etcd-1:2380] IsLearner:false} Attributes:{Name:etcd-1 ClientURLs:[http://etcd-1:2379]}}] RemovedMemberIDs:[]}: member count is unequal",
+  "stacktrace": "go.etcd.io/etcd/server/v3/etcdmain.startEtcdOrProxyV2\n\tgo.etcd.io/etcd/server/v3/etcdmain/etcd.go:204\ngo.etcd.io/etcd/server/v3/etcdmain.Main\n\tgo.etcd.io/etcd/server/v3/etcdmain/main.go:40\nmain.main\n\tgo.etcd.io/etcd/server/v3/main.go:31\nruntime.main\n\truntime/proc.go:250"
+}
 ```
 
 This basically means that the member count doesn't match. We specified 2 in our
@@ -167,7 +184,7 @@ bar
 
 ### Avoid adding members manually
 
-The steps demonstrated abvoe seem to be tedious because we have to add each
+The steps demonstrated above seem to be tedious because we have to add each
 member manually before we can start the instance. If we know all the members
 beforehand, we can avoid doing that manually. To run the same setup, we can just
 do the following:
@@ -280,8 +297,15 @@ $ etcd --name=etcd-1 \
 
 It is going to fail with:
 
-```console
-{"level":"fatal","ts":"2023-06-18T13:16:48.878283-0700","caller":"etcdmain/etcd.go:204","msg":"discovery failed","error":"member a3959071884acd0c has already been bootstrapped","stacktrace":"go.etcd.io/etcd/server/v3/etcdmain.startEtcdOrProxyV2\n\tgo.etcd.io/etcd/server/v3/etcdmain/etcd.go:204\ngo.etcd.io/etcd/server/v3/etcdmain.Main\n\tgo.etcd.io/etcd/server/v3/etcdmain/main.go:40\nmain.main\n\tgo.etcd.io/etcd/server/v3/main.go:31\nruntime.main\n\truntime/proc.go:250"}
+```json
+{
+  "level": "fatal",
+  "ts": "2023-06-18T13:16:48.878283-0700",
+  "caller": "etcdmain/etcd.go:204",
+  "msg": "discovery failed",
+  "error": "member a3959071884acd0c has already been bootstrapped",
+  "stacktrace": "go.etcd.io/etcd/server/v3/etcdmain.startEtcdOrProxyV2\n\tgo.etcd.io/etcd/server/v3/etcdmain/etcd.go:204\ngo.etcd.io/etcd/server/v3/etcdmain.Main\n\tgo.etcd.io/etcd/server/v3/etcdmain/main.go:40\nmain.main\n\tgo.etcd.io/etcd/server/v3/main.go:31\nruntime.main\n\truntime/proc.go:250"
+}
 ```
 
 What this message means is that `etcd-1` has already been bootstrapped in the
