@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready text-sm lg:text-base"
+  style="--bg: #fbfbfb"
+  lang="en-us"
+>
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+
+  
+  <title>why en-dash looks strange in utf8 - Hi-Been Space</title>
+
+  
+  <meta name="theme-color" />
+
+  
+  
+  
+  <meta name="description" content="I have been using hyphen and dash exchangeably for a long time, and I thought they are the same. Until I realized there are:
+en-dash (–) em-dash (—) One is longer than the other, and both of them are longer than hyphen (-) (probably depends on which font you are using).
+I went through all this because there was an issue I investigated recently in kubernetes.
+The story Note: To simplify the context, the example below is faked with only the details that matter." />
+  <meta name="author" content="Haibing Zhou" />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="https://blog.zhouhaibing.com/main.min.css" />
+
+  
+  <script
+    defer
+    src="https://blog.zhouhaibing.com/highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+  
+
+  
+   
+  <link rel="preload" as="image" href="https://blog.zhouhaibing.com/theme.png" />
+
+  
+  
+  
+  <link rel="preload" as="image" href="https://www.gravatar.com/avatar/5efba87a944c70d1abe7f7892f4df74b?s=160&amp;d=identicon" />
+  
+  
+
+  
+  <link rel="preload" as="image" href="https://blog.zhouhaibing.com/github.svg" />
+  
+  <link rel="preload" as="image" href="https://blog.zhouhaibing.com/linkedin.svg" />
+  
+  
+
+  
+  
+
+  
+  <link rel="icon" href="https://blog.zhouhaibing.com/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://blog.zhouhaibing.com/apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.121.1">
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:title" content="why en-dash looks strange in utf8" />
+<meta property="og:description" content="I have been using hyphen and dash exchangeably for a long time, and I thought they are the same. Until I realized there are:
+en-dash (–) em-dash (—) One is longer than the other, and both of them are longer than hyphen (-) (probably depends on which font you are using).
+I went through all this because there was an issue I investigated recently in kubernetes.
+The story Note: To simplify the context, the example below is faked with only the details that matter." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.zhouhaibing.com/posts/why-en-dash-looks-strange-in-utf8/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-01-04T22:31:00-08:00" />
+<meta property="article:modified_time" content="2024-01-04T22:31:00-08:00" />
+
+
+  
+  <meta itemprop="name" content="why en-dash looks strange in utf8">
+<meta itemprop="description" content="I have been using hyphen and dash exchangeably for a long time, and I thought they are the same. Until I realized there are:
+en-dash (–) em-dash (—) One is longer than the other, and both of them are longer than hyphen (-) (probably depends on which font you are using).
+I went through all this because there was an issue I investigated recently in kubernetes.
+The story Note: To simplify the context, the example below is faked with only the details that matter."><meta itemprop="datePublished" content="2024-01-04T22:31:00-08:00" />
+<meta itemprop="dateModified" content="2024-01-04T22:31:00-08:00" />
+<meta itemprop="wordCount" content="1303">
+<meta itemprop="keywords" content="" />
+  
+  <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="why en-dash looks strange in utf8"/>
+<meta name="twitter:description" content="I have been using hyphen and dash exchangeably for a long time, and I thought they are the same. Until I realized there are:
+en-dash (–) em-dash (—) One is longer than the other, and both of them are longer than hyphen (-) (probably depends on which font you are using).
+I went through all this because there was an issue I investigated recently in kubernetes.
+The story Note: To simplify the context, the example below is faked with only the details that matter."/>
+
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+    <a
+      class="-translate-x-[1px] -translate-y-[1px] text-2xl font-semibold"
+      href="https://blog.zhouhaibing.com/"
+      >Hi-Been Space</a
+    >
+    <div
+      class="btn-dark text-[0] ml-4 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]"
+      role="button"
+      aria-label="Dark"
+    ></div>
+  </div>
+
+  <div
+    class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+    role="button"
+    aria-label="Menu"
+  ></div>
+
+  
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = `#fbfbfb`.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:ml-12 lg:mt-0 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 text-[0] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href="https://github.com/zhouhaibing089"
+        target="_blank"
+        rel="me"
+      >
+        github
+      </a>
+      
+      <a
+        class="h-8 w-8 text-[0] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./linkedin.svg)"
+        href="https://linkedin.com/in/haibzhou"
+        target="_blank"
+        rel="me"
+      >
+        linkedin
+      </a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main
+      class="prose prose-neutral relative mx-auto min-h-[calc(100%-10rem)] max-w-3xl px-8 pb-24 pt-16 dark:prose-invert"
+    >
+      
+
+<article>
+  <header class="mb-20">
+    <h1 class="!my-0 pb-2.5">why en-dash looks strange in utf8</h1>
+
+    
+    <div class="text-sm opacity-60">
+      
+      <time>Jan 4, 2024</time>
+      
+      
+      
+      
+    </div>
+    
+  </header>
+
+  <section><p>I have been using hyphen and dash exchangeably for a long time, and I thought
+they are the same. Until I realized there are:</p>
+<ul>
+<li>en-dash (–)</li>
+<li>em-dash (—)</li>
+</ul>
+<p>One is longer than the other, and both of them are longer than hyphen (-)
+(probably depends on which font you are using).</p>
+<p>I went through all this because there was an issue I investigated recently in
+kubernetes.</p>
+<h2 id="the-story">The story</h2>
+<blockquote>
+<p>Note: To simplify the context, the example below is faked with only the
+details that matter.</p>
+</blockquote>
+<p>A pod can be retrieved in JSON, but can&rsquo;t be retrieved in YAML because there
+are control characters detected, but how?</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ kubectl get pods nginx-pod -o yaml
+</span></span><span style="display:flex;"><span>error: error converting JSON to YAML: yaml: control characters are not allowed
+</span></span><span style="display:flex;"><span>$ kubectl get pods nginx-pod -o json
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    &#34;apiVersion&#34;: &#34;v1&#34;,
+</span></span><span style="display:flex;"><span>    &#34;kind&#34;: &#34;Pod&#34;,
+</span></span><span style="display:flex;"><span>    &#34;metadata&#34;: {
+</span></span><span style="display:flex;"><span>        &#34;annotations&#34;: {
+</span></span><span style="display:flex;"><span>            &#34;range&#34;: &#34;0â9&#34;
+</span></span><span style="display:flex;"><span>        },
+</span></span><span style="display:flex;"><span>    ...
+</span></span></code></pre></div><p>In order to see the invisible characters, we can leverage other tools (for
+instance, json viewer in Firefox):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">&#34;metadata&#34;</span>: {
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">&#34;annotations&#34;</span>: {
+</span></span><span style="display:flex;"><span>            <span style="color:#f92672">&#34;range&#34;</span>: <span style="color:#e6db74">&#34;0â\u0080\u00939&#34;</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>We can see there are two invisible (the visible <code>â</code> is <a href="https://www.compart.com/en/unicode/U+00E2">U+00E2</a>) unicode
+characters in between:</p>
+<ul>
+<li><a href="https://www.compart.com/en/unicode/U+0080">U+0080</a></li>
+<li><a href="https://www.compart.com/en/unicode/U+0093">U+0093</a></li>
+</ul>
+<p>The first one is &ldquo;Padding Character&rdquo; while the second one is &ldquo;Set Transmit
+State&rdquo;. Both of them are control characters.</p>
+<p>After talking with customer, the value was supposed to be <code>0–9</code> (0, en-dash, 9).
+So how could an en-dash <code>–</code> turn into <code>\u00e2\u0080\u0093</code>.</p>
+<h2 id="chatgpt">ChatGPT</h2>
+<p>In a pre-ChatGPT world, we would search for possibilities, but that is pretty
+hard because we don&rsquo;t have an idea to start with. Encoding issue maybe, but what
+should I put in a search box? I decided to give it a try on ChatGPT (free
+version) and here is my conversation.</p>
+<hr>
+<blockquote>
+<p>What is the encoding of 0â9?</p>
+</blockquote>
+<p>It seems there&rsquo;s some confusion or issue with the representation of characters
+in your provided text &ldquo;0â9.&rdquo; The correct representation of &ldquo;0–9&rdquo; (0 to 9 with
+an en dash) in UTF-8 encoding would be:</p>
+<pre tabindex="0"><code>30 E2 80 93 39
+</code></pre><p>Here:</p>
+<ul>
+<li><code>30</code> is the hexadecimal representation of the ASCII character &lsquo;0&rsquo;.</li>
+<li><code>E2 80 93</code> represents the UTF-8 encoding of the en dash character &lsquo;–&rsquo;.</li>
+<li><code>39</code> is the hexadecimal representation of the ASCII character &lsquo;9&rsquo;.</li>
+</ul>
+<p>If you are seeing unexpected characters like &ldquo;â,&rdquo; it indicates a decoding or
+display issue. Ensure that you are correctly interpreting the text as UTF-8
+during decoding, and also check the encoding settings of your display or
+processing environment to avoid misinterpretation.</p>
+<blockquote>
+<p>What might be the issue?</p>
+</blockquote>
+<p>The issue with the characters &ldquo;â&rdquo; appearing in the text &ldquo;0â9&rdquo; suggests a
+problem with character encoding or decoding. Here are some common reasons for
+such issues:</p>
+<ol>
+<li>
+<p>Double Encoding or Incorrect Decoding: The text may have been encoded twice
+with different character encodings, or it might be decoded using an incorrect
+encoding. For example, if the original encoding is UTF-8, but it is being
+decoded as ISO-8859-1, you may see unexpected characters.</p>
+</li>
+<li>
+<p>Incorrect Declaration: The encoding declaration might be incorrect or
+missing. It&rsquo;s essential to know the correct encoding to interpret the characters
+properly.</p>
+</li>
+<li>
+<p>Data Corruption: If the data has undergone corruption during transmission or
+storage, it may result in incorrect character interpretation.</p>
+</li>
+</ol>
+<p>To address this issue:</p>
+<ul>
+<li>
+<p>Check Encoding Declarations: Ensure that the encoding declaration or
+specification matches the actual encoding of the text. In this case, it should
+be UTF-8.</p>
+</li>
+<li>
+<p>Use the Correct Decoding: When decoding the text, use the appropriate decoding
+method for the specified encoding. In this case, use UTF-8 decoding.</p>
+</li>
+<li>
+<p>Inspect Data Sources: Check the source of the data to see if there are any
+issues with how it&rsquo;s being generated or stored.</p>
+</li>
+<li>
+<p>Update Software: Ensure that the software you are using to read or process the
+data is up-to-date and supports the expected character encoding.</p>
+</li>
+</ul>
+<p>If you have control over the data source, make sure the data is consistently
+encoded in UTF-8. If the issue persists, further investigation into the specific
+details of your system and data flow may be necessary.</p>
+<blockquote>
+<p>What is your guess?</p>
+</blockquote>
+<p>Given the presence of the characters &ldquo;â&rdquo; in the text &ldquo;0â9,&rdquo; it strongly
+suggests a misinterpretation of character encoding, likely involving UTF-8.
+Here&rsquo;s a common scenario:</p>
+<ol>
+<li>The original text &ldquo;0–9&rdquo; is encoded in UTF-8, where the en dash character (–)
+is represented by the bytes <code>0xE2 0x80 0x93</code>.</li>
+<li>During decoding or display, the interpreting system or software might be
+expecting a different encoding (e.g., ISO-8859-1) or incorrectly interpreting
+the UTF-8 encoding, leading to the display of &ldquo;â&rdquo; instead of the en dash.</li>
+</ol>
+<p>To address this:</p>
+<ul>
+<li>Double-check the encoding declaration or specification to ensure it is set to
+UTF-8.</li>
+<li>Use UTF-8 decoding when interpreting the text.</li>
+</ul>
+<p>If you have control over the source or decoding process, make sure the correct
+encoding is used to interpret the characters. If the issue persists, inspecting
+the data source, encoding settings, and the software being used for any
+discrepancies or misconfigurations would be recommended.</p>
+<hr>
+<h2 id="iso-8859-1">ISO-8859-1</h2>
+<p>While ChatGPT didn&rsquo;t say exactly what is the reason, but it did mention few
+times that <code>ISO-8859-1</code> might have been used when decoding the original text.</p>
+<blockquote>
+<p>Note: I had a much better experience when using internal GPT which is also
+based on gpt-3.5. That conversation told me right away that the text I
+provided has a mixed encoding which includes both utf-8 and iso-8859-1.</p>
+</blockquote>
+<p>I wrote a small Go program to verify this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;unicode/utf8&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;golang.org/x/text/encoding/charmap&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">utf8Bytes</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">utf8</span>.<span style="color:#a6e22e">RuneLen</span>(<span style="color:#e6db74">&#39;–&#39;</span>))
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">written</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">utf8</span>.<span style="color:#a6e22e">EncodeRune</span>(<span style="color:#a6e22e">utf8Bytes</span>, <span style="color:#e6db74">&#39;–&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;– has %d bytes in utf8\n&#34;</span>, <span style="color:#a6e22e">written</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">b</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">utf8Bytes</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%b &#34;</span>, <span style="color:#a6e22e">b</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">isoBytes</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">byte</span>, <span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">written</span>, <span style="color:#a6e22e">read</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">charmap</span>.<span style="color:#a6e22e">ISO8859_1</span>.<span style="color:#a6e22e">NewDecoder</span>().<span style="color:#a6e22e">Transform</span>(
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">isoBytes</span>, <span style="color:#a6e22e">utf8Bytes</span>, <span style="color:#66d9ef">true</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;failed to transform into iso8859-1: %s\n&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Exit</span>(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;transformed in iso8859-1 has %d bytes (%d bytes read)\n&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">written</span>, <span style="color:#a6e22e">read</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">b</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">isoBytes</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">written</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%b &#34;</span>, <span style="color:#a6e22e">b</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>This program basically executes the following steps:</p>
+<ol>
+<li>Reads <code>–</code> (en-dash) as UTF-8.</li>
+<li>Prints out its binary form.</li>
+<li>Converts to ISO8859-1.</li>
+<li>Prints out its binary form.</li>
+</ol>
+<p>The output is:</p>
+<pre tabindex="0"><code>– has 3 bytes in utf8
+11100010 10000000 10010011 
+transformed in iso8859-1 has 6 bytes (3 bytes read)
+11000011 10100010 11000010 10000000 11000010 10010011
+</code></pre><h2 id="utf-8">UTF-8</h2>
+<p>Now if we read the last 6 bytes as UTF-8, we have to figure out how to
+interprete such bytes. In another word, we need to understand <a href="https://en.wikipedia.org/wiki/UTF-8">UTF-8</a> a
+little bit. Fortunately that is not hard (well, you could also just ask ChatGPT
+what they are):</p>
+<ul>
+<li>UTF-8 is a multi-byte encoding.</li>
+<li>Any byte that starts with <code>10</code> is a continuation byte.</li>
+</ul>
+<p>Essentially we have three unicodes:</p>
+<ul>
+<li><code>11000011 10100010</code> (the second byte starts with <code>10</code> so it is a continuation
+byte, but the one after is not as that starts with <code>11</code>)</li>
+<li><code>11000010 10000000</code> (same)</li>
+<li><code>11000010 10010011</code> (same)</li>
+</ul>
+<p>Then according to the its <a href="https://en.wikipedia.org/wiki/UTF-8">wiki page</a>:</p>
+<table>
+<thead>
+<tr>
+<th>First code point</th>
+<th>Last code point</th>
+<th>Byte 1</th>
+<th>Byte 2</th>
+<th>Byte 3</th>
+<th>Byte 4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>U+0000</td>
+<td>U+007F</td>
+<td>0xxxxxxx</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>U+0080</td>
+<td>U+07FF</td>
+<td>110xxxxx</td>
+<td>10xxxxxx</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>U+0800</td>
+<td>U+FFFF</td>
+<td>1110xxxx</td>
+<td>10xxxxxx</td>
+<td>10xxxxxx</td>
+<td></td>
+</tr>
+<tr>
+<td>U+10000</td>
+<td>U+10FFFF</td>
+<td>11110xxx</td>
+<td>10xxxxxx</td>
+<td>10xxxxxx</td>
+<td>10xxxxxx</td>
+</tr>
+</tbody>
+</table>
+<p>So we can turn those binaries into the exact code point:</p>
+<ul>
+<li><code>11000011 10100010</code> =&gt; <code>00011 100010</code> =&gt; <code>000 1110 0010</code> =&gt; <code>00E2</code></li>
+<li><code>11000010 10000000</code> =&gt; <code>00010 000000</code> =&gt; <code>000 1000 0000</code> =&gt; <code>0080</code></li>
+<li><code>11000010 10010011</code> =&gt; <code>00010 010011</code> =&gt; <code>000 1001 0011</code> =&gt; <code>0093</code></li>
+</ul>
+<p>Remember what we observed at the beginning?</p>
+<pre tabindex="0"><code>U+00E2 U+0080 U+0093
+</code></pre><p>That matches exactly!</p>
+<p>And as it turns out finally, the client service which receives payload from
+Github Webhook, has a different encoding <code>-Dfile.encoding=ISO-8859-1</code> so that&rsquo;s
+how an en-dash turned into a 6 bytes as 3 unicodes.</p>
+<h2 id="summary">Summary</h2>
+<p>I stumbled on this problem for a while before I turned into ChatGPT and it
+really helped on providing hints and potential explanations. I also take this
+chance and now have a better understanding of UTF-8 encoding, especially after
+doing all this math.</p>
+</section>
+
+  
+  
+
+  
+  
+  
+  <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+    
+    
+    <a
+      class="ml-auto flex w-1/2 items-center justify-end rounded-r-md p-6 pl-3 no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      href="https://blog.zhouhaibing.com/posts/etcd-clustering-step-by-step/"
+      ><span>etcd clustering step by step</span><span class="ml-1.5">→</span></a
+    >
+    
+  </nav>
+  
+
+  
+  
+  <div class="mt-24" id="disqus_thread"></div>
+  <script>
+    const disqusShortname = 'zhouhaibing089';
+    const script = document.createElement('script');
+    script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+    script.setAttribute('data-timestamp', +new Date());
+    document.head.appendChild(script);
+  </script>
+  
+
+  
+  
+</article>
+
+
+    </main>
+
+    <footer
+  class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60"
+>
+  <div class="mr-auto">
+    &copy; 2024
+    <a class="link" href="https://blog.zhouhaibing.com/">Hi-Been Space</a>
+  </div>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
+    >Powered by Hugo️️</a
+  >️
+  <a
+    class="link"
+    href="https://github.com/nanxiaobei/hugo-paper"
+    rel="noopener"
+    target="_blank"
+    >Theme Paper</a
+  >
+</footer>
+
+  </body>
+</html>

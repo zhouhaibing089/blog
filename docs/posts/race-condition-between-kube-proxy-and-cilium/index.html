@@ -109,7 +109,7 @@ About the cluster The cluster was set up like something below:" />
   <link rel="apple-touch-icon" href="https://blog.zhouhaibing.com/apple-touch-icon.png" />
 
   
-  <meta name="generator" content="Hugo 0.112.3">
+  <meta name="generator" content="Hugo 0.121.1">
 
   
   
@@ -130,6 +130,7 @@ About the cluster The cluster was set up like something below:" />
 <meta property="article:published_time" content="2023-05-27T16:00:00-07:00" />
 <meta property="article:modified_time" content="2023-05-27T16:00:00-07:00" />
 
+
   
   <meta itemprop="name" content="Race condition between kube-proxy and cilium">
 <meta itemprop="description" content="This is an investigation story where all pods on one host lost connectivity to external service. It looks like something below:
@@ -139,8 +140,7 @@ About the cluster The cluster was set up like something below:"><meta itemprop="
 <meta itemprop="wordCount" content="1534">
 <meta itemprop="keywords" content="" />
   
-  <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Race condition between kube-proxy and cilium"/>
+  <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Race condition between kube-proxy and cilium"/>
 <meta name="twitter:description" content="This is an investigation story where all pods on one host lost connectivity to external service. It looks like something below:
 $ nsenter --net=/proc/29080/ns/net curl docs.cilium.io -v &gt; GET / HTTP/1.1 &gt; Host: docs.cilium.io &gt; User-Agent: curl/7.79.1 &gt; Accept: */* &gt; Here 29080 is the pid of some pod process, and it appeared that TCP connection has been established, but somehow it couldn&rsquo;t receive any response.
 About the cluster The cluster was set up like something below:"/>
@@ -186,7 +186,7 @@ About the cluster The cluster was set up like something below:"/>
 
     
     const metaTheme = document.querySelector('meta[name="theme-color"]');
-    const lightBg = `"#fbfbfb"`.replace(/"/g, '');
+    const lightBg = `#fbfbfb`.replace(/"/g, '');
     const setDark = (isDark) => {
       metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
       htmlClass[isDark ? 'add' : 'remove']('dark');
@@ -473,7 +473,7 @@ there was a SYN before, it is considered as INVALID.</p>
   class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60"
 >
   <div class="mr-auto">
-    &copy; 2023
+    &copy; 2024
     <a class="link" href="https://blog.zhouhaibing.com/">Hi-Been Space</a>
   </div>
   <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
