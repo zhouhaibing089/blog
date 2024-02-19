@@ -6,8 +6,15 @@
     <description>Recent content on Hi-Been Space</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 04 Jan 2024 22:31:00 -0800</lastBuildDate>
+    <lastBuildDate>Sun, 18 Feb 2024 14:22:00 -0800</lastBuildDate>
     <atom:link href="https://blog.zhouhaibing.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>two lane queue</title>
+      <link>https://blog.zhouhaibing.com/posts/two-lane-queue/</link>
+      <pubDate>Sun, 18 Feb 2024 14:22:00 -0800</pubDate>
+      <guid>https://blog.zhouhaibing.com/posts/two-lane-queue/</guid>
+      <description>As you may know, a controller in kubernetes is a loop which picks up a key from workqueue and then reconciles the key into some desired state. While most of such control loops are reactive (based on external events), some of them require periodic processing (also known as resync). In general, periodic processing can easily fill up the workqueue when the number of keys is pretty huge.&#xA;I have been involved in such scenarios more than once.</description>
+    </item>
     <item>
       <title>why en-dash looks strange in utf8</title>
       <link>https://blog.zhouhaibing.com/posts/why-en-dash-looks-strange-in-utf8/</link>

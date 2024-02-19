@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready text-sm lg:text-base"
+  style="--bg: #fbfbfb"
+  lang="en-us"
+>
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+
+  
+  <title>two lane queue - Hi-Been Space</title>
+
+  
+  <meta name="theme-color" />
+
+  
+  
+  
+  <meta name="description" content="As you may know, a controller in kubernetes is a loop which picks up a key from workqueue and then reconciles the key into some desired state. While most of such control loops are reactive (based on external events), some of them require periodic processing (also known as resync). In general, periodic processing can easily fill up the workqueue when the number of keys is pretty huge.
+I have been involved in such scenarios more than once." />
+  <meta name="author" content="Haibing Zhou" />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="https://blog.zhouhaibing.com/main.min.css" />
+
+  
+  <script
+    defer
+    src="https://blog.zhouhaibing.com/highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+  
+
+  
+   
+  <link rel="preload" as="image" href="https://blog.zhouhaibing.com/theme.png" />
+
+  
+  
+  
+  <link rel="preload" as="image" href="https://www.gravatar.com/avatar/5efba87a944c70d1abe7f7892f4df74b?s=160&amp;d=identicon" />
+  
+  
+
+  
+  <link rel="preload" as="image" href="https://blog.zhouhaibing.com/github.svg" />
+  
+  <link rel="preload" as="image" href="https://blog.zhouhaibing.com/linkedin.svg" />
+  
+  
+
+  
+  
+
+  
+  <link rel="icon" href="https://blog.zhouhaibing.com/favicon.ico" />
+  <link rel="apple-touch-icon" href="https://blog.zhouhaibing.com/apple-touch-icon.png" />
+
+  
+  <meta name="generator" content="Hugo 0.122.0">
+
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  <meta property="og:title" content="two lane queue" />
+<meta property="og:description" content="As you may know, a controller in kubernetes is a loop which picks up a key from workqueue and then reconciles the key into some desired state. While most of such control loops are reactive (based on external events), some of them require periodic processing (also known as resync). In general, periodic processing can easily fill up the workqueue when the number of keys is pretty huge.
+I have been involved in such scenarios more than once." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://blog.zhouhaibing.com/posts/two-lane-queue/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-02-18T14:22:00-08:00" />
+<meta property="article:modified_time" content="2024-02-18T14:22:00-08:00" />
+
+
+  
+  <meta itemprop="name" content="two lane queue">
+<meta itemprop="description" content="As you may know, a controller in kubernetes is a loop which picks up a key from workqueue and then reconciles the key into some desired state. While most of such control loops are reactive (based on external events), some of them require periodic processing (also known as resync). In general, periodic processing can easily fill up the workqueue when the number of keys is pretty huge.
+I have been involved in such scenarios more than once."><meta itemprop="datePublished" content="2024-02-18T14:22:00-08:00" />
+<meta itemprop="dateModified" content="2024-02-18T14:22:00-08:00" />
+<meta itemprop="wordCount" content="935">
+<meta itemprop="keywords" content="" />
+  
+  <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="two lane queue"/>
+<meta name="twitter:description" content="As you may know, a controller in kubernetes is a loop which picks up a key from workqueue and then reconciles the key into some desired state. While most of such control loops are reactive (based on external events), some of them require periodic processing (also known as resync). In general, periodic processing can easily fill up the workqueue when the number of keys is pretty huge.
+I have been involved in such scenarios more than once."/>
+
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+    <a
+      class="-translate-x-[1px] -translate-y-[1px] text-2xl font-semibold"
+      href="https://blog.zhouhaibing.com/"
+      >Hi-Been Space</a
+    >
+    <div
+      class="btn-dark text-[0] ml-4 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]"
+      role="button"
+      aria-label="Dark"
+    ></div>
+  </div>
+
+  <div
+    class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+    role="button"
+    aria-label="Menu"
+  ></div>
+
+  
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = `#fbfbfb`.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:ml-12 lg:mt-0 lg:items-center lg:space-x-6"
+    >
+      
+      <a
+        class="h-8 w-8 text-[0] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href="https://github.com/zhouhaibing089"
+        target="_blank"
+        rel="me"
+      >
+        github
+      </a>
+      
+      <a
+        class="h-8 w-8 text-[0] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./linkedin.svg)"
+        href="https://linkedin.com/in/haibzhou"
+        target="_blank"
+        rel="me"
+      >
+        linkedin
+      </a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main
+      class="prose prose-neutral relative mx-auto min-h-[calc(100%-10rem)] max-w-3xl px-8 pb-24 pt-16 dark:prose-invert"
+    >
+      
+
+<article>
+  <header class="mb-20">
+    <h1 class="!my-0 pb-2.5">two lane queue</h1>
+
+    
+    <div class="text-sm opacity-60">
+      
+      <time>Feb 18, 2024</time>
+      
+      
+      
+      
+    </div>
+    
+  </header>
+
+  <section><p>As you may know, a controller in kubernetes is a loop which picks up a key from
+workqueue and then reconciles the key into some desired state.
+While most of such control loops are reactive (based on external events),
+some of them require periodic processing (also known as resync). In general,
+<strong>periodic processing</strong> can easily fill up the workqueue when the number of keys
+is pretty huge.</p>
+<p>I have been involved in such scenarios more than once. For instance, we have an
+internal API called <code>HealthMonitor</code> which is similar to pod readiness probes,
+but describes the health status of an application. This API is often consumed in
+higher order deployment API to make sure applications are still healthy before
+we move into next colo (region, az or cluster). By nature, application health
+checks are periodic, so when we want to check the health status of one specific
+application, there is a huge chance that it is going to take long as the
+controller might be busy dealing with other applications.</p>
+<p>Another common case is when controller initially starts, it is pretty common for
+the controller to process all the keys again even when they are already in their
+desired state. At this time, any new created or updated keys may have to wait
+for a long time if the existing keys are holding the queue too long.</p>
+<p>In this post, I&rsquo;m going to share one of the techniques to tackle this problem.
+If you experienced something similar, I hope this is helpful to your case, too.</p>
+<h3 id="the-idea">The idea</h3>
+<p>In many of the scenarios, what users expected is to have a priority processing
+and that basically means some keys are more important than the others:</p>
+<ul>
+<li>Keys that are more actively consumed should have higher priority. For e.g, the
+<code>HealthMonitor</code>s that are tied to an active deployment should be prioritized
+over those that are not.</li>
+<li>When controller initially starts, existing keys usually have lower priority
+than the new or updated keys.</li>
+</ul>
+<p>So the idea is: When controller picks up a key from workqueue, can the queue
+give back the key that needs more urgency?</p>
+<h3 id="workqueue">Workqueue</h3>
+<p>Below is a simplified illustration explaining how workqueue works in its minimal
+context (<code>DelayingInterface</code> and <code>RateLimitingInterface</code> are higher order
+abstractions but are not necessary for this discussion).</p>
+<p><img src="/images/workqueue.svg" alt="workqueue"></p>
+<h4 id="informer">Informer</h4>
+<p>Informer is the event source. It lists/watches from apiserver and maintains a
+local cache store (mostly a mirror of objects in apiserver). When there are
+changes detected, it calls the corresponding event handler functions to deliver
+this change.</p>
+<h4 id="controller">Controller</h4>
+<p>Controller is the loop which listens to the events sent by informers and then
+reconciles the object to drive into its desired state. Because a reconciliation
+loop can take however long it needs, and the informer needs to deliver events
+fast, workqueue is employed to bridge them together.</p>
+<h4 id="workqueue-1">Workqueue</h4>
+<p><a href="https://github.com/kubernetes/client-go/blob/306b201a2d292fd78483fdf6147131926ed25a78/util/workqueue/queue.go#L115">Workqueue</a> primarily offers three functions:</p>
+<ul>
+<li><code>Add</code>: Accepts a new key.</li>
+<li><code>Get</code>: Retrieves a key.</li>
+<li><code>Done</code>: Marks a key as processed.</li>
+</ul>
+<p>It also maintains two sets:</p>
+<ul>
+<li><code>dirty</code>: All the keys that need to be processed.</li>
+<li><code>processing</code>: All the keys that are currently being processed.</li>
+</ul>
+<p>By default it uses a slice <code>[]any</code> (called <code>queue</code>) to store all the keys that
+are not processed yet.</p>
+<ul>
+<li>A key is either in <code>queue</code> or in <code>processing</code>.</li>
+<li>All the items in <code>queue</code> must also be in <code>dirty</code> (not vice versa).</li>
+<li><code>dirty</code> may have an overlap with <code>processing</code> if a key is <code>Add</code>-ed while it is
+being processed.</li>
+</ul>
+<p><code>queue</code> is a FIFO queue which means, keys that are added first are always going
+to be processed earlier.</p>
+<h3 id="fifo">FIFO?</h3>
+<p>It appears that if we somehow can swap out the default <code>[]any</code> implementation,
+we might be able to implement a different strategy. By looking at the places
+where <code>[]any</code> is used, all it needs are:</p>
+<ul>
+<li><code>Push</code>: Push a key into the queue.</li>
+<li><code>Pop</code>: Pop out a key from the queue.</li>
+<li><code>Len</code>: The number of keys in the queue.</li>
+</ul>
+<p>But wait, if a key is already in the queue, we may want to reset its priority on
+its next <code>Add</code>. This could happen when:</p>
+<ul>
+<li><code>dirty</code> has this key.</li>
+<li><code>processing</code> doesn&rsquo;t have this key.</li>
+</ul>
+<p>In order to offer such callback, another function is needed:</p>
+<ul>
+<li><code>Touch</code>: The key is already in queue, but we still want to do something with
+it.</li>
+</ul>
+<p>In short, we need something as done in <a href="https://github.com/kubernetes/kubernetes/pull/123347">kubernetes/kubernetes#123347</a> (or use
+this <a href="https://github.com/zhouhaibing089/workqueue/tree/main">fork</a>).</p>
+<h3 id="twolanequeue">TwoLaneQueue</h3>
+<p>Once it is possible to swap out the default FIFO implementation, the idea of
+priortizing something over others is possible. While it is fine to go crazy and
+assign keys with an integer priority, reality is that only two are sufficient:
+fast or slow.</p>
+<p><a href="https://github.com/knative/pkg/blob/main/controller/two_lane_queue.go">knative/pkg</a> started the concept of two lane queue, but its implementation
+is at workqueue level (combining two workqueues into a consumer queue). The
+problem with that approach is that slow keys are still going to block fast keys
+when slow keys take over the whole consumer queue.</p>
+<p>Things become much easier at one level down by swapping the underlying queue of
+workqueue. This is implemented <a href="https://github.com/zhouhaibing089/workqueue/tree/main/twolanequeue">here</a>. The idea is: instead of using one
+single slice, we can use two lists (<code>fast</code> and <code>slow</code> accordingly):</p>
+<ol>
+<li>As long as <code>fast</code> is not empty, the items in <code>fast</code> is returned first.</li>
+<li>Each <code>Add</code> can change item priority via <code>Touch</code> function (move from <code>fast</code> to
+<code>slow</code>, or from <code>slow</code> to <code>fast</code>).</li>
+<li><code>list</code> (linked list) is chosen because of the exact reason above (remove and
+insert).</li>
+</ol>
+<h3 id="the-end">The end</h3>
+<p>While this post doesn&rsquo;t show you an end to end example, I hope it still offers a
+good amount of information. Let me know if you disagree or have a different
+idea. Thank you for reading.</p>
+</section>
+
+  
+  
+
+  
+  
+  
+  <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+    
+    
+    <a
+      class="ml-auto flex w-1/2 items-center justify-end rounded-r-md p-6 pl-3 no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      href="https://blog.zhouhaibing.com/posts/why-en-dash-looks-strange-in-utf8/"
+      ><span>why en-dash looks strange in utf8</span><span class="ml-1.5">→</span></a
+    >
+    
+  </nav>
+  
+
+  
+  
+  <div class="mt-24" id="disqus_thread"></div>
+  <script>
+    const disqusShortname = 'zhouhaibing089';
+    const script = document.createElement('script');
+    script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+    script.setAttribute('data-timestamp', +new Date());
+    document.head.appendChild(script);
+  </script>
+  
+
+  
+  
+</article>
+
+
+    </main>
+
+    <footer
+  class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60"
+>
+  <div class="mr-auto">
+    &copy; 2024
+    <a class="link" href="https://blog.zhouhaibing.com/">Hi-Been Space</a>
+  </div>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
+    >Powered by Hugo️️</a
+  >️
+  <a
+    class="link"
+    href="https://github.com/nanxiaobei/hugo-paper"
+    rel="noopener"
+    target="_blank"
+    >Theme Paper</a
+  >
+</footer>
+
+  </body>
+</html>
