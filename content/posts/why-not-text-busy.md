@@ -574,7 +574,7 @@ try to open it with `O_RDWR` again with inode `d688`, it fails with ETXTBSY.
 
 While the story when being told, seems to be straightforward, there were a lot
 of trials and errors. It literally took me several days to figure out all the
-functions to trace, however it was als a great relief / joy when everything was
+functions to trace, however it was also a great relief / joy when everything was
 connected in the end. Thanks for reading!
 
 > You can also use the exact same bpftrace script to understand why ubuntu 22.04
