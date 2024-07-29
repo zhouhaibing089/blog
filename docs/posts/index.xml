@@ -4,10 +4,17 @@
     <title>Posts on Hi-Been Space</title>
     <link>https://blog.zhouhaibing.com/posts/</link>
     <description>Recent content in Posts on Hi-Been Space</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 18 Feb 2024 14:22:00 -0800</lastBuildDate>
+    <lastBuildDate>Sat, 27 Jul 2024 19:14:00 -0700</lastBuildDate>
     <atom:link href="https://blog.zhouhaibing.com/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>why not text busy</title>
+      <link>https://blog.zhouhaibing.com/posts/why-not-text-busy/</link>
+      <pubDate>Sat, 27 Jul 2024 19:14:00 -0700</pubDate>
+      <guid>https://blog.zhouhaibing.com/posts/why-not-text-busy/</guid>
+      <description>There are two types of troubleshootings:&#xA;Why something doesn&amp;rsquo;t work? Why something worked? This post is about the second category.&#xA;The Problem We have been using kaniko as image builder since a while back, including building a customzied kaniko image with itself like below:&#xA;FROM alpine:latest COPY --from=gcr.io/kaniko-project/executor:v1.23.2 /kaniko /kaniko Despite of its official documentation clearly suggesting that this is not supported:&#xA;Running kaniko in any Docker image other than the official kaniko image is not supported due to implementation details.</description>
+    </item>
     <item>
       <title>two lane queue</title>
       <link>https://blog.zhouhaibing.com/posts/two-lane-queue/</link>

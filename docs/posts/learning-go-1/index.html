@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<!doctype html>
+
+
+
 
 
 
@@ -40,7 +43,7 @@
 
 
 <html
-  class="not-ready text-sm lg:text-base"
+  class="not-ready lg:text-base"
   style="--bg: #fbfbfb"
   lang="en-us"
 >
@@ -58,6 +61,7 @@
   
   <meta name="theme-color" />
 
+  
   
   
   
@@ -80,17 +84,13 @@ Sabaki: 一个基于eletron的桌面围棋应用, 跨平台. gnugo: 机器玩家
   <link rel="preload stylesheet" as="style" href="https://blog.zhouhaibing.com/main.min.css" />
 
   
-  <script
-    defer
-    src="https://blog.zhouhaibing.com/highlight.min.js"
-    onload="hljs.initHighlightingOnLoad();"
-  ></script>
   
-
   
-   
+  
+  
   <link rel="preload" as="image" href="https://blog.zhouhaibing.com/theme.png" />
 
+  
   
   
   
@@ -98,6 +98,7 @@ Sabaki: 一个基于eletron的桌面围棋应用, 跨平台. gnugo: 机器玩家
   
   
 
+  
   
   <link rel="preload" as="image" href="https://blog.zhouhaibing.com/github.svg" />
   
@@ -107,70 +108,92 @@ Sabaki: 一个基于eletron的桌面围棋应用, 跨平台. gnugo: 机器玩家
 
   
   
-
-  
-  <link rel="icon" href="https://blog.zhouhaibing.com/favicon.ico" />
-  <link rel="apple-touch-icon" href="https://blog.zhouhaibing.com/apple-touch-icon.png" />
-
-  
-  <meta name="generator" content="Hugo 0.122.0">
-
-  
+  <script
+    defer
+    src="https://blog.zhouhaibing.com/highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
   
 
   
   
   
+
+  
+  <link
+    rel="icon"
+    href="https://blog.zhouhaibing.com/favicon.ico"
+  />
+  <link
+    rel="apple-touch-icon"
+    href="https://blog.zhouhaibing.com/apple-touch-icon.png"
+  />
+
+  
+  <meta name="generator" content="Hugo 0.129.0">
+
   
   
   
   
-  <meta property="og:title" content="学棋记" />
-<meta property="og:description" content="记得小时候看过一部动画片: &lt;围棋少年&gt;, 那时自己也是少年, 虽不懂棋, 却瞅着江流儿的经历也 饶有兴致. 而近期兴致又起, 想重温此动画片之时, 竟想不如也学学围棋. 毕竟也是中华文化的代 表之一, 学学亦是乐事.
-于是乎, 说干就干, 从亚马逊上以将近120刀的价格入了一套工具, 包括棋盘, 棋子等等. 让我没 想到的是, 这货体积还挺大, 疫情期间, 货也不送上门, 最后还是我从leasing office那里搬回了 家.
-拆开包装, 里头自带一本英文教程, 文虽简短, 却也将基本规则描述地很清楚. 我自己也有在网上 搜索一些教程, 比如这个就是我觉得做的比较用心的入门视频了.
-不过所谓入门, 无非是了解棋盘, 了解规则, 了解输赢. 至于棋理, 虽然还没办法做到细致入微, 但做到宏观掌控, 还是有机会的. 比如说王元的围棋入门快易精我觉得就说得非常好.
-那了解规则, 又再大概了解棋理, 我们就可以学习一些细节了, 在这里, 我想推荐这些教程:
-围棋零基础教学. 弈客围棋, 有iOS应用, 可以练习. 除了这些教程, 程序员的习惯自然还是寻找其他的工具, 比如AI对战, 棋谱学习等等:
-Sabaki: 一个基于eletron的桌面围棋应用, 跨平台. gnugo: 机器玩家. " />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://blog.zhouhaibing.com/posts/learning-go-1/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2020-10-05T21:16:00-07:00" />
-<meta property="article:modified_time" content="2020-10-05T21:16:00-07:00" />
+  
 
 
+  
   
   <meta itemprop="name" content="学棋记">
-<meta itemprop="description" content="记得小时候看过一部动画片: &lt;围棋少年&gt;, 那时自己也是少年, 虽不懂棋, 却瞅着江流儿的经历也 饶有兴致. 而近期兴致又起, 想重温此动画片之时, 竟想不如也学学围棋. 毕竟也是中华文化的代 表之一, 学学亦是乐事.
+  <meta itemprop="description" content="记得小时候看过一部动画片: &lt;围棋少年&gt;, 那时自己也是少年, 虽不懂棋, 却瞅着江流儿的经历也 饶有兴致. 而近期兴致又起, 想重温此动画片之时, 竟想不如也学学围棋. 毕竟也是中华文化的代 表之一, 学学亦是乐事.
 于是乎, 说干就干, 从亚马逊上以将近120刀的价格入了一套工具, 包括棋盘, 棋子等等. 让我没 想到的是, 这货体积还挺大, 疫情期间, 货也不送上门, 最后还是我从leasing office那里搬回了 家.
 拆开包装, 里头自带一本英文教程, 文虽简短, 却也将基本规则描述地很清楚. 我自己也有在网上 搜索一些教程, 比如这个就是我觉得做的比较用心的入门视频了.
 不过所谓入门, 无非是了解棋盘, 了解规则, 了解输赢. 至于棋理, 虽然还没办法做到细致入微, 但做到宏观掌控, 还是有机会的. 比如说王元的围棋入门快易精我觉得就说得非常好.
 那了解规则, 又再大概了解棋理, 我们就可以学习一些细节了, 在这里, 我想推荐这些教程:
 围棋零基础教学. 弈客围棋, 有iOS应用, 可以练习. 除了这些教程, 程序员的习惯自然还是寻找其他的工具, 比如AI对战, 棋谱学习等等:
-Sabaki: 一个基于eletron的桌面围棋应用, 跨平台. gnugo: 机器玩家. "><meta itemprop="datePublished" content="2020-10-05T21:16:00-07:00" />
-<meta itemprop="dateModified" content="2020-10-05T21:16:00-07:00" />
-<meta itemprop="wordCount" content="59">
-<meta itemprop="keywords" content="" />
+Sabaki: 一个基于eletron的桌面围棋应用, 跨平台. gnugo: 机器玩家. ">
+  <meta itemprop="datePublished" content="2020-10-05T21:16:00-07:00">
+  <meta itemprop="dateModified" content="2020-10-05T21:16:00-07:00">
+  <meta itemprop="wordCount" content="59">
   
-  <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="学棋记"/>
-<meta name="twitter:description" content="记得小时候看过一部动画片: &lt;围棋少年&gt;, 那时自己也是少年, 虽不懂棋, 却瞅着江流儿的经历也 饶有兴致. 而近期兴致又起, 想重温此动画片之时, 竟想不如也学学围棋. 毕竟也是中华文化的代 表之一, 学学亦是乐事.
+  <meta property="og:url" content="https://blog.zhouhaibing.com/posts/learning-go-1/">
+  <meta property="og:site_name" content="Hi-Been Space">
+  <meta property="og:title" content="学棋记">
+  <meta property="og:description" content="记得小时候看过一部动画片: &lt;围棋少年&gt;, 那时自己也是少年, 虽不懂棋, 却瞅着江流儿的经历也 饶有兴致. 而近期兴致又起, 想重温此动画片之时, 竟想不如也学学围棋. 毕竟也是中华文化的代 表之一, 学学亦是乐事.
 于是乎, 说干就干, 从亚马逊上以将近120刀的价格入了一套工具, 包括棋盘, 棋子等等. 让我没 想到的是, 这货体积还挺大, 疫情期间, 货也不送上门, 最后还是我从leasing office那里搬回了 家.
 拆开包装, 里头自带一本英文教程, 文虽简短, 却也将基本规则描述地很清楚. 我自己也有在网上 搜索一些教程, 比如这个就是我觉得做的比较用心的入门视频了.
 不过所谓入门, 无非是了解棋盘, 了解规则, 了解输赢. 至于棋理, 虽然还没办法做到细致入微, 但做到宏观掌控, 还是有机会的. 比如说王元的围棋入门快易精我觉得就说得非常好.
 那了解规则, 又再大概了解棋理, 我们就可以学习一些细节了, 在这里, 我想推荐这些教程:
 围棋零基础教学. 弈客围棋, 有iOS应用, 可以练习. 除了这些教程, 程序员的习惯自然还是寻找其他的工具, 比如AI对战, 棋谱学习等等:
-Sabaki: 一个基于eletron的桌面围棋应用, 跨平台. gnugo: 机器玩家. "/>
+Sabaki: 一个基于eletron的桌面围棋应用, 跨平台. gnugo: 机器玩家. ">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2020-10-05T21:16:00-07:00">
+    <meta property="article:modified_time" content="2020-10-05T21:16:00-07:00">
 
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="学棋记">
+  <meta name="twitter:description" content="记得小时候看过一部动画片: &lt;围棋少年&gt;, 那时自己也是少年, 虽不懂棋, 却瞅着江流儿的经历也 饶有兴致. 而近期兴致又起, 想重温此动画片之时, 竟想不如也学学围棋. 毕竟也是中华文化的代 表之一, 学学亦是乐事.
+于是乎, 说干就干, 从亚马逊上以将近120刀的价格入了一套工具, 包括棋盘, 棋子等等. 让我没 想到的是, 这货体积还挺大, 疫情期间, 货也不送上门, 最后还是我从leasing office那里搬回了 家.
+拆开包装, 里头自带一本英文教程, 文虽简短, 却也将基本规则描述地很清楚. 我自己也有在网上 搜索一些教程, 比如这个就是我觉得做的比较用心的入门视频了.
+不过所谓入门, 无非是了解棋盘, 了解规则, 了解输赢. 至于棋理, 虽然还没办法做到细致入微, 但做到宏观掌控, 还是有机会的. 比如说王元的围棋入门快易精我觉得就说得非常好.
+那了解规则, 又再大概了解棋理, 我们就可以学习一些细节了, 在这里, 我想推荐这些教程:
+围棋零基础教学. 弈客围棋, 有iOS应用, 可以练习. 除了这些教程, 程序员的习惯自然还是寻找其他的工具, 比如AI对战, 棋谱学习等等:
+Sabaki: 一个基于eletron的桌面围棋应用, 跨平台. gnugo: 机器玩家. ">
+
+  
+  
+
+  
+  <link rel="canonical" href="https://blog.zhouhaibing.com/posts/learning-go-1/" />
   
   
 </head>
 
   <body class="text-black duration-200 ease-out dark:text-white">
-    <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
+    <header class="mx-auto flex h-[4.5rem] max-w-3xl px-8 lg:justify-center">
   <div class="relative z-50 mr-auto flex items-center">
-    <a
-      class="-translate-x-[1px] -translate-y-[1px] text-2xl font-semibold"
-      href="https://blog.zhouhaibing.com/"
+    <a class="-translate-y-[1px] text-2xl" href="https://blog.zhouhaibing.com/"
       >Hi-Been Space</a
     >
     <div
@@ -181,12 +204,13 @@ Sabaki: 一个基于eletron的桌面围棋应用, 跨平台. gnugo: 机器玩家
   </div>
 
   <div
-    class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+    class="btn-menu relative z-50 -mr-8 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
     role="button"
     aria-label="Menu"
   ></div>
 
   
+
   <script>
     
     const htmlClass = document.documentElement.classList;
@@ -202,7 +226,7 @@ Sabaki: 一个基于eletron的桌面围棋应用, 跨平台. gnugo: 机器玩家
 
     
     const metaTheme = document.querySelector('meta[name="theme-color"]');
-    const lightBg = `#fbfbfb`.replace(/"/g, '');
+    const lightBg = '#fbfbfb'.replace(/"/g, '');
     const setDark = (isDark) => {
       metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
       htmlClass[isDark ? 'add' : 'remove']('dark');
@@ -238,7 +262,7 @@ Sabaki: 一个基于eletron的桌面围棋应用, 跨平台. gnugo: 机器玩家
 
     
     <nav
-      class="mt-12 flex justify-center space-x-10 dark:invert lg:ml-12 lg:mt-0 lg:items-center lg:space-x-6"
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:ml-14 lg:mt-0 lg:items-center"
     >
       
       <a
@@ -268,16 +292,16 @@ Sabaki: 一个基于eletron的桌面围棋应用, 跨平台. gnugo: 机器玩家
 
 
     <main
-      class="prose prose-neutral relative mx-auto min-h-[calc(100%-10rem)] max-w-3xl px-8 pb-24 pt-16 dark:prose-invert"
+      class="prose prose-neutral relative mx-auto min-h-[calc(100%-9rem)] max-w-3xl px-8 pb-16 pt-14 dark:prose-invert"
     >
       
 
 <article>
-  <header class="mb-20">
+  <header class="mb-16">
     <h1 class="!my-0 pb-2.5">学棋记</h1>
 
     
-    <div class="text-sm opacity-60">
+    <div class="text-xs antialiased opacity-60">
       
       <time>Oct 5, 2020</time>
       
@@ -316,22 +340,26 @@ Sabaki: 一个基于eletron的桌面围棋应用, 跨平台. gnugo: 机器玩家
   
   
   
-  <nav class="mt-24 flex rounded-lg bg-black/[3%] text-lg dark:bg-white/[8%]">
+  
+  <nav
+    class="mt-24 flex rounded-lg bg-black/[3%] text-lg !leading-[1.2] dark:bg-white/[8%]"
+  >
     
     <a
-      class="flex w-1/2 items-center rounded-l-md p-6 pr-3 no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      class="flex w-1/2 items-center rounded-l-md p-6 pr-3 font-medium no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
       href="https://blog.zhouhaibing.com/posts/kubectl-alias-done-right/"
       ><span class="mr-1.5">←</span><span>kubectl alias done right</span></a
     >
     
     
     <a
-      class="ml-auto flex w-1/2 items-center justify-end rounded-r-md p-6 pl-3 no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      class="ml-auto flex w-1/2 items-center justify-end rounded-r-md p-6 pl-3 font-medium no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
       href="https://blog.zhouhaibing.com/posts/a-story-about-deleteoptions/"
       ><span>A Story about DeleteOptions</span><span class="ml-1.5">→</span></a
     >
     
   </nav>
+  
   
 
   
@@ -348,27 +376,32 @@ Sabaki: 一个基于eletron的桌面围棋应用, 跨平台. gnugo: 机器玩家
 
   
   
+
+  
+
+
+  
 </article>
 
 
     </main>
 
     <footer
-  class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60"
+  class="mx-auto flex h-[4.5rem] max-w-3xl items-center px-8 text-xs uppercase tracking-wider opacity-60"
 >
   <div class="mr-auto">
     &copy; 2024
     <a class="link" href="https://blog.zhouhaibing.com/">Hi-Been Space</a>
   </div>
   <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
-    >Powered by Hugo️️</a
+    >powered by hugo️️</a
   >️
   <a
     class="link"
     href="https://github.com/nanxiaobei/hugo-paper"
     rel="noopener"
     target="_blank"
-    >Theme Paper</a
+    >hugo-paper</a
   >
 </footer>
 

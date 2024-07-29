@@ -1,0 +1,817 @@
+<!doctype html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<html
+  class="not-ready lg:text-base"
+  style="--bg: #fbfbfb"
+  lang="en-us"
+>
+  <head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, shrink-to-fit=no"
+  />
+
+  
+  <title>why not text busy - Hi-Been Space</title>
+
+  
+  <meta name="theme-color" />
+
+  
+  
+  
+  
+  <meta name="description" content="There are two types of troubleshootings:
+Why something doesn&rsquo;t work? Why something worked? This post is about the second category.
+The Problem We have been using kaniko as image builder since a while back, including building a customzied kaniko image with itself like below:
+FROM alpine:latest COPY --from=gcr.io/kaniko-project/executor:v1.23.2 /kaniko /kaniko Despite of its official documentation clearly suggesting that this is not supported:
+Running kaniko in any Docker image other than the official kaniko image is not supported due to implementation details." />
+  <meta name="author" content="Haibing Zhou" />
+  
+
+  
+  
+  
+  
+  
+  
+  <link rel="preload stylesheet" as="style" href="https://blog.zhouhaibing.com/main.min.css" />
+
+  
+  
+  
+  
+  
+  <link rel="preload" as="image" href="https://blog.zhouhaibing.com/theme.png" />
+
+  
+  
+  
+  
+  <link rel="preload" as="image" href="https://www.gravatar.com/avatar/5efba87a944c70d1abe7f7892f4df74b?s=160&amp;d=identicon" />
+  
+  
+
+  
+  
+  <link rel="preload" as="image" href="https://blog.zhouhaibing.com/github.svg" />
+  
+  <link rel="preload" as="image" href="https://blog.zhouhaibing.com/linkedin.svg" />
+  
+  
+
+  
+  
+  <script
+    defer
+    src="https://blog.zhouhaibing.com/highlight.min.js"
+    onload="hljs.initHighlightingOnLoad();"
+  ></script>
+  
+
+  
+  
+  
+
+  
+  <link
+    rel="icon"
+    href="https://blog.zhouhaibing.com/favicon.ico"
+  />
+  <link
+    rel="apple-touch-icon"
+    href="https://blog.zhouhaibing.com/apple-touch-icon.png"
+  />
+
+  
+  <meta name="generator" content="Hugo 0.129.0">
+
+  
+  
+  
+  
+  
+
+
+  
+  
+  <meta itemprop="name" content="why not text busy">
+  <meta itemprop="description" content="There are two types of troubleshootings:
+Why something doesn’t work? Why something worked? This post is about the second category.
+The Problem We have been using kaniko as image builder since a while back, including building a customzied kaniko image with itself like below:
+FROM alpine:latest COPY --from=gcr.io/kaniko-project/executor:v1.23.2 /kaniko /kaniko Despite of its official documentation clearly suggesting that this is not supported:
+Running kaniko in any Docker image other than the official kaniko image is not supported due to implementation details.">
+  <meta itemprop="datePublished" content="2024-07-27T19:14:00-07:00">
+  <meta itemprop="dateModified" content="2024-07-27T19:14:00-07:00">
+  <meta itemprop="wordCount" content="2894">
+  
+  <meta property="og:url" content="https://blog.zhouhaibing.com/posts/why-not-text-busy/">
+  <meta property="og:site_name" content="Hi-Been Space">
+  <meta property="og:title" content="why not text busy">
+  <meta property="og:description" content="There are two types of troubleshootings:
+Why something doesn’t work? Why something worked? This post is about the second category.
+The Problem We have been using kaniko as image builder since a while back, including building a customzied kaniko image with itself like below:
+FROM alpine:latest COPY --from=gcr.io/kaniko-project/executor:v1.23.2 /kaniko /kaniko Despite of its official documentation clearly suggesting that this is not supported:
+Running kaniko in any Docker image other than the official kaniko image is not supported due to implementation details.">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2024-07-27T19:14:00-07:00">
+    <meta property="article:modified_time" content="2024-07-27T19:14:00-07:00">
+
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="why not text busy">
+  <meta name="twitter:description" content="There are two types of troubleshootings:
+Why something doesn’t work? Why something worked? This post is about the second category.
+The Problem We have been using kaniko as image builder since a while back, including building a customzied kaniko image with itself like below:
+FROM alpine:latest COPY --from=gcr.io/kaniko-project/executor:v1.23.2 /kaniko /kaniko Despite of its official documentation clearly suggesting that this is not supported:
+Running kaniko in any Docker image other than the official kaniko image is not supported due to implementation details.">
+
+  
+  
+
+  
+  <link rel="canonical" href="https://blog.zhouhaibing.com/posts/why-not-text-busy/" />
+  
+  
+</head>
+
+  <body class="text-black duration-200 ease-out dark:text-white">
+    <header class="mx-auto flex h-[4.5rem] max-w-3xl px-8 lg:justify-center">
+  <div class="relative z-50 mr-auto flex items-center">
+    <a class="-translate-y-[1px] text-2xl" href="https://blog.zhouhaibing.com/"
+      >Hi-Been Space</a
+    >
+    <div
+      class="btn-dark text-[0] ml-4 h-6 w-6 shrink-0 cursor-pointer [background:url(./theme.png)_left_center/_auto_theme('spacing.6')_no-repeat] [transition:_background-position_0.4s_steps(5)] dark:[background-position:right]"
+      role="button"
+      aria-label="Dark"
+    ></div>
+  </div>
+
+  <div
+    class="btn-menu relative z-50 -mr-8 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+    role="button"
+    aria-label="Menu"
+  ></div>
+
+  
+
+  <script>
+    
+    const htmlClass = document.documentElement.classList;
+    setTimeout(() => {
+      htmlClass.remove('not-ready');
+    }, 10);
+
+    
+    const btnMenu = document.querySelector('.btn-menu');
+    btnMenu.addEventListener('click', () => {
+      htmlClass.toggle('open');
+    });
+
+    
+    const metaTheme = document.querySelector('meta[name="theme-color"]');
+    const lightBg = '#fbfbfb'.replace(/"/g, '');
+    const setDark = (isDark) => {
+      metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
+      htmlClass[isDark ? 'add' : 'remove']('dark');
+      localStorage.setItem('dark', isDark);
+    };
+
+    
+    const darkScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    if (htmlClass.contains('dark')) {
+      setDark(true);
+    } else {
+      const darkVal = localStorage.getItem('dark');
+      setDark(darkVal ? darkVal === 'true' : darkScheme.matches);
+    }
+
+    
+    darkScheme.addEventListener('change', (event) => {
+      setDark(event.matches);
+    });
+
+    
+    const btnDark = document.querySelector('.btn-dark');
+    btnDark.addEventListener('click', () => {
+      setDark(localStorage.getItem('dark') !== 'true');
+    });
+  </script>
+
+  <div
+    class="nav-wrapper fixed inset-x-0 top-full z-40 flex h-full select-none flex-col justify-center pb-16 duration-200 dark:bg-black lg:static lg:h-auto lg:flex-row lg:!bg-transparent lg:pb-0 lg:transition-none"
+  >
+    
+    
+
+    
+    <nav
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:ml-14 lg:mt-0 lg:items-center"
+    >
+      
+      <a
+        class="h-8 w-8 text-[0] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./github.svg)"
+        href="https://github.com/zhouhaibing089"
+        target="_blank"
+        rel="me"
+      >
+        github
+      </a>
+      
+      <a
+        class="h-8 w-8 text-[0] [background:var(--url)_center_center/cover_no-repeat] lg:h-6 lg:w-6"
+        style="--url: url(./linkedin.svg)"
+        href="https://linkedin.com/in/haibzhou"
+        target="_blank"
+        rel="me"
+      >
+        linkedin
+      </a>
+      
+    </nav>
+    
+  </div>
+</header>
+
+
+    <main
+      class="prose prose-neutral relative mx-auto min-h-[calc(100%-9rem)] max-w-3xl px-8 pb-16 pt-14 dark:prose-invert"
+    >
+      
+
+<article>
+  <header class="mb-16">
+    <h1 class="!my-0 pb-2.5">why not text busy</h1>
+
+    
+    <div class="text-xs antialiased opacity-60">
+      
+      <time>Jul 27, 2024</time>
+      
+      
+      
+      
+    </div>
+    
+  </header>
+
+  <section><p>There are two types of troubleshootings:</p>
+<ol>
+<li>Why something doesn&rsquo;t work?</li>
+<li>Why something worked?</li>
+</ol>
+<p>This post is about the second category.</p>
+<p><img src="/images/ubuntu-2004-vs-ubuntu-2204.png" alt="text-busy"></p>
+<h2 id="the-problem">The Problem</h2>
+<p>We have been using <a href="https://github.com/googleContainerTools/kaniko">kaniko</a> as image builder since a while back, including
+building a customzied kaniko image with itself like below:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> alpine:latest</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> --from<span style="color:#f92672">=</span>gcr.io/kaniko-project/executor:v1.23.2 /kaniko /kaniko<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><p>Despite of its <a href="https://github.com/GoogleContainerTools/kaniko?tab=readme-ov-file#known-issues">official documentation</a> clearly suggesting that this is not
+supported:</p>
+<blockquote>
+<p>Running kaniko in any Docker image other than the official kaniko image is not
+supported due to implementation details.</p>
+<ul>
+<li>This includes copying the kaniko executables from the official image into
+another image (e.g. a Jenkins CI agent).</li>
+<li>In particular, it cannot use chroot or bind-mount because its container
+must not require privilege, so it unpacks directly into its own container
+root and may overwrite anything already there.</li>
+</ul>
+</blockquote>
+<p>The team did it anyway, and it worked pretty fine&hellip; until it doesn&rsquo;t!</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ docker run -it --entrypoint /bin/sh -v <span style="color:#66d9ef">$(</span>pwd<span style="color:#66d9ef">)</span>:/workspace gcr.io/kaniko-project/executor:v1.23.2-debug
+</span></span><span style="display:flex;"><span>/workspace # executor --no-push
+</span></span><span style="display:flex;"><span>INFO[0000] Retrieving image manifest gcr.io/kaniko-project/executor:v1.23.2
+</span></span><span style="display:flex;"><span>INFO[0000] Retrieving image gcr.io/kaniko-project/executor:v1.23.2 from registry gcr.io
+</span></span><span style="display:flex;"><span>INFO[0000] Storing source image from stage gcr.io/kaniko-project/executor:v1.23.2 at path /kaniko/stages/gcr.io/kaniko-project/executor:v1.23.2
+</span></span><span style="display:flex;"><span>INFO[0010] Retrieving image manifest alpine:latest
+</span></span><span style="display:flex;"><span>INFO[0010] Retrieving image alpine:latest from registry index.docker.io
+</span></span><span style="display:flex;"><span>INFO[0022] Built cross stage deps: map[]
+</span></span><span style="display:flex;"><span>INFO[0022] Retrieving image manifest alpine:latest
+</span></span><span style="display:flex;"><span>INFO[0022] Returning cached image manifest
+</span></span><span style="display:flex;"><span>INFO[0022] Executing 0 build triggers
+</span></span><span style="display:flex;"><span>INFO[0022] Building stage &#39;alpine:latest&#39; [idx: &#39;0&#39;, base-idx: &#39;-1&#39;]
+</span></span><span style="display:flex;"><span>INFO[0022] Unpacking rootfs as cmd COPY --from=gcr.io/kaniko-project/executor:v1.23.2 /kaniko /kaniko requires it.
+</span></span><span style="display:flex;"><span>INFO[0022] COPY --from=gcr.io/kaniko-project/executor:v1.23.2 /kaniko /kaniko
+</span></span><span style="display:flex;"><span>error building image: error building stage: failed to execute command: copying dir: creating file: open /kaniko/executor: text file busy
+</span></span></code></pre></div><p>It didn&rsquo;t take too long before we figured it out that:</p>
+<ul>
+<li>It only happens on ubuntu 20.04. (Not happenning on 22.04)</li>
+<li>The binary is on overlayfs (containers). (Not happenning on xfs)</li>
+</ul>
+<h2 id="simplification">Simplification</h2>
+<p>As <a href="https://github.com/googleContainerTools/kaniko">kaniko</a> has its own complications, we later figured out <a href="https://github.com/zhouhaibing089/txtbsy/blob/main/main.go">an easy way</a>
+to reproduce the same behavior. All we need is to create an application which
+tries to open its own executable (aka, <code>/proc/self/exe</code>) with <code>O_RDWR</code>. You may
+build this program as a docker image with the following steps:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ git clone https://github.com/zhouhaibing089/txtbsy.git
+</span></span><span style="display:flex;"><span>$ cd txtbsy
+</span></span><span style="display:flex;"><span>$ docker build -t txtbsy:v0 -f Dockerfile .
+</span></span></code></pre></div><blockquote>
+<p>kaniko has its binary at path <code>/kaniko/executor</code>. When it tries to copy
+<code>/kaniko</code> from another image to its own <code>/kaniko</code>, it essentially does the
+same thing to override its own executable to be something else.</p>
+</blockquote>
+<p>And then you can run this program on a freshly installed <a href="https://releases.ubuntu.com/focal/">ubuntu 20.04</a>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ docker run -it --entrypoint /bin/sh --rm txtbsy:v0
+</span></span><span style="display:flex;"><span>/ # /app
+</span></span><span style="display:flex;"><span>2024/07/29 01:28:45 pid: 7
+</span></span><span style="display:flex;"><span>2024/07/29 01:28:45 path: /app, dev: 53, inode 675400
+</span></span><span style="display:flex;"><span>2024/07/29 01:28:45 path: /app, dev: 53, inode 675400
+</span></span><span style="display:flex;"><span>/ # /app
+</span></span><span style="display:flex;"><span>2024/07/29 01:28:47 pid: 11
+</span></span><span style="display:flex;"><span>2024/07/29 01:28:47 path: /app, dev: 53, inode 675400
+</span></span><span style="display:flex;"><span>2024/07/29 01:28:47 failed to create /app: open /app: text file busy
+</span></span></code></pre></div><p>The first run completed successfully (but unexpectedly) while the second run
+failed with <code>text file busy</code> error which it should.</p>
+<h2 id="starting-with-strace">Starting with strace</h2>
+<p><a href="https://man7.org/linux/man-pages/man1/strace.1.html">strace</a> is a trace tool which shows all the system calls a process makes
+during its lifetime. As we see <code>text file busy</code> error, it makes sense for us to
+see which system call (if at all) gives such error.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ strace -p &lt;pid&gt; -f -e trace<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;/(open|exec)&#34;</span> -o syscall.txt
+</span></span></code></pre></div><blockquote>
+<p>pid is the pid of <code>/bin/sh</code> from the container. <code>-f</code> allows the program to
+further follow forks (child processes like <code>/app</code>). I also applied a filter
+to only care about <code>open</code> and <code>exec</code>-like system calls, but you may skip it
+to see all of them (which could be a bit noisy).</p>
+</blockquote>
+<p>The <a href="https://github.com/zhouhaibing089/txtbsy/blob/main/ubuntu-2004.syscall.txt">output</a> is something like below:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ cat syscall.txt
+</span></span><span style="display:flex;"><span>2705  openat(AT_FDCWD, &#34;/root/.ash_history&#34;, O_WRONLY|O_CREAT|O_APPEND, 0600) = 3
+</span></span><span style="display:flex;"><span>2895  execve(&#34;/app&#34;, [&#34;/app&#34;], 0x559425259660 /* 6 vars */) = 0
+</span></span><span style="display:flex;"><span>2895  openat(AT_FDCWD, &#34;/sys/kernel/mm/transparent_hugepage/hpage_pmd_size&#34;, O_RDONLY) = 3
+</span></span><span style="display:flex;"><span>2895  openat(AT_FDCWD, &#34;/etc/localtime&#34;, O_RDONLY) = 3
+</span></span><span style="display:flex;"><span>2895  openat(AT_FDCWD, &#34;/app&#34;, O_RDONLY|O_CLOEXEC) = 3
+</span></span><span style="display:flex;"><span>2895  openat(AT_FDCWD, &#34;/app&#34;, O_RDWR|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 3
+</span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>2900  execve(&#34;/app&#34;, [&#34;/app&#34;], 0x559425259660 /* 6 vars */) = 0
+</span></span><span style="display:flex;"><span>2900  openat(AT_FDCWD, &#34;/sys/kernel/mm/transparent_hugepage/hpage_pmd_size&#34;, O_RDONLY) = 3
+</span></span><span style="display:flex;"><span>2900  openat(AT_FDCWD, &#34;/etc/localtime&#34;, O_RDONLY) = 3
+</span></span><span style="display:flex;"><span>2900  openat(AT_FDCWD, &#34;/app&#34;, O_RDONLY|O_CLOEXEC) = 3
+</span></span><span style="display:flex;"><span>2902  openat(AT_FDCWD, &#34;/app&#34;, O_RDWR|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = -1 ETXTBSY (Text file busy)
+</span></span></code></pre></div><p>If we compare the two <code>openat</code> system calls that pid 2895 and pid 2902 made, one
+was able to return a valid fd while the other gives -1 with errno <code>ETXTBSY</code>.</p>
+<pre tabindex="0"><code>2895  openat(AT_FDCWD, &#34;/app&#34;, O_RDWR|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 3
+2902  openat(AT_FDCWD, &#34;/app&#34;, O_RDWR|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = -1 ETXTBSY (Text file busy)
+</code></pre><h2 id="continue-with-ftrace">Continue with ftrace</h2>
+<p><a href="https://github.com/torvalds/linux/blob/master/Documentation/trace/ftrace.rst">ftrace</a> is able to trace functions and function graphs so we get better
+visibility into what is going on in kernel. In the case above, we knew that
+<code>openat</code> was giving <code>ETXTBSY</code>. We can look further what happened exactly within
+that <code>openat</code> system call.</p>
+<p>To set it up, we need to be clear on how exactly we need to do it:</p>
+<ul>
+<li>The function we are going to trace is <code>__x64_sys_openat</code> (I&rsquo;m running amd64)</li>
+<li>It should trace child processes as well (like what <code>strace</code> does).</li>
+<li>We need to do <code>function_graph</code> tracer because we care about call stack.</li>
+</ul>
+<blockquote>
+<p>The reason why it is important to trace child processes is two folds: 1) It is
+more convenient to trace <code>/bin/sh</code> because we can find its pid after we launch
+it but before we run <code>/app</code>. 2) Go programs typically have multiple os threads
+so even if we can put a <code>sleep</code> in my <code>/app</code> program to make it possible to
+look up its pid, the actual <code>openat</code> may still run on a different os thread.</p>
+</blockquote>
+<p>We can do all of them with steps like below:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ echo nop &gt; /sys/kernel/tracing/current_tracer
+</span></span><span style="display:flex;"><span>$ echo __x64_sys_openat &gt; /sys/kernel/tracing/set_graph_function
+</span></span><span style="display:flex;"><span>$ echo <span style="color:#66d9ef">function</span>-fork &gt;&gt; /sys/kernel/tracing/trace_options
+</span></span><span style="display:flex;"><span>$ echo &lt;pid&gt; &gt; /sys/kernel/tracing/set_ftrace_pid
+</span></span><span style="display:flex;"><span>$ echo function_graph &gt; /sys/kernel/tracing/current_tracer
+</span></span><span style="display:flex;"><span>... (run the app)
+</span></span><span style="display:flex;"><span>$ cat /sys/kernel/tracing/trace &gt; output
+</span></span></code></pre></div><p>I have already captured one <a href="https://github.com/zhouhaibing089/txtbsy/blob/main/ubuntu-2004.ftrace.txt">example</a>. From our strace earlier, there were
+9 <code>openat</code> system calls in total, and the one which showed <code>ETXTBSY</code> is the last
+one:</p>
+<pre tabindex="0"><code> 0)               |  __x64_sys_openat() {
+ 0)               |    do_sys_open() {
+ 0)               |      do_filp_open() {
+ 0)               |        path_openat() {
+ 0)               |          do_last() {
+ 0)               |            vfs_open() {
+ 0)               |              do_dentry_open() {
+ 0)               |                ovl_open [overlay]() {
+ 0)               |                  ovl_open_realfile [overlay]() {
+ 0)               |                    open_with_fake_path() {
+ 0)               |                      do_dentry_open() {
+ 0)               |                        path_get() {
+ 0)   0.201 us    |                          mntget();
+ 0)   0.471 us    |                        }
+ 0)               |                        path_put()
+...
+</code></pre><blockquote>
+<p>I made a significant simplication here (for the sake of saving some space).</p>
+</blockquote>
+<p>In short, it calls into <code>do_dentry_open</code> -&gt; <code>ovl_open</code> (overlay kernel module) and
+then failed in the second <code>do_dentry_open</code> call.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">// fs/open.c
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">do_dentry_open</span>(<span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span>f,
+</span></span><span style="display:flex;"><span>			  <span style="color:#66d9ef">struct</span> inode <span style="color:#f92672">*</span>inode,
+</span></span><span style="display:flex;"><span>			  <span style="color:#66d9ef">int</span> (<span style="color:#f92672">*</span>open)(<span style="color:#66d9ef">struct</span> inode <span style="color:#f92672">*</span>, <span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span>))
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> (f<span style="color:#f92672">-&gt;</span>f_mode <span style="color:#f92672">&amp;</span> FMODE_WRITE <span style="color:#f92672">&amp;&amp;</span> <span style="color:#f92672">!</span><span style="color:#a6e22e">special_file</span>(inode<span style="color:#f92672">-&gt;</span>i_mode)) {
+</span></span><span style="display:flex;"><span>		error <span style="color:#f92672">=</span> <span style="color:#a6e22e">get_write_access</span>(inode);
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">unlikely</span>(error))
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">goto</span> cleanup_file;
+</span></span><span style="display:flex;"><span>		error <span style="color:#f92672">=</span> <span style="color:#a6e22e">__mnt_want_write</span>(f<span style="color:#f92672">-&gt;</span>f_path.mnt);
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">unlikely</span>(error)) {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">put_write_access</span>(inode);
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">goto</span> cleanup_file;
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		f<span style="color:#f92672">-&gt;</span>f_mode <span style="color:#f92672">|=</span> FMODE_WRITER;
+</span></span><span style="display:flex;"><span>	}
+</span></span></code></pre></div><p>Since we didn&rsquo;t see <code>__mnt_want_write</code> in function graph (while it is there in
+the first <code>do_dentry_open</code>), we can be certain that <code>get_write_access</code> failed.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">// include/linux/fs.h
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">get_write_access</span>(<span style="color:#66d9ef">struct</span> inode <span style="color:#f92672">*</span>inode)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">atomic_inc_unless_negative</span>(<span style="color:#f92672">&amp;</span>inode<span style="color:#f92672">-&gt;</span>i_writecount) <span style="color:#f92672">?</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">:</span> <span style="color:#f92672">-</span>ETXTBSY;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>When the <code>i_writecount</code> from the given <code>inode</code> is negative, it fails with
+<code>ETXTBSY</code>.</p>
+<blockquote>
+<p>You might wonder, why there are two <code>do_dentry_open</code>s, and do they open with
+the same file? To give a little bit context here, the first <code>do_dentry_open</code>
+opens the file as seen from overlayfs, and the second <code>do_dentry_open</code> opens
+the real file in the underlying filesystem.</p>
+</blockquote>
+<h2 id="end-with-bpftrace">End with bpftrace</h2>
+<p>The question now comes to <code>i_writecount</code>, if it is negative, then what value is
+it, and most importantly, how does this value change? To answer that question,
+we need to rely on <a href="https://docs.kernel.org/trace/kprobes.html">kprobe</a>. I have a <a href="https://github.com/zhouhaibing089/txtbsy/blob/main/file_at_open_or_exec.bt">simple bpftrace program</a> which can
+answer all of these questions.</p>
+<h3 id="do_filp_open">do_filp_open</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>kretprobe:do_filp_open <span style="color:#f92672">/</span>comm <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;sh&#34;</span> <span style="color:#f92672">||</span> comm <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;app&#34;</span><span style="color:#f92672">/</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">$</span>file <span style="color:#f92672">=</span> (<span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span>)retval;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;[ret do_filp_open     ] %s at inode[%p]: %d %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, comm, <span style="color:#960050;background-color:#1e0010">$</span>file<span style="color:#f92672">-&gt;</span>f_inode, <span style="color:#960050;background-color:#1e0010">$</span>file<span style="color:#f92672">-&gt;</span>f_inode<span style="color:#f92672">-&gt;</span>i_writecount.counter, <span style="color:#960050;background-color:#1e0010">$</span>file<span style="color:#f92672">-&gt;</span>f_inode<span style="color:#f92672">-&gt;</span>i_ino);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>do_filp_open</code> gives back the <code>file</code> pointer on return, and we can examine the
+inode address, its <code>i_writecount</code> and inode number (for correlation).</p>
+<h3 id="do_open_execat">do_open_execat</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>kretprobe:do_open_execat <span style="color:#f92672">/</span>comm <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;sh&#34;</span> <span style="color:#f92672">||</span> comm <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;app&#34;</span><span style="color:#f92672">/</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">$</span>file <span style="color:#f92672">=</span> (<span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span>)retval;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;[ret do_open_execat   ] %s at inode[%p]: %d %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, comm, <span style="color:#960050;background-color:#1e0010">$</span>file<span style="color:#f92672">-&gt;</span>f_inode, <span style="color:#960050;background-color:#1e0010">$</span>file<span style="color:#f92672">-&gt;</span>f_inode<span style="color:#f92672">-&gt;</span>i_writecount.counter, <span style="color:#960050;background-color:#1e0010">$</span>file<span style="color:#f92672">-&gt;</span>f_inode<span style="color:#f92672">-&gt;</span>i_ino);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>do_open_execat</code> is executed before the binary is loaded into memory. Before it
+returns, it decreases <code>i_writecount</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">// fs/exec.c
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span><span style="color:#a6e22e">do_open_execat</span>(<span style="color:#66d9ef">int</span> fd, <span style="color:#66d9ef">struct</span> filename <span style="color:#f92672">*</span>name, <span style="color:#66d9ef">int</span> flags)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==&gt;</span> err <span style="color:#f92672">=</span> <span style="color:#a6e22e">deny_write_access</span>(file);
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> (err)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">goto</span> exit;
+</span></span><span style="display:flex;"><span>    ...
+</span></span></code></pre></div><h3 id="free_bprm">free_bprm</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>kprobe:free_bprm <span style="color:#f92672">/</span>comm <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;sh&#34;</span> <span style="color:#f92672">||</span> comm <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;app&#34;</span><span style="color:#f92672">/</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">$</span>bprm <span style="color:#f92672">=</span> (<span style="color:#66d9ef">struct</span> linux_binprm <span style="color:#f92672">*</span>)arg0;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;[free_bprm            ] %s at inode[%p]: %d %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, comm, <span style="color:#960050;background-color:#1e0010">$</span>bprm<span style="color:#f92672">-&gt;</span>file<span style="color:#f92672">-&gt;</span>f_inode, <span style="color:#960050;background-color:#1e0010">$</span>bprm<span style="color:#f92672">-&gt;</span>file<span style="color:#f92672">-&gt;</span>f_inode<span style="color:#f92672">-&gt;</span>i_writecount.counter, <span style="color:#960050;background-color:#1e0010">$</span>bprm<span style="color:#f92672">-&gt;</span>file<span style="color:#f92672">-&gt;</span>f_inode<span style="color:#f92672">-&gt;</span>i_ino);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>free_bprm</code> is executed when the binary is completely mapped into memory. It
+increases its <code>i_writecount</code> before it returns:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">// fs/exec.c
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">free_bprm</span>(<span style="color:#66d9ef">struct</span> linux_binprm <span style="color:#f92672">*</span>bprm)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (bprm<span style="color:#f92672">-&gt;</span>file) {
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==&gt;</span>		<span style="color:#a6e22e">allow_write_access</span>(bprm<span style="color:#f92672">-&gt;</span>file);
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fput</span>(bprm<span style="color:#f92672">-&gt;</span>file);
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="mmap_region">mmap_region</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>kprobe:mmap_region <span style="color:#f92672">/</span>comm <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;sh&#34;</span> <span style="color:#f92672">||</span> comm <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;app&#34;</span><span style="color:#f92672">/</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">$</span>file <span style="color:#f92672">=</span> (<span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span>)arg0;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (<span style="color:#960050;background-color:#1e0010">$</span>file <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#960050;background-color:#1e0010">$</span>file<span style="color:#f92672">-&gt;</span>f_inode <span style="color:#f92672">!=</span> <span style="color:#ae81ff">0</span>) {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;[mmap_region          ] %s at inode[%p]: %d %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, comm, <span style="color:#960050;background-color:#1e0010">$</span>file<span style="color:#f92672">-&gt;</span>f_inode, <span style="color:#960050;background-color:#1e0010">$</span>file<span style="color:#f92672">-&gt;</span>f_inode<span style="color:#f92672">-&gt;</span>i_writecount.counter, <span style="color:#960050;background-color:#1e0010">$</span>file<span style="color:#f92672">-&gt;</span>f_inode<span style="color:#f92672">-&gt;</span>i_ino);
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>mmap_region</code> sets up the mmap for one of the specific region. As you may guess,
+the program has multiple regions and this function is going to be called
+multiple times. This function, when called successfully, is going to decrease
+<code>i_writecount</code> first, but then increase <code>i_writecount</code> when it is completed.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">// mm/mmap.c
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> <span style="color:#a6e22e">mmap_region</span>(<span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span>file, <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> addr,
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> len, <span style="color:#66d9ef">vm_flags_t</span> vm_flags, <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> pgoff,
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">struct</span> list_head <span style="color:#f92672">*</span>uf)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (file) {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> (vm_flags <span style="color:#f92672">&amp;</span> VM_DENYWRITE) {
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==&gt;</span>			error <span style="color:#f92672">=</span> <span style="color:#a6e22e">deny_write_access</span>(file);
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">if</span> (error)
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">goto</span> free_vma;
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">vma_link</span>(mm, vma, prev, rb_link, rb_parent);
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">/* Once vma denies write, undo our temporary denial count */</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> (file) {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> (vm_flags <span style="color:#f92672">&amp;</span> VM_SHARED)
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">mapping_unmap_writable</span>(file<span style="color:#f92672">-&gt;</span>f_mapping);
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> (vm_flags <span style="color:#f92672">&amp;</span> VM_DENYWRITE)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==&gt;</span>			<span style="color:#a6e22e">allow_write_access</span>(file);
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	file <span style="color:#f92672">=</span> vma<span style="color:#f92672">-&gt;</span>vm_file;
+</span></span></code></pre></div><p>You might end up with thinking that <code>mmap_region</code> isn&rsquo;t going to do anything
+with the given <code>file</code> regarding <code>i_writecount</code>, but that&rsquo;s not right, <code>vma_link</code>
+does decrease <code>i_writecount</code> on <code>vma-&gt;vm_file</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">// mm/mmap.c
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">__vma_link_file</span>(<span style="color:#66d9ef">struct</span> vm_area_struct <span style="color:#f92672">*</span>vma)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    file <span style="color:#f92672">=</span> vma<span style="color:#f92672">-&gt;</span>vm_file;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (file) {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">struct</span> address_space <span style="color:#f92672">*</span>mapping <span style="color:#f92672">=</span> file<span style="color:#f92672">-&gt;</span>f_mapping;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> (vma<span style="color:#f92672">-&gt;</span>vm_flags <span style="color:#f92672">&amp;</span> VM_DENYWRITE)
+</span></span><span style="display:flex;"><span><span style="color:#f92672">==&gt;</span>			<span style="color:#a6e22e">atomic_dec</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">file_inode</span>(file)<span style="color:#f92672">-&gt;</span>i_writecount);
+</span></span><span style="display:flex;"><span>        ...
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">vma_link</span>(<span style="color:#66d9ef">struct</span> mm_struct <span style="color:#f92672">*</span>mm, <span style="color:#66d9ef">struct</span> vm_area_struct <span style="color:#f92672">*</span>vma,
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">struct</span> vm_area_struct <span style="color:#f92672">*</span>prev, <span style="color:#66d9ef">struct</span> rb_node <span style="color:#f92672">**</span>rb_link,
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">struct</span> rb_node <span style="color:#f92672">*</span>rb_parent)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">__vma_link</span>(mm, vma, prev, rb_link, rb_parent);
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">__vma_link_file</span>(vma);
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Essentially, after <code>mmap_region</code>, we would expect that <code>i_writecount</code> will be
+decreased by one.</p>
+<h3 id="ovl_mmap">ovl_mmap</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>kprobe:ovl_mmap <span style="color:#f92672">/</span>comm <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;sh&#34;</span> <span style="color:#f92672">||</span> comm <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;app&#34;</span><span style="color:#f92672">/</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">$</span>file <span style="color:#f92672">=</span> (<span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span>)arg0;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;[ovl_mmap(file)       ] %s at inode[%p]: %d %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, comm, <span style="color:#960050;background-color:#1e0010">$</span>file<span style="color:#f92672">-&gt;</span>f_inode, <span style="color:#960050;background-color:#1e0010">$</span>file<span style="color:#f92672">-&gt;</span>f_inode<span style="color:#f92672">-&gt;</span>i_writecount.counter, <span style="color:#960050;background-color:#1e0010">$</span>file<span style="color:#f92672">-&gt;</span>f_inode<span style="color:#f92672">-&gt;</span>i_ino);
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;[ovl_mmap(realfile)   ] %s at inode[%p]: %d %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, comm, ((<span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span>)<span style="color:#960050;background-color:#1e0010">$</span>file<span style="color:#f92672">-&gt;</span>private_data)<span style="color:#f92672">-&gt;</span>f_inode, ((<span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span>)<span style="color:#960050;background-color:#1e0010">$</span>file<span style="color:#f92672">-&gt;</span>private_data)<span style="color:#f92672">-&gt;</span>f_inode<span style="color:#f92672">-&gt;</span>i_writecount.counter, ((<span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span>)<span style="color:#960050;background-color:#1e0010">$</span>file<span style="color:#f92672">-&gt;</span>private_data)<span style="color:#f92672">-&gt;</span>f_inode<span style="color:#f92672">-&gt;</span>i_ino);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>ovl_mmap</code> is registered as <code>mmap</code> file operation for any files on overlay
+file system. As <code>mmap_region</code> calls into this function, we can print information
+about the <code>i_writecount</code> here regarding <code>file</code> (in overlay) and <code>realfile</code> (in
+underlying file system).</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">// fs/overlayfs/file.c
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">ovl_mmap</span>(<span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span>file, <span style="color:#66d9ef">struct</span> vm_area_struct <span style="color:#f92672">*</span>vma)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span>realfile <span style="color:#f92672">=</span> file<span style="color:#f92672">-&gt;</span>private_data;
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    vma<span style="color:#f92672">-&gt;</span>vm_file <span style="color:#f92672">=</span> <span style="color:#a6e22e">get_file</span>(realfile)
+</span></span><span style="display:flex;"><span>    ...
+</span></span><span style="display:flex;"><span>    ret <span style="color:#f92672">=</span> <span style="color:#a6e22e">call_mmap</span>(vma<span style="color:#f92672">-&gt;</span>vm_file, vma);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>It puts the <code>realfile</code> into <code>vma-&gt;vm_file</code> (remember that <code>vma_link</code> is going to
+decrease its <code>i_write_count</code>) and then calls <code>mmap</code> of the <code>realfile</code>.</p>
+<h3 id="other-functions">Other functions</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span>kprobe:ovl_open_realfile <span style="color:#f92672">/</span>comm <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;sh&#34;</span> <span style="color:#f92672">||</span> comm <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;app&#34;</span><span style="color:#f92672">/</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">$</span>file <span style="color:#f92672">=</span> (<span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span>)arg0;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;[ovl_open_realfile    ] %s at inode[%p]: %d %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, comm, <span style="color:#960050;background-color:#1e0010">$</span>file<span style="color:#f92672">-&gt;</span>f_inode, <span style="color:#960050;background-color:#1e0010">$</span>file<span style="color:#f92672">-&gt;</span>f_inode<span style="color:#f92672">-&gt;</span>i_writecount.counter, <span style="color:#960050;background-color:#1e0010">$</span>file<span style="color:#f92672">-&gt;</span>f_inode<span style="color:#f92672">-&gt;</span>i_ino);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>kretprobe:ovl_open_realfile <span style="color:#f92672">/</span>comm <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;sh&#34;</span> <span style="color:#f92672">||</span> comm <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;app&#34;</span><span style="color:#f92672">/</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">$</span>file <span style="color:#f92672">=</span> (<span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span>)retval;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;[ret ovl_open_realfile] %s at inode[%p]: %d %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, comm, <span style="color:#960050;background-color:#1e0010">$</span>file<span style="color:#f92672">-&gt;</span>f_inode, <span style="color:#960050;background-color:#1e0010">$</span>file<span style="color:#f92672">-&gt;</span>f_inode<span style="color:#f92672">-&gt;</span>i_writecount.counter, <span style="color:#960050;background-color:#1e0010">$</span>file<span style="color:#f92672">-&gt;</span>f_inode<span style="color:#f92672">-&gt;</span>i_ino);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>kprobe:do_dentry_open <span style="color:#f92672">/</span>comm <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;sh&#34;</span> <span style="color:#f92672">||</span> comm <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;app&#34;</span><span style="color:#f92672">/</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">$</span>inode <span style="color:#f92672">=</span> (<span style="color:#66d9ef">struct</span> inode <span style="color:#f92672">*</span>)arg1;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;[do_dentry_open       ] %s at inode[%p]: %d %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, comm, <span style="color:#960050;background-color:#1e0010">$</span>inode, <span style="color:#960050;background-color:#1e0010">$</span>inode<span style="color:#f92672">-&gt;</span>i_writecount.counter, <span style="color:#960050;background-color:#1e0010">$</span>inode<span style="color:#f92672">-&gt;</span>i_ino);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>kprobe:ovl_setattr <span style="color:#f92672">/</span>comm <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;sh&#34;</span> <span style="color:#f92672">||</span> comm <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;app&#34;</span><span style="color:#f92672">/</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#960050;background-color:#1e0010">$</span>dentry <span style="color:#f92672">=</span> (<span style="color:#66d9ef">struct</span> dentry <span style="color:#f92672">*</span>)arg0;
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">printf</span>(<span style="color:#e6db74">&#34;[ovl_setattr          ] %s at inode[%p]: %d %d</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>, comm, <span style="color:#960050;background-color:#1e0010">$</span>dentry<span style="color:#f92672">-&gt;</span>d_inode, <span style="color:#960050;background-color:#1e0010">$</span>dentry<span style="color:#f92672">-&gt;</span>d_inode<span style="color:#f92672">-&gt;</span>i_writecount.counter, <span style="color:#960050;background-color:#1e0010">$</span>dentry<span style="color:#f92672">-&gt;</span>d_inode<span style="color:#f92672">-&gt;</span>i_ino);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>These are just used to show the <code>i_writecount</code>.</p>
+<h3 id="put-it-in-action">Put it in action</h3>
+<p>Once we run this bpftrace script, and then run the <code>/app</code> twice as we we did in
+the beginning, we&rsquo;ll see something like below:</p>
+<h4 id="the-first-exec">The first exec</h4>
+<pre tabindex="0"><code>[do_dentry_open       ] sh at inode[0xffff9719b7ea1040]: 0 675400
+[ovl_open_realfile    ] sh at inode[0xffff9719b7ea1040]: 0 675400
+[do_dentry_open       ] sh at inode[0xffff9719ba6600e8]: 0 675400
+[ret ovl_open_realfile] sh at inode[0xffff9719ba6600e8]: 0 675400
+[ret do_filp_open     ] sh at inode[0xffff9719b7ea1040]: 0 675400
+[ret do_open_execat   ] sh at inode[0xffff9719b7ea1040]: -1 675400
+[mmap_region          ] app at inode[0xffff9719b7ea1040]: -1 675400
+[ovl_mmap(file)       ] app at inode[0xffff9719b7ea1040]: -2 675400
+[ovl_mmap(realfile)   ] app at inode[0xffff9719ba6600e8]: 0 675400
+[mmap_region          ] app at inode[0xffff9719b7ea1040]: -1 675400
+[ovl_mmap(file)       ] app at inode[0xffff9719b7ea1040]: -2 675400
+[ovl_mmap(realfile)   ] app at inode[0xffff9719ba6600e8]: -1 675400
+[mmap_region          ] app at inode[0xffff9719b7ea1040]: -1 675400
+[ovl_mmap(file)       ] app at inode[0xffff9719b7ea1040]: -2 675400
+[ovl_mmap(realfile)   ] app at inode[0xffff9719ba6600e8]: -2 675400
+[free_bprm            ] app at inode[0xffff9719b7ea1040]: -1 675400
+</code></pre><blockquote>
+<p>Below, I use <code>1040</code> to represent the inode at address <code>0xffff9719b7ea1040</code> and
+<code>00e8</code> to represent the inode at address <code>0xffff9719ba6600e8</code>.</p>
+</blockquote>
+<p>There are 2 inodes, namingly <code>1040</code> (addr) and <code>00e8</code> (addr). Both of them
+have the same inode number <code>675400</code>. When we initially open <code>/app</code>, it is on
+overlayfs, so the inode <code>1040</code> is the one from overlayfs super block, once it
+returns from <code>ovl_open_realfile</code>, <code>00e8</code> shows up, and that is the inode from
+the underlying file system (ext4 for example).</p>
+<p>When it returns from <code>do_open_execat</code>, we do see that the <code>i_writecount</code> of
+inode <code>1040</code> turns into <code>-1</code>.</p>
+<p>Now it goes into <code>mmap_region</code>, as we talked earlier, it tries to decrease the
+<code>i_writecount</code> of the incoming inode <code>1040</code>, so that&rsquo;s why <code>ovl_mmap</code> shows that
+inode <code>1040</code> now has <code>i_write_count</code> value as -2, and it sets <code>vma-&gt;file</code> to the
+real file <code>00e8</code>, so that <code>vma_link</code> will decrease its <code>i_writecount</code> by 1 which
+is going to be -1 (as we can confirm in the second iteration of <code>mmap_region</code>).
+Further, since <code>mmap_region</code> increases the <code>i_writecount</code> of inode <code>1040</code> before
+it returns, its <code>i_writecount</code> remains at -1.</p>
+<p>After <code>mmap_region</code> function runs 3 times, eventually, it is going to set
+<code>i_writecount</code> of <code>00e8</code> to be -3 while <code>i_writecount</code> of <code>1040</code> remains at -1.</p>
+<p>In the end, <code>free_bprm</code> is going to release the write of inode <code>1040</code>, so after
+it returns, the <code>i_writecount</code> if inode <code>1040</code> becomes 0.</p>
+<h4 id="open-with-read-only">Open with read only</h4>
+<pre tabindex="0"><code>[do_dentry_open       ] app at inode[0xffff9719b7ea1040]: 0 675400
+[ovl_open_realfile    ] app at inode[0xffff9719b7ea1040]: 0 675400
+[do_dentry_open       ] app at inode[0xffff9719ba6600e8]: -3 675400
+[ret ovl_open_realfile] app at inode[0xffff9719ba6600e8]: -3 675400
+[ret do_filp_open     ] app at inode[0xffff9719b7ea1040]: 0 675400
+</code></pre><p>We can confirm here that inode <code>1040</code> has <code>i_writecount</code> as 0, and inode <code>00e8</code>
+has <code>i_writecount</code> as -3 (due to the fact that <code>vma_link</code> was called 3 times
+above).</p>
+<h4 id="open-with-read-write">Open with read write</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>[do_dentry_open       ] app at inode[0xffff9719b7ea1040]: 0 675400
+</span></span><span style="display:flex;"><span>[ovl_open_realfile    ] app at inode[0xffff9719b7ea1040]: 1 675400
+</span></span><span style="display:flex;"><span>[do_dentry_open       ] app at inode[0xffff9719b7e7d688]: 0 675462
+</span></span><span style="display:flex;"><span>[ret ovl_open_realfile] app at inode[0xffff9719b7e7d688]: 1 675462
+</span></span><span style="display:flex;"><span>[ovl_setattr          ] app at inode[0xffff9719b7ea1040]: 2 675400
+</span></span><span style="display:flex;"><span>[ret do_filp_open     ] app at inode[0xffff9719b7ea1040]: 1 675400
+</span></span></code></pre></div><p>As inode <code>1040</code> has <code>i_writecount</code> as 0, it still allows writes. When the write
+is permitted, overlayfs is going to create a new file in upper layer, and that&rsquo;s
+why inode <code>d688</code> shows up: It&rsquo;s the new inode in the underlying file system.</p>
+<p>You&rsquo;ll see that the new inode has a different number <code>675462</code> because overlayfs
+actually creates a new file in underlying file system. However, users will still
+see the same inode <code>1040</code> with number <code>675400</code></p>
+<h4 id="the-second-exec">The second exec</h4>
+<pre tabindex="0"><code>[do_dentry_open       ] sh at inode[0xffff9719b7ea1040]: 0 675400
+[ovl_open_realfile    ] sh at inode[0xffff9719b7ea1040]: 0 675400
+[do_dentry_open       ] sh at inode[0xffff9719b7e7d688]: 0 675462
+[ret ovl_open_realfile] sh at inode[0xffff9719b7e7d688]: 0 675462
+[ret do_filp_open     ] sh at inode[0xffff9719b7ea1040]: 0 675400
+[ret do_open_execat   ] sh at inode[0xffff9719b7ea1040]: -1 675400
+[mmap_region          ] app at inode[0xffff9719b7ea1040]: -1 675400
+[ovl_mmap(file)       ] app at inode[0xffff9719b7ea1040]: -2 675400
+[ovl_mmap(realfile)   ] app at inode[0xffff9719b7e7d688]: 0 675462
+[mmap_region          ] app at inode[0xffff9719b7ea1040]: -1 675400
+[ovl_mmap(file)       ] app at inode[0xffff9719b7ea1040]: -2 675400
+[ovl_mmap(realfile)   ] app at inode[0xffff9719b7e7d688]: -1 675462
+[mmap_region          ] app at inode[0xffff9719b7ea1040]: -1 675400
+[ovl_mmap(file)       ] app at inode[0xffff9719b7ea1040]: -2 675400
+[ovl_mmap(realfile)   ] app at inode[0xffff9719b7e7d688]: -2 675462
+[free_bprm            ] app at inode[0xffff9719b7ea1040]: -1 675400
+</code></pre><p>This is exactly the same as the first run. In the end, inode <code>1040</code> has 0
+<code>i_writecount</code> and <code>d688</code> (the new inode in underlying file system) has
+<code>i_writecount</code> as -3.</p>
+<h4 id="open-with-read-only-2nd">Open with read only (2nd)</h4>
+<pre tabindex="0"><code>[do_dentry_open       ] app at inode[0xffff9719b7ea1040]: 0 675400
+[ovl_open_realfile    ] app at inode[0xffff9719b7ea1040]: 0 675400
+[do_dentry_open       ] app at inode[0xffff9719b7e7d688]: -3 675462
+[ret ovl_open_realfile] app at inode[0xffff9719b7e7d688]: -3 675462
+[ret do_filp_open     ] app at inode[0xffff9719b7ea1040]: 0 675400
+</code></pre><p>This is a read only open, so the <code>i_writecount</code> value doesn&rsquo;t matter here and it
+succeeded as usual.</p>
+<h4 id="open-with-read-write-2nd">Open with read write (2nd)</h4>
+<pre tabindex="0"><code>[do_dentry_open       ] app at inode[0xffff9719b7ea1040]: 0 675400
+[ovl_open_realfile    ] app at inode[0xffff9719b7ea1040]: 1 675400
+[do_dentry_open       ] app at inode[0xffff9719b7e7d688]: -3 675462
+[ret ovl_open_realfile] app at inode[(nil)]: 0 0
+[ret do_filp_open     ] app at inode[(nil)]: 0 0
+</code></pre><p>This is when <code>text file busy</code> error happens, because overlayfs sees that the
+file is already in upper layer (the inode <code>d688</code>, previously copied up). When we
+try to open it with <code>O_RDWR</code> again with inode <code>d688</code>, it fails with ETXTBSY.</p>
+<h2 id="summary">Summary</h2>
+<p>While the story when being told, seems to be straightforward, there were a lot
+of trials and errors. It literally took me several days to figure out all the
+functions to trace, however it was als a great relief / joy when everything was
+connected in the end. Thanks for reading!</p>
+<blockquote>
+<p>You can also use the exact same bpftrace script to understand why ubuntu 22.04
+doesn&rsquo;t have this problem. I&rsquo;ll leave it as an exercise to you. I promise it
+is going to be fun. Let me know what you are going to find out in the comments
+below.</p>
+</blockquote>
+</section>
+
+  
+  
+
+  
+  
+  
+  
+  <nav
+    class="mt-24 flex rounded-lg bg-black/[3%] text-lg !leading-[1.2] dark:bg-white/[8%]"
+  >
+    
+    
+    <a
+      class="ml-auto flex w-1/2 items-center justify-end rounded-r-md p-6 pl-3 font-medium no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      href="https://blog.zhouhaibing.com/posts/two-lane-queue/"
+      ><span>two lane queue</span><span class="ml-1.5">→</span></a
+    >
+    
+  </nav>
+  
+  
+
+  
+  
+  <div class="mt-24" id="disqus_thread"></div>
+  <script>
+    const disqusShortname = 'zhouhaibing089';
+    const script = document.createElement('script');
+    script.src = 'https://' + disqusShortname + '.disqus.com/embed.js';
+    script.setAttribute('data-timestamp', +new Date());
+    document.head.appendChild(script);
+  </script>
+  
+
+  
+  
+
+  
+
+
+  
+</article>
+
+
+    </main>
+
+    <footer
+  class="mx-auto flex h-[4.5rem] max-w-3xl items-center px-8 text-xs uppercase tracking-wider opacity-60"
+>
+  <div class="mr-auto">
+    &copy; 2024
+    <a class="link" href="https://blog.zhouhaibing.com/">Hi-Been Space</a>
+  </div>
+  <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
+    >powered by hugo️️</a
+  >️
+  <a
+    class="link"
+    href="https://github.com/nanxiaobei/hugo-paper"
+    rel="noopener"
+    target="_blank"
+    >hugo-paper</a
+  >
+</footer>
+
+  </body>
+</html>

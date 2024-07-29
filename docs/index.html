@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<!doctype html>
+
+
+
 
 
 
@@ -40,7 +43,7 @@
 
 
 <html
-  class="not-ready text-sm lg:text-base"
+  class="not-ready lg:text-base"
   style="--bg: #fbfbfb"
   lang="en-us"
 >
@@ -62,6 +65,7 @@
   
   
   
+  
   <meta
     name="description"
     content="A personal blog"
@@ -78,11 +82,13 @@
   <link rel="preload stylesheet" as="style" href="https://blog.zhouhaibing.com/main.min.css" />
 
   
-
   
-   
+  
+  
+  
   <link rel="preload" as="image" href="https://blog.zhouhaibing.com/theme.png" />
 
+  
   
   
   
@@ -90,6 +96,7 @@
   
   
 
+  
   
   <link rel="preload" as="image" href="https://blog.zhouhaibing.com/github.svg" />
   
@@ -101,11 +108,45 @@
   
 
   
-  <link rel="icon" href="https://blog.zhouhaibing.com/favicon.ico" />
-  <link rel="apple-touch-icon" href="https://blog.zhouhaibing.com/apple-touch-icon.png" />
+  
+  
 
   
-  <meta name="generator" content="Hugo 0.122.0">
+  <link
+    rel="icon"
+    href="https://blog.zhouhaibing.com/favicon.ico"
+  />
+  <link
+    rel="apple-touch-icon"
+    href="https://blog.zhouhaibing.com/apple-touch-icon.png"
+  />
+
+  
+  <meta name="generator" content="Hugo 0.129.0">
+
+  
+  
+  
+  
+  
+
+
+  
+  
+  <meta itemprop="name" content="Hi-Been Space">
+  <meta itemprop="datePublished" content="2024-07-27T19:14:00-07:00">
+  <meta itemprop="dateModified" content="2024-07-27T19:14:00-07:00">
+  
+  <meta property="og:url" content="https://blog.zhouhaibing.com/">
+  <meta property="og:site_name" content="Hi-Been Space">
+  <meta property="og:title" content="Hi-Been Space">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="website">
+
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Hi-Been Space">
 
   
   
@@ -118,35 +159,15 @@
   
 
   
-  
-  
-  
-  
-  
-  
-  <meta property="og:title" content="Hi-Been Space" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://blog.zhouhaibing.com/" />
-
-
-  
-  <meta itemprop="name" content="Hi-Been Space">
-<meta itemprop="description" content="">
-  
-  <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Hi-Been Space"/>
-<meta name="twitter:description" content=""/>
-
+  <link rel="canonical" href="https://blog.zhouhaibing.com/" />
   
   
 </head>
 
   <body class="text-black duration-200 ease-out dark:text-white">
-    <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
+    <header class="mx-auto flex h-[4.5rem] max-w-3xl px-8 lg:justify-center">
   <div class="relative z-50 mr-auto flex items-center">
-    <a
-      class="-translate-x-[1px] -translate-y-[1px] text-2xl font-semibold"
-      href="https://blog.zhouhaibing.com/"
+    <a class="-translate-y-[1px] text-2xl" href="https://blog.zhouhaibing.com/"
       >Hi-Been Space</a
     >
     <div
@@ -157,12 +178,13 @@
   </div>
 
   <div
-    class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+    class="btn-menu relative z-50 -mr-8 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
     role="button"
     aria-label="Menu"
   ></div>
 
   
+
   <script>
     
     const htmlClass = document.documentElement.classList;
@@ -178,7 +200,7 @@
 
     
     const metaTheme = document.querySelector('meta[name="theme-color"]');
-    const lightBg = `#fbfbfb`.replace(/"/g, '');
+    const lightBg = '#fbfbfb'.replace(/"/g, '');
     const setDark = (isDark) => {
       metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
       htmlClass[isDark ? 'add' : 'remove']('dark');
@@ -214,7 +236,7 @@
 
     
     <nav
-      class="mt-12 flex justify-center space-x-10 dark:invert lg:ml-12 lg:mt-0 lg:items-center lg:space-x-6"
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:ml-14 lg:mt-0 lg:items-center"
     >
       
       <a
@@ -244,7 +266,7 @@
 
 
     <main
-      class="prose prose-neutral relative mx-auto min-h-[calc(100%-10rem)] max-w-3xl px-8 pb-24 pt-16 dark:prose-invert"
+      class="prose prose-neutral relative mx-auto min-h-[calc(100%-9rem)] max-w-3xl px-8 pb-16 pt-14 dark:prose-invert"
     >
       
 
@@ -265,13 +287,13 @@
 
 
 
-<div class="-mt-2 mb-20 flex items-center">
+<div class="-mt-2 mb-16 flex items-center">
   
   <div
-    class="mr-5 shrink-0 rounded-full border-[0.5px] border-black/10 bg-white/50 p-3 shadow-sm dark:bg-white/[15%]"
+    class="-ml-1 mr-5 aspect-square w-24 shrink-0 rounded-full border-[0.5px] border-black/10 bg-white/50 p-3 dark:!bg-white/90"
   >
     <img
-      class="my-0 aspect-square w-16 rounded-full !bg-black/5 hover:animate-spin dark:!bg-black/80"
+      class="my-0 h-full w-full rounded-full !bg-black/5 hover:animate-spin dark:!bg-black/80"
       src="https://www.gravatar.com/avatar/5efba87a944c70d1abe7f7892f4df74b?s=160&amp;d=identicon"
       alt="Haibing Zhou"
     />
@@ -279,7 +301,7 @@
   
   
   <div>
-    <h1 class="mb-2 mt-3 text-[1.6rem] font-bold">Haibing Zhou</h1>
+    <h1 class="mb-1 mt-3 text-3xl font-medium">Haibing Zhou</h1>
     <div class="break-words">
       Obstacle is the way; Ego is the enemy.
     </div>
@@ -292,8 +314,21 @@
 
 <section class="relative my-10 first-of-type:mt-0 last-of-type:mb-0">
   
-  <h2 class="!my-0 pb-1 font-bold !leading-none">two lane queue</h2>
-  <time class="text-sm opacity-60"
+  <h2 class="!my-0">why not text busy</h2>
+  <time class="text-xs antialiased opacity-60"
+    >Jul 27, 2024</time
+  >
+  <a class="absolute inset-0 text-[0]" href="https://blog.zhouhaibing.com/posts/why-not-text-busy/">why not text busy</a>
+</section>
+
+
+
+
+
+<section class="relative my-10 first-of-type:mt-0 last-of-type:mb-0">
+  
+  <h2 class="!my-0">two lane queue</h2>
+  <time class="text-xs antialiased opacity-60"
     >Feb 18, 2024</time
   >
   <a class="absolute inset-0 text-[0]" href="https://blog.zhouhaibing.com/posts/two-lane-queue/">two lane queue</a>
@@ -305,8 +340,8 @@
 
 <section class="relative my-10 first-of-type:mt-0 last-of-type:mb-0">
   
-  <h2 class="!my-0 pb-1 font-bold !leading-none">why en-dash looks strange in utf8</h2>
-  <time class="text-sm opacity-60"
+  <h2 class="!my-0">why en-dash looks strange in utf8</h2>
+  <time class="text-xs antialiased opacity-60"
     >Jan 4, 2024</time
   >
   <a class="absolute inset-0 text-[0]" href="https://blog.zhouhaibing.com/posts/why-en-dash-looks-strange-in-utf8/">why en-dash looks strange in utf8</a>
@@ -318,8 +353,8 @@
 
 <section class="relative my-10 first-of-type:mt-0 last-of-type:mb-0">
   
-  <h2 class="!my-0 pb-1 font-bold !leading-none">etcd clustering step by step</h2>
-  <time class="text-sm opacity-60"
+  <h2 class="!my-0">etcd clustering step by step</h2>
+  <time class="text-xs antialiased opacity-60"
     >Jun 18, 2023</time
   >
   <a class="absolute inset-0 text-[0]" href="https://blog.zhouhaibing.com/posts/etcd-clustering-step-by-step/">etcd clustering step by step</a>
@@ -331,8 +366,8 @@
 
 <section class="relative my-10 first-of-type:mt-0 last-of-type:mb-0">
   
-  <h2 class="!my-0 pb-1 font-bold !leading-none">Race condition between kube-proxy and cilium</h2>
-  <time class="text-sm opacity-60"
+  <h2 class="!my-0">Race condition between kube-proxy and cilium</h2>
+  <time class="text-xs antialiased opacity-60"
     >May 27, 2023</time
   >
   <a class="absolute inset-0 text-[0]" href="https://blog.zhouhaibing.com/posts/race-condition-between-kube-proxy-and-cilium/">Race condition between kube-proxy and cilium</a>
@@ -344,8 +379,8 @@
 
 <section class="relative my-10 first-of-type:mt-0 last-of-type:mb-0">
   
-  <h2 class="!my-0 pb-1 font-bold !leading-none">kubectl alias done right</h2>
-  <time class="text-sm opacity-60"
+  <h2 class="!my-0">kubectl alias done right</h2>
+  <time class="text-xs antialiased opacity-60"
     >Apr 23, 2023</time
   >
   <a class="absolute inset-0 text-[0]" href="https://blog.zhouhaibing.com/posts/kubectl-alias-done-right/">kubectl alias done right</a>
@@ -357,8 +392,8 @@
 
 <section class="relative my-10 first-of-type:mt-0 last-of-type:mb-0">
   
-  <h2 class="!my-0 pb-1 font-bold !leading-none">学棋记</h2>
-  <time class="text-sm opacity-60"
+  <h2 class="!my-0">学棋记</h2>
+  <time class="text-xs antialiased opacity-60"
     >Oct 5, 2020</time
   >
   <a class="absolute inset-0 text-[0]" href="https://blog.zhouhaibing.com/posts/learning-go-1/">学棋记</a>
@@ -370,8 +405,8 @@
 
 <section class="relative my-10 first-of-type:mt-0 last-of-type:mb-0">
   
-  <h2 class="!my-0 pb-1 font-bold !leading-none">A Story about DeleteOptions</h2>
-  <time class="text-sm opacity-60"
+  <h2 class="!my-0">A Story about DeleteOptions</h2>
+  <time class="text-xs antialiased opacity-60"
     >Mar 30, 2019</time
   >
   <a class="absolute inset-0 text-[0]" href="https://blog.zhouhaibing.com/posts/a-story-about-deleteoptions/">A Story about DeleteOptions</a>
@@ -383,8 +418,8 @@
 
 <section class="relative my-10 first-of-type:mt-0 last-of-type:mb-0">
   
-  <h2 class="!my-0 pb-1 font-bold !leading-none">我为什么要跑步</h2>
-  <time class="text-sm opacity-60"
+  <h2 class="!my-0">我为什么要跑步</h2>
+  <time class="text-xs antialiased opacity-60"
     >Mar 17, 2019</time
   >
   <a class="absolute inset-0 text-[0]" href="https://blog.zhouhaibing.com/posts/why-keep-running-as-a-habbit/">我为什么要跑步</a>
@@ -398,21 +433,21 @@
     </main>
 
     <footer
-  class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60"
+  class="mx-auto flex h-[4.5rem] max-w-3xl items-center px-8 text-xs uppercase tracking-wider opacity-60"
 >
   <div class="mr-auto">
     &copy; 2024
     <a class="link" href="https://blog.zhouhaibing.com/">Hi-Been Space</a>
   </div>
   <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
-    >Powered by Hugo️️</a
+    >powered by hugo️️</a
   >️
   <a
     class="link"
     href="https://github.com/nanxiaobei/hugo-paper"
     rel="noopener"
     target="_blank"
-    >Theme Paper</a
+    >hugo-paper</a
   >
 </footer>
 

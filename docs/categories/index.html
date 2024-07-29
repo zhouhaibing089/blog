@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+<!doctype html>
+
+
+
 
 
 
@@ -40,7 +43,7 @@
 
 
 <html
-  class="not-ready text-sm lg:text-base"
+  class="not-ready lg:text-base"
   style="--bg: #fbfbfb"
   lang="en-us"
 >
@@ -62,6 +65,7 @@
   
   
   
+  
   <meta
     name="description"
     content="A personal blog"
@@ -78,11 +82,13 @@
   <link rel="preload stylesheet" as="style" href="https://blog.zhouhaibing.com/main.min.css" />
 
   
-
   
-   
+  
+  
+  
   <link rel="preload" as="image" href="https://blog.zhouhaibing.com/theme.png" />
 
+  
   
   
   
@@ -90,6 +96,7 @@
   
   
 
+  
   
   <link rel="preload" as="image" href="https://blog.zhouhaibing.com/github.svg" />
   
@@ -101,11 +108,43 @@
   
 
   
-  <link rel="icon" href="https://blog.zhouhaibing.com/favicon.ico" />
-  <link rel="apple-touch-icon" href="https://blog.zhouhaibing.com/apple-touch-icon.png" />
+  
+  
 
   
-  <meta name="generator" content="Hugo 0.122.0">
+  <link
+    rel="icon"
+    href="https://blog.zhouhaibing.com/favicon.ico"
+  />
+  <link
+    rel="apple-touch-icon"
+    href="https://blog.zhouhaibing.com/apple-touch-icon.png"
+  />
+
+  
+  <meta name="generator" content="Hugo 0.129.0">
+
+  
+  
+  
+  
+  
+
+
+  
+  
+  <meta itemprop="name" content="Categories">
+  
+  <meta property="og:url" content="https://blog.zhouhaibing.com/categories/">
+  <meta property="og:site_name" content="Hi-Been Space">
+  <meta property="og:title" content="Categories">
+  <meta property="og:locale" content="en_us">
+  <meta property="og:type" content="website">
+
+  
+  
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Categories">
 
   
   
@@ -118,35 +157,15 @@
   
 
   
-  
-  
-  
-  
-  
-  
-  <meta property="og:title" content="Categories" />
-<meta property="og:description" content="" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://blog.zhouhaibing.com/categories/" />
-
-
-  
-  <meta itemprop="name" content="Categories">
-<meta itemprop="description" content="">
-  
-  <meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Categories"/>
-<meta name="twitter:description" content=""/>
-
+  <link rel="canonical" href="https://blog.zhouhaibing.com/categories/" />
   
   
 </head>
 
   <body class="text-black duration-200 ease-out dark:text-white">
-    <header class="mx-auto flex h-[5rem] max-w-3xl px-8 lg:justify-center">
+    <header class="mx-auto flex h-[4.5rem] max-w-3xl px-8 lg:justify-center">
   <div class="relative z-50 mr-auto flex items-center">
-    <a
-      class="-translate-x-[1px] -translate-y-[1px] text-2xl font-semibold"
-      href="https://blog.zhouhaibing.com/"
+    <a class="-translate-y-[1px] text-2xl" href="https://blog.zhouhaibing.com/"
       >Hi-Been Space</a
     >
     <div
@@ -157,12 +176,13 @@
   </div>
 
   <div
-    class="btn-menu relative z-50 -mr-8 flex h-[5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
+    class="btn-menu relative z-50 -mr-8 flex h-[4.5rem] w-[5rem] shrink-0 cursor-pointer flex-col items-center justify-center gap-2.5 lg:hidden"
     role="button"
     aria-label="Menu"
   ></div>
 
   
+
   <script>
     
     const htmlClass = document.documentElement.classList;
@@ -178,7 +198,7 @@
 
     
     const metaTheme = document.querySelector('meta[name="theme-color"]');
-    const lightBg = `#fbfbfb`.replace(/"/g, '');
+    const lightBg = '#fbfbfb'.replace(/"/g, '');
     const setDark = (isDark) => {
       metaTheme.setAttribute('content', isDark ? '#000' : lightBg);
       htmlClass[isDark ? 'add' : 'remove']('dark');
@@ -214,7 +234,7 @@
 
     
     <nav
-      class="mt-12 flex justify-center space-x-10 dark:invert lg:ml-12 lg:mt-0 lg:items-center lg:space-x-6"
+      class="mt-12 flex justify-center space-x-10 dark:invert lg:ml-14 lg:mt-0 lg:items-center"
     >
       
       <a
@@ -244,7 +264,7 @@
 
 
     <main
-      class="prose prose-neutral relative mx-auto min-h-[calc(100%-10rem)] max-w-3xl px-8 pb-24 pt-16 dark:prose-invert"
+      class="prose prose-neutral relative mx-auto min-h-[calc(100%-9rem)] max-w-3xl px-8 pb-16 pt-14 dark:prose-invert"
     >
       
 
@@ -265,21 +285,21 @@
     </main>
 
     <footer
-  class="opaco mx-auto flex h-[5rem] max-w-3xl items-center px-8 text-[0.9em] opacity-60"
+  class="mx-auto flex h-[4.5rem] max-w-3xl items-center px-8 text-xs uppercase tracking-wider opacity-60"
 >
   <div class="mr-auto">
     &copy; 2024
     <a class="link" href="https://blog.zhouhaibing.com/">Hi-Been Space</a>
   </div>
   <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
-    >Powered by Hugo️️</a
+    >powered by hugo️️</a
   >️
   <a
     class="link"
     href="https://github.com/nanxiaobei/hugo-paper"
     rel="noopener"
     target="_blank"
-    >Theme Paper</a
+    >hugo-paper</a
   >
 </footer>
 
