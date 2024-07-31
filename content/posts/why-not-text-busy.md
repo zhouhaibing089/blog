@@ -462,6 +462,9 @@ the beginning, we'll see something like below:
 > Below, I use `1040` to represent the inode at address `0xffff9719b7ea1040` and
 > `00e8` to represent the inode at address `0xffff9719ba6600e8`.
 
+
+![i_writecount_exec](/images/inode_writecount_exec.svg)
+
 There are 2 inodes, namingly `1040` (addr) and `00e8` (addr). Both of them
 have the same inode number `675400`. When we initially open `/app`, it is on
 overlayfs, so the inode `1040` is the one from overlayfs super block, once it

@@ -128,7 +128,7 @@ Running kaniko in any Docker image other than the official kaniko image is not s
   />
 
   
-  <meta name="generator" content="Hugo 0.129.0">
+  <meta name="generator" content="Hugo 0.130.0">
 
   
   
@@ -658,6 +658,7 @@ the beginning, we&rsquo;ll see something like below:</p>
 <p>Below, I use <code>1040</code> to represent the inode at address <code>0xffff9719b7ea1040</code> and
 <code>00e8</code> to represent the inode at address <code>0xffff9719ba6600e8</code>.</p>
 </blockquote>
+<p><img src="/images/inode_writecount_exec.svg" alt="i_writecount_exec"></p>
 <p>There are 2 inodes, namingly <code>1040</code> (addr) and <code>00e8</code> (addr). Both of them
 have the same inode number <code>675400</code>. When we initially open <code>/app</code>, it is on
 overlayfs, so the inode <code>1040</code> is the one from overlayfs super block, once it
