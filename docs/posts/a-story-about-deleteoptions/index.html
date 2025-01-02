@@ -66,9 +66,14 @@
   
   
   <meta name="description" content="Note: The issue has been fixed in https://github.com/kubernetes/kubernetes/pull/76051.
-Today, I want to share a story about object deletion in kubernetes federation. This leads to a better understanding on how object deletion works in kubernetes, and I believe this may help others to understand it as well.
+Today, I want to share a story about object deletion in kubernetes federation.
+This leads to a better understanding on how object deletion works in kubernetes,
+and I believe this may help others to understand it as well.
 It all starts with a support request:
-When I delete my namespace on federation, the same namespace in member cluster is not deleted, however, cascade deletion does happen for all other resources like configmaps." />
+
+When I delete my namespace on federation, the same namespace in member cluster
+is not deleted, however, cascade deletion does happen for all other resources
+like configmaps." />
   <meta name="author" content="Haibing Zhou" />
   
 
@@ -127,15 +132,12 @@ When I delete my namespace on federation, the same namespace in member cluster i
   />
 
   
-  <meta name="generator" content="Hugo 0.130.0">
+  <meta name="generator" content="Hugo 0.140.2">
 
   
   
   
   
-  
-
-
   
   
   <meta itemprop="name" content="A Story about DeleteOptions">
@@ -639,7 +641,7 @@ the codebase. However it is really enjoyable.</p>
   class="mx-auto flex h-[4.5rem] max-w-3xl items-center px-8 text-xs uppercase tracking-wider opacity-60"
 >
   <div class="mr-auto">
-    &copy; 2024
+    &copy; 2025
     <a class="link" href="https://blog.zhouhaibing.com/">Hi-Been Space</a>
   </div>
   <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"

@@ -65,10 +65,20 @@
   
   
   
-  <meta name="description" content="I have been using hyphen and dash exchangeably for a long time, and I thought they are the same. Until I realized there are:
-en-dash (–) em-dash (—) One is longer than the other, and both of them are longer than hyphen (-) (probably depends on which font you are using).
-I went through all this because there was an issue I investigated recently in kubernetes.
-The story Note: To simplify the context, the example below is faked with only the details that matter." />
+  <meta name="description" content="I have been using hyphen and dash exchangeably for a long time, and I thought
+they are the same. Until I realized there are:
+
+en-dash (–)
+em-dash (—)
+
+One is longer than the other, and both of them are longer than hyphen (-)
+(probably depends on which font you are using).
+I went through all this because there was an issue I investigated recently in
+kubernetes.
+The story
+
+Note: To simplify the context, the example below is faked with only the
+details that matter." />
   <meta name="author" content="Haibing Zhou" />
   
 
@@ -127,15 +137,12 @@ The story Note: To simplify the context, the example below is faked with only th
   />
 
   
-  <meta name="generator" content="Hugo 0.130.0">
+  <meta name="generator" content="Hugo 0.140.2">
 
   
   
   
   
-  
-
-
   
   
   <meta itemprop="name" content="why en-dash looks strange in utf8">
@@ -515,50 +522,50 @@ byte, but the one after is not as that starts with <code>11</code>)</li>
 </ul>
 <p>Then according to the its <a href="https://en.wikipedia.org/wiki/UTF-8">wiki page</a>:</p>
 <table>
-<thead>
-<tr>
-<th>First code point</th>
-<th>Last code point</th>
-<th>Byte 1</th>
-<th>Byte 2</th>
-<th>Byte 3</th>
-<th>Byte 4</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>U+0000</td>
-<td>U+007F</td>
-<td>0xxxxxxx</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>U+0080</td>
-<td>U+07FF</td>
-<td>110xxxxx</td>
-<td>10xxxxxx</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td>U+0800</td>
-<td>U+FFFF</td>
-<td>1110xxxx</td>
-<td>10xxxxxx</td>
-<td>10xxxxxx</td>
-<td></td>
-</tr>
-<tr>
-<td>U+10000</td>
-<td>U+10FFFF</td>
-<td>11110xxx</td>
-<td>10xxxxxx</td>
-<td>10xxxxxx</td>
-<td>10xxxxxx</td>
-</tr>
-</tbody>
+  <thead>
+      <tr>
+          <th>First code point</th>
+          <th>Last code point</th>
+          <th>Byte 1</th>
+          <th>Byte 2</th>
+          <th>Byte 3</th>
+          <th>Byte 4</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>U+0000</td>
+          <td>U+007F</td>
+          <td>0xxxxxxx</td>
+          <td></td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>U+0080</td>
+          <td>U+07FF</td>
+          <td>110xxxxx</td>
+          <td>10xxxxxx</td>
+          <td></td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>U+0800</td>
+          <td>U+FFFF</td>
+          <td>1110xxxx</td>
+          <td>10xxxxxx</td>
+          <td>10xxxxxx</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>U+10000</td>
+          <td>U+10FFFF</td>
+          <td>11110xxx</td>
+          <td>10xxxxxx</td>
+          <td>10xxxxxx</td>
+          <td>10xxxxxx</td>
+      </tr>
+  </tbody>
 </table>
 <p>So we can turn those binaries into the exact code point:</p>
 <ul>
@@ -635,7 +642,7 @@ doing all this math.</p>
   class="mx-auto flex h-[4.5rem] max-w-3xl items-center px-8 text-xs uppercase tracking-wider opacity-60"
 >
   <div class="mr-auto">
-    &copy; 2024
+    &copy; 2025
     <a class="link" href="https://blog.zhouhaibing.com/">Hi-Been Space</a>
   </div>
   <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"

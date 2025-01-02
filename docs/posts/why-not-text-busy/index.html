@@ -66,10 +66,22 @@
   
   
   <meta name="description" content="There are two types of troubleshootings:
-Why something doesn&rsquo;t work? Why something worked? This post is about the second category.
-The Problem We have been using kaniko as image builder since a while back, including building a customzied kaniko image with itself like below:
-FROM alpine:latest COPY --from=gcr.io/kaniko-project/executor:v1.23.2 /kaniko /kaniko Despite of its official documentation clearly suggesting that this is not supported:
-Running kaniko in any Docker image other than the official kaniko image is not supported due to implementation details." />
+
+Why something doesn&rsquo;t work?
+Why something worked?
+
+This post is about the second category.
+
+The Problem
+We have been using kaniko as image builder since a while back, including
+building a customzied kaniko image with itself like below:
+FROM alpine:latest
+COPY --from=gcr.io/kaniko-project/executor:v1.23.2 /kaniko /kaniko
+Despite of its official documentation clearly suggesting that this is not
+supported:
+
+Running kaniko in any Docker image other than the official kaniko image is not
+supported due to implementation details." />
   <meta name="author" content="Haibing Zhou" />
   
 
@@ -128,15 +140,12 @@ Running kaniko in any Docker image other than the official kaniko image is not s
   />
 
   
-  <meta name="generator" content="Hugo 0.130.0">
+  <meta name="generator" content="Hugo 0.140.2">
 
   
   
   
   
-  
-
-
   
   
   <meta itemprop="name" content="why not text busy">
@@ -760,6 +769,12 @@ below.</p>
     class="mt-24 flex rounded-lg bg-black/[3%] text-lg !leading-[1.2] dark:bg-white/[8%]"
   >
     
+    <a
+      class="flex w-1/2 items-center rounded-l-md p-6 pr-3 font-medium no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
+      href="https://blog.zhouhaibing.com/posts/note-2024-10-27/"
+      ><span class="mr-1.5">←</span><span>小记-2024-10-27</span></a
+    >
+    
     
     <a
       class="ml-auto flex w-1/2 items-center justify-end rounded-r-md p-6 pl-3 font-medium no-underline hover:bg-black/[2%] dark:hover:bg-white/[3%]"
@@ -799,7 +814,7 @@ below.</p>
   class="mx-auto flex h-[4.5rem] max-w-3xl items-center px-8 text-xs uppercase tracking-wider opacity-60"
 >
   <div class="mr-auto">
-    &copy; 2024
+    &copy; 2025
     <a class="link" href="https://blog.zhouhaibing.com/">Hi-Been Space</a>
   </div>
   <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"

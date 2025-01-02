@@ -65,9 +65,18 @@
   
   
   
-  <meta name="description" content="This is an investigation story where all pods on one host lost connectivity to external service. It looks like something below:
-$ nsenter --net=/proc/29080/ns/net curl docs.cilium.io -v &gt; GET / HTTP/1.1 &gt; Host: docs.cilium.io &gt; User-Agent: curl/7.79.1 &gt; Accept: */* &gt; Here 29080 is the pid of some pod process, and it appeared that TCP connection has been established, but somehow it couldn&rsquo;t receive any response.
-About the cluster The cluster was set up like something below:" />
+  <meta name="description" content="This is an investigation story where all pods on one host lost connectivity to
+external service. It looks like something below:
+$ nsenter --net=/proc/29080/ns/net curl docs.cilium.io -v
+&gt; GET / HTTP/1.1
+&gt; Host: docs.cilium.io
+&gt; User-Agent: curl/7.79.1
+&gt; Accept: */*
+&gt;
+Here 29080 is the pid of some pod process, and it appeared that TCP
+connection has been established, but somehow it couldn&rsquo;t receive any response.
+About the cluster
+The cluster was set up like something below:" />
   <meta name="author" content="Haibing Zhou" />
   
 
@@ -126,15 +135,12 @@ About the cluster The cluster was set up like something below:" />
   />
 
   
-  <meta name="generator" content="Hugo 0.130.0">
+  <meta name="generator" content="Hugo 0.140.2">
 
   
   
   
   
-  
-
-
   
   
   <meta itemprop="name" content="Race condition between kube-proxy and cilium">
@@ -506,7 +512,7 @@ there was a SYN before, it is considered as INVALID.</p>
   class="mx-auto flex h-[4.5rem] max-w-3xl items-center px-8 text-xs uppercase tracking-wider opacity-60"
 >
   <div class="mr-auto">
-    &copy; 2024
+    &copy; 2025
     <a class="link" href="https://blog.zhouhaibing.com/">Hi-Been Space</a>
   </div>
   <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"

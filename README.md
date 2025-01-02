@@ -10,3 +10,16 @@ I can post, and people can leave comments for discussion.
 And [Issues][1] is exactly a such place.
 
 [1]: https://github.com/zhouhaibing089/Blog/issues
+
+## 如何构建
+
+```console
+$ git submodule update --init themes/paper
+$ hugo -d docs/
+```
+
+本地运行的话，使用：
+
+```console
+$ hugo serve -d docs/
+```

@@ -65,8 +65,20 @@
   
   
   
-  <meta name="description" content="As you may know, a controller in kubernetes is a loop which picks up a key from workqueue and then reconciles the key into some desired state. While most of such control loops are reactive (based on external events), some of them require periodic processing (also known as resync). In general, periodic processing can easily fill up the workqueue when the number of keys is pretty huge.
-I have been involved in such scenarios more than once." />
+  <meta name="description" content="As you may know, a controller in kubernetes is a loop which picks up a key from
+workqueue and then reconciles the key into some desired state.
+While most of such control loops are reactive (based on external events),
+some of them require periodic processing (also known as resync). In general,
+periodic processing can easily fill up the workqueue when the number of keys
+is pretty huge.
+I have been involved in such scenarios more than once. For instance, we have an
+internal API called HealthMonitor which is similar to pod readiness probes,
+but describes the health status of an application. This API is often consumed in
+higher order deployment API to make sure applications are still healthy before
+we move into next colo (region, az or cluster). By nature, application health
+checks are periodic, so when we want to check the health status of one specific
+application, there is a huge chance that it is going to take long as the
+controller might be busy dealing with other applications." />
   <meta name="author" content="Haibing Zhou" />
   
 
@@ -125,20 +137,17 @@ I have been involved in such scenarios more than once." />
   />
 
   
-  <meta name="generator" content="Hugo 0.130.0">
+  <meta name="generator" content="Hugo 0.140.2">
 
   
   
   
   
-  
-
-
   
   
   <meta itemprop="name" content="two lane queue">
   <meta itemprop="description" content="As you may know, a controller in kubernetes is a loop which picks up a key from workqueue and then reconciles the key into some desired state. While most of such control loops are reactive (based on external events), some of them require periodic processing (also known as resync). In general, periodic processing can easily fill up the workqueue when the number of keys is pretty huge.
-I have been involved in such scenarios more than once.">
+I have been involved in such scenarios more than once. For instance, we have an internal API called HealthMonitor which is similar to pod readiness probes, but describes the health status of an application. This API is often consumed in higher order deployment API to make sure applications are still healthy before we move into next colo (region, az or cluster). By nature, application health checks are periodic, so when we want to check the health status of one specific application, there is a huge chance that it is going to take long as the controller might be busy dealing with other applications.">
   <meta itemprop="datePublished" content="2024-02-18T14:22:00-08:00">
   <meta itemprop="dateModified" content="2024-02-18T14:22:00-08:00">
   <meta itemprop="wordCount" content="935">
@@ -147,7 +156,7 @@ I have been involved in such scenarios more than once.">
   <meta property="og:site_name" content="Hi-Been Space">
   <meta property="og:title" content="two lane queue">
   <meta property="og:description" content="As you may know, a controller in kubernetes is a loop which picks up a key from workqueue and then reconciles the key into some desired state. While most of such control loops are reactive (based on external events), some of them require periodic processing (also known as resync). In general, periodic processing can easily fill up the workqueue when the number of keys is pretty huge.
-I have been involved in such scenarios more than once.">
+I have been involved in such scenarios more than once. For instance, we have an internal API called HealthMonitor which is similar to pod readiness probes, but describes the health status of an application. This API is often consumed in higher order deployment API to make sure applications are still healthy before we move into next colo (region, az or cluster). By nature, application health checks are periodic, so when we want to check the health status of one specific application, there is a huge chance that it is going to take long as the controller might be busy dealing with other applications.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="article">
     <meta property="article:section" content="posts">
@@ -159,7 +168,7 @@ I have been involved in such scenarios more than once.">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="two lane queue">
   <meta name="twitter:description" content="As you may know, a controller in kubernetes is a loop which picks up a key from workqueue and then reconciles the key into some desired state. While most of such control loops are reactive (based on external events), some of them require periodic processing (also known as resync). In general, periodic processing can easily fill up the workqueue when the number of keys is pretty huge.
-I have been involved in such scenarios more than once.">
+I have been involved in such scenarios more than once. For instance, we have an internal API called HealthMonitor which is similar to pod readiness probes, but describes the health status of an application. This API is often consumed in higher order deployment API to make sure applications are still healthy before we move into next colo (region, az or cluster). By nature, application health checks are periodic, so when we want to check the health status of one specific application, there is a huge chance that it is going to take long as the controller might be busy dealing with other applications.">
 
   
   
@@ -464,7 +473,7 @@ idea. Thank you for reading.</p>
   class="mx-auto flex h-[4.5rem] max-w-3xl items-center px-8 text-xs uppercase tracking-wider opacity-60"
 >
   <div class="mr-auto">
-    &copy; 2024
+    &copy; 2025
     <a class="link" href="https://blog.zhouhaibing.com/">Hi-Been Space</a>
   </div>
   <a class="link mx-6" href="https://gohugo.io/" rel="noopener" target="_blank"
