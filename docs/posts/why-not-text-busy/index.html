@@ -140,7 +140,7 @@ supported due to implementation details." />
   />
 
   
-  <meta name="generator" content="Hugo 0.140.2">
+  <meta name="generator" content="Hugo 0.153.3">
 
   
   
@@ -323,8 +323,8 @@ Running kaniko in any Docker image other than the official kaniko image is not s
 <h2 id="the-problem">The Problem</h2>
 <p>We have been using <a href="https://github.com/googleContainerTools/kaniko">kaniko</a> as image builder since a while back, including
 building a customzied kaniko image with itself like below:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span><span style="color:#e6db74"> alpine:latest</span><span style="color:#960050;background-color:#1e0010">
-</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span><span style="color:#66d9ef">COPY</span> --from<span style="color:#f92672">=</span>gcr.io/kaniko-project/executor:v1.23.2 /kaniko /kaniko<span style="color:#960050;background-color:#1e0010">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Dockerfile" data-lang="Dockerfile"><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span> <span style="color:#e6db74">alpine:latest</span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">COPY</span> --from<span style="color:#f92672">=</span>gcr.io/kaniko-project/executor:v1.23.2 /kaniko /kaniko<span style="color:#960050;background-color:#1e0010">
 </span></span></span></code></pre></div><p>Despite of its <a href="https://github.com/GoogleContainerTools/kaniko?tab=readme-ov-file#known-issues">official documentation</a> clearly suggesting that this is not
 supported:</p>
 <blockquote>
@@ -404,7 +404,7 @@ to see all of them (which could be a bit noisy).</p>
 </span></span><span style="display:flex;"><span>2895  openat(AT_FDCWD, &#34;/app&#34;, O_RDONLY|O_CLOEXEC) = 3
 </span></span><span style="display:flex;"><span>2895  openat(AT_FDCWD, &#34;/app&#34;, O_RDWR|O_CREAT|O_TRUNC|O_CLOEXEC, 0666) = 3
 </span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
-</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>2900  execve(&#34;/app&#34;, [&#34;/app&#34;], 0x559425259660 /* 6 vars */) = 0
+</span></span></span><span style="display:flex;"><span>2900  execve(&#34;/app&#34;, [&#34;/app&#34;], 0x559425259660 /* 6 vars */) = 0
 </span></span><span style="display:flex;"><span>2900  openat(AT_FDCWD, &#34;/sys/kernel/mm/transparent_hugepage/hpage_pmd_size&#34;, O_RDONLY) = 3
 </span></span><span style="display:flex;"><span>2900  openat(AT_FDCWD, &#34;/etc/localtime&#34;, O_RDONLY) = 3
 </span></span><span style="display:flex;"><span>2900  openat(AT_FDCWD, &#34;/app&#34;, O_RDONLY|O_CLOEXEC) = 3
@@ -464,7 +464,7 @@ one:</p>
 <p>In short, it calls into <code>do_dentry_open</code> -&gt; <code>ovl_open</code> (overlay kernel module) and
 then failed in the second <code>do_dentry_open</code> call.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">// fs/open.c
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">do_dentry_open</span>(<span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span>f,
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">do_dentry_open</span>(<span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span>f,
 </span></span><span style="display:flex;"><span>			  <span style="color:#66d9ef">struct</span> inode <span style="color:#f92672">*</span>inode,
 </span></span><span style="display:flex;"><span>			  <span style="color:#66d9ef">int</span> (<span style="color:#f92672">*</span>open)(<span style="color:#66d9ef">struct</span> inode <span style="color:#f92672">*</span>, <span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span>))
 </span></span><span style="display:flex;"><span>{
@@ -483,7 +483,7 @@ then failed in the second <code>do_dentry_open</code> call.</p>
 </span></span></code></pre></div><p>Since we didn&rsquo;t see <code>__mnt_want_write</code> in function graph (while it is there in
 the first <code>do_dentry_open</code>), we can be certain that <code>get_write_access</code> failed.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">// include/linux/fs.h
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">get_write_access</span>(<span style="color:#66d9ef">struct</span> inode <span style="color:#f92672">*</span>inode)
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">inline</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">get_write_access</span>(<span style="color:#66d9ef">struct</span> inode <span style="color:#f92672">*</span>inode)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">atomic_inc_unless_negative</span>(<span style="color:#f92672">&amp;</span>inode<span style="color:#f92672">-&gt;</span>i_writecount) <span style="color:#f92672">?</span> <span style="color:#ae81ff">0</span> <span style="color:#f92672">:</span> <span style="color:#f92672">-</span>ETXTBSY;
 </span></span><span style="display:flex;"><span>}
@@ -515,7 +515,7 @@ inode address, its <code>i_writecount</code> and inode number (for correlation).
 </span></span></code></pre></div><p><code>do_open_execat</code> is executed before the binary is loaded into memory. Before it
 returns, it decreases <code>i_writecount</code>.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">// fs/exec.c
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span><span style="color:#a6e22e">do_open_execat</span>(<span style="color:#66d9ef">int</span> fd, <span style="color:#66d9ef">struct</span> filename <span style="color:#f92672">*</span>name, <span style="color:#66d9ef">int</span> flags)
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span><span style="color:#a6e22e">do_open_execat</span>(<span style="color:#66d9ef">int</span> fd, <span style="color:#66d9ef">struct</span> filename <span style="color:#f92672">*</span>name, <span style="color:#66d9ef">int</span> flags)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    ...
 </span></span><span style="display:flex;"><span><span style="color:#f92672">==&gt;</span> err <span style="color:#f92672">=</span> <span style="color:#a6e22e">deny_write_access</span>(file);
@@ -530,7 +530,7 @@ returns, it decreases <code>i_writecount</code>.</p>
 </span></span></code></pre></div><p><code>free_bprm</code> is executed when the binary is completely mapped into memory. It
 increases its <code>i_writecount</code> before it returns:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">// fs/exec.c
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">free_bprm</span>(<span style="color:#66d9ef">struct</span> linux_binprm <span style="color:#f92672">*</span>bprm)
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">free_bprm</span>(<span style="color:#66d9ef">struct</span> linux_binprm <span style="color:#f92672">*</span>bprm)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    ...
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (bprm<span style="color:#f92672">-&gt;</span>file) {
@@ -551,7 +551,7 @@ the program has multiple regions and this function is going to be called
 multiple times. This function, when called successfully, is going to decrease
 <code>i_writecount</code> first, but then increase <code>i_writecount</code> when it is completed.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">// mm/mmap.c
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> <span style="color:#a6e22e">mmap_region</span>(<span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span>file, <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> addr,
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> <span style="color:#a6e22e">mmap_region</span>(<span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span>file, <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> addr,
 </span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> len, <span style="color:#66d9ef">vm_flags_t</span> vm_flags, <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">long</span> pgoff,
 </span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">struct</span> list_head <span style="color:#f92672">*</span>uf)
 </span></span><span style="display:flex;"><span>{
@@ -576,7 +576,7 @@ multiple times. This function, when called successfully, is going to decrease
 with the given <code>file</code> regarding <code>i_writecount</code>, but that&rsquo;s not right, <code>vma_link</code>
 does decrease <code>i_writecount</code> on <code>vma-&gt;vm_file</code>.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">// mm/mmap.c
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">__vma_link_file</span>(<span style="color:#66d9ef">struct</span> vm_area_struct <span style="color:#f92672">*</span>vma)
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">__vma_link_file</span>(<span style="color:#66d9ef">struct</span> vm_area_struct <span style="color:#f92672">*</span>vma)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    ...
 </span></span><span style="display:flex;"><span>    file <span style="color:#f92672">=</span> vma<span style="color:#f92672">-&gt;</span>vm_file;
@@ -612,7 +612,7 @@ file system. As <code>mmap_region</code> calls into this function, we can print 
 about the <code>i_writecount</code> here regarding <code>file</code> (in overlay) and <code>realfile</code> (in
 underlying file system).</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">// fs/overlayfs/file.c
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">ovl_mmap</span>(<span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span>file, <span style="color:#66d9ef">struct</span> vm_area_struct <span style="color:#f92672">*</span>vma)
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">ovl_mmap</span>(<span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span>file, <span style="color:#66d9ef">struct</span> vm_area_struct <span style="color:#f92672">*</span>vma)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">struct</span> file <span style="color:#f92672">*</span>realfile <span style="color:#f92672">=</span> file<span style="color:#f92672">-&gt;</span>private_data;
 </span></span><span style="display:flex;"><span>    ...

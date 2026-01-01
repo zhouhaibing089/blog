@@ -137,7 +137,7 @@ We can run the following command to start our first etcd instance:" />
   />
 
   
-  <meta name="generator" content="Hugo 0.140.2">
+  <meta name="generator" content="Hugo 0.153.3">
 
   
   
@@ -319,7 +319,7 @@ of the etcd instances that I&rsquo;m about to create.</p>
 </span></span></code></pre></div><h2 id="the-first-instance">The first instance</h2>
 <p>We can run the following command to start our first etcd instance:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-1 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.1:2380 \
+</span></span></span><span style="display:flex;"><span>    --listen-peer-urls http://127.0.0.1:2380 \
 </span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.1:2379 \
 </span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380 \
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-1:2380 \
@@ -343,7 +343,7 @@ instance expects other peers and clients to talk to it.</p>
 <p>It is natural to just try the same command with few modifications. Let&rsquo;s try it
 out:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-2 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.2:2380 \
+</span></span></span><span style="display:flex;"><span>    --listen-peer-urls http://127.0.0.2:2380 \
 </span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.2:2379 \
 </span></span><span style="display:flex;"><span>    --initial-cluster etcd-2=http://etcd-2:2380 \
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-2:2380 \
@@ -358,7 +358,7 @@ not connected to the first instance at all:</p>
 <p>You may have to run <code>rm -drf etcd-2.etcd</code> to clean up first.</p>
 </blockquote>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-2 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.2:2380 \
+</span></span></span><span style="display:flex;"><span>    --listen-peer-urls http://127.0.0.2:2380 \
 </span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.2:2379 \
 </span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380 \
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-2:2380 \
@@ -378,7 +378,7 @@ not connected to the first instance at all:</p>
 </span></span></code></pre></div><p>It means that this instance tried to create another cluster which isn&rsquo;t expected.
 We can fix this by add <code>--initial-cluster-state existing</code>.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-2 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.2:2380 \
+</span></span></span><span style="display:flex;"><span>    --listen-peer-urls http://127.0.0.2:2380 \
 </span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.2:2379 \
 </span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380 \
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-2:2380 \
@@ -413,7 +413,7 @@ well:</p>
 <p>The step should now be straightforward:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcdctl --endpoints<span style="color:#f92672">=</span>http://etcd-1:2379 member add etcd-3 --peer-urls http://etcd-3:2380
 </span></span><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-3 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.3:2380 \
+</span></span></span><span style="display:flex;"><span>    --listen-peer-urls http://127.0.0.3:2380 \
 </span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.3:2379 \
 </span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-3:2380 \
@@ -431,19 +431,19 @@ do the following:</p>
 <p>You may need to clean up everything we did above by running <code>rm -drf etcd-*</code>.</p>
 </blockquote>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-1 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.1:2380 \
+</span></span></span><span style="display:flex;"><span>    --listen-peer-urls http://127.0.0.1:2380 \
 </span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.1:2379 \
 </span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-1:2380 \
 </span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-1:2379
 </span></span><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-2 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.2:2380 \
+</span></span></span><span style="display:flex;"><span>    --listen-peer-urls http://127.0.0.2:2380 \
 </span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.2:2379 \
 </span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-2:2380 \
 </span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-2:2379
 </span></span><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-3 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.3:2380 \
+</span></span></span><span style="display:flex;"><span>    --listen-peer-urls http://127.0.0.3:2380 \
 </span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.3:2379 \
 </span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-3:2380 \
@@ -491,7 +491,7 @@ change by updating <code>/etc/hosts</code>:</p>
 </span></span><span style="display:flex;"><span>127.0.0.3 etcd-3
 </span></span></code></pre></div><p>Note that <code>etcd-1</code> now points to <code>127.0.0.4</code>. We can now start this instance by:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-1 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.4:2380 \
+</span></span></span><span style="display:flex;"><span>    --listen-peer-urls http://127.0.0.4:2380 \
 </span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.4:2379 \
 </span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-1:2380 \
@@ -502,7 +502,7 @@ simulate this case, let&rsquo;s wipe out the data via:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ rm -drf etcd-1.etcd
 </span></span></code></pre></div><p>Now if we try the same command as mentioned above:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-1 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.4:2380 \
+</span></span></span><span style="display:flex;"><span>    --listen-peer-urls http://127.0.0.4:2380 \
 </span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.4:2379 \
 </span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-1:2380 \
@@ -525,7 +525,7 @@ successfully, we have to reset its state by removing this member:</p>
 and then start the instance with <code>--initial-cluster-state existing</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcdctl --endpoints<span style="color:#f92672">=</span>http://etcd-2:2379 member add etcd-1 --peer-urls http://etcd-1:2380
 </span></span><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-1 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.4:2380 \
+</span></span></span><span style="display:flex;"><span>    --listen-peer-urls http://127.0.0.4:2380 \
 </span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.4:2379 \
 </span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-1:2380 \
@@ -543,13 +543,13 @@ for them are <code>127.0.0.5</code> and <code>127.0.0.6</code> respectively:</p>
 </span></span><span style="display:flex;"><span>127.0.0.5 etcd-2
 </span></span><span style="display:flex;"><span>127.0.0.6 etcd-3
 </span></span><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-2 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.5:2380 \
+</span></span></span><span style="display:flex;"><span>    --listen-peer-urls http://127.0.0.5:2380 \
 </span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.5:2379 \
 </span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-2:2380 \
 </span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-2:2379
 </span></span><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-3 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.6:2380 \
+</span></span></span><span style="display:flex;"><span>    --listen-peer-urls http://127.0.0.6:2380 \
 </span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.6:2379 \
 </span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-3:2380 \
@@ -573,32 +573,32 @@ are possible anymore. This can further be dividied into three different cases:</
 </span></span><span style="display:flex;"><span>$ rm -drf etcd-3.etcd
 </span></span></code></pre></div><p>Now we can restore the data directory for each of the instance via:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcdctl snapshot restore snapshot.db <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --name etcd-1 \
+</span></span></span><span style="display:flex;"><span>    --name etcd-1 \
 </span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-1:2380
 </span></span><span style="display:flex;"><span>$ etcdctl snapshot restore snapshot.db <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --name etcd-2 \
+</span></span></span><span style="display:flex;"><span>    --name etcd-2 \
 </span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-2:2380
 </span></span><span style="display:flex;"><span>$ etcdctl snapshot restore snapshot.db <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --name etcd-3 \
+</span></span></span><span style="display:flex;"><span>    --name etcd-3 \
 </span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-3:2380
 </span></span></code></pre></div><p>Then we can follow the same steps above just like we have data available:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-1 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.4:2380 \
+</span></span></span><span style="display:flex;"><span>    --listen-peer-urls http://127.0.0.4:2380 \
 </span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.4:2379 \
 </span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-1:2380 \
 </span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-1:2379
 </span></span><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-2 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.5:2380 \
+</span></span></span><span style="display:flex;"><span>    --listen-peer-urls http://127.0.0.5:2380 \
 </span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.5:2379 \
 </span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-2:2380 \
 </span></span><span style="display:flex;"><span>    --advertise-client-urls http://etcd-2:2379
 </span></span><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-3 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.6:2380 \
+</span></span></span><span style="display:flex;"><span>    --listen-peer-urls http://127.0.0.6:2380 \
 </span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.6:2379 \
 </span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-3:2380 \
@@ -612,7 +612,7 @@ remove its data directories:</p>
 </span></span><span style="display:flex;"><span>$ rm -drf etcd-3.etcd
 </span></span></code></pre></div><p>Now we can restart <code>etcd-1</code> with <code>--force-new-cluster</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-1 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.4:2380 \
+</span></span></span><span style="display:flex;"><span>    --listen-peer-urls http://127.0.0.4:2380 \
 </span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.4:2379 \
 </span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-1:2380 \
@@ -622,7 +622,7 @@ remove its data directories:</p>
 we experimented earlier - when we set up clustering manually:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ etcdctl --endpoints<span style="color:#f92672">=</span>http://etcd-1:2379 member add etcd-2 --peer-urls http://etcd-2:2380
 </span></span><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-2 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.5:2380 \
+</span></span></span><span style="display:flex;"><span>    --listen-peer-urls http://127.0.0.5:2380 \
 </span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.5:2379 \
 </span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380 \
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-2:2380 \
@@ -630,7 +630,7 @@ we experimented earlier - when we set up clustering manually:</p>
 </span></span><span style="display:flex;"><span>    --initial-cluster-state existing
 </span></span><span style="display:flex;"><span>$ etcdctl --endpoints<span style="color:#f92672">=</span>http://etcd-1:2379 member add etcd-3 --peer-urls http://etcd-3:2380
 </span></span><span style="display:flex;"><span>$ etcd --name<span style="color:#f92672">=</span>etcd-3 <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --listen-peer-urls http://127.0.0.6:2380 \
+</span></span></span><span style="display:flex;"><span>    --listen-peer-urls http://127.0.0.6:2380 \
 </span></span><span style="display:flex;"><span>    --listen-client-urls http://127.0.0.6:2379 \
 </span></span><span style="display:flex;"><span>    --initial-cluster etcd-1=http://etcd-1:2380,etcd-2=http://etcd-2:2380,etcd-3=http://etcd-3:2380 \
 </span></span><span style="display:flex;"><span>    --initial-advertise-peer-urls http://etcd-3:2380 \

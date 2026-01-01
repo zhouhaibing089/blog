@@ -135,7 +135,7 @@ The cluster was set up like something below:" />
   />
 
   
-  <meta name="generator" content="Hugo 0.140.2">
+  <meta name="generator" content="Hugo 0.153.3">
 
   
   
@@ -315,10 +315,10 @@ connection has been established, but somehow it couldn&rsquo;t receive any respo
 <h2 id="about-the-cluster">About the cluster</h2>
 <p>The cluster was set up like something below:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ minikube start --driver<span style="color:#f92672">=</span>virtualbox --cpus<span style="color:#f92672">=</span><span style="color:#ae81ff">4</span> --memory<span style="color:#f92672">=</span>8g --network-plugin<span style="color:#f92672">=</span>cni <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --cni=false --nodes=3
+</span></span></span><span style="display:flex;"><span>    --cni=false --nodes=3
 </span></span></code></pre></div><p>and then cilium was installed with:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-console" data-lang="console"><span style="display:flex;"><span>$ cilium install --kube-proxy-replacement<span style="color:#f92672">=</span>probe <span style="color:#ae81ff">\
-</span></span></span><span style="display:flex;"><span><span style="color:#ae81ff"></span>    --helm-set ipam.operator.clusterPoolIPv4PodCIDR=172.16.0.0/16 \
+</span></span></span><span style="display:flex;"><span>    --helm-set ipam.operator.clusterPoolIPv4PodCIDR=172.16.0.0/16 \
 </span></span><span style="display:flex;"><span>    --helm-set bpf.masquerade=true \
 </span></span><span style="display:flex;"><span>    --version=v1.11.17
 </span></span></code></pre></div><p>In short, this is a cluster created with minikube, and then cilium was
